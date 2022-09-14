@@ -188,5 +188,5 @@ class TextController extends Controller
 
         return response()->json($text);
     }
-    //todo ok!ok!ok!ok!
+
 }
