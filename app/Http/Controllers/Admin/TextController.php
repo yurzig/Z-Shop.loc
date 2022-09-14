@@ -188,5 +188,4 @@ class TextController extends Controller
 
         return response()->json($text);
     }
-// end 123456 87654321
 }
