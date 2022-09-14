@@ -1,18 +1,18 @@
 <?php
 $help = [
-    'slug' => 'Обязательное поле. Название настройки латиницей, должно быть уникальным.',
-    'description' => 'Описание или правила заполнения настройки.',
-    'setting' => 'Обязательное поле. Заполняются ключ-значение. Ключ(цифры, буквы) обязателен.',
+    'title' => '',
+    'content' => '',
+    'type' => '',
 ];
-$pageName = 'Редактирование настройки';
-$page = 'admin.settings.';
+$pageName = 'Редактирование текста';
+$page = 'admin.texts.';
 ?>
 @extends('layouts.admin')
 
 @section('title', $pageName)
 
 @section('header-block')
-<span>{{ $pageName }}: ({{ $item->id }}) {{ $item->slug }}</span>
+<span>{{ $pageName }}: ({{ $item->id }}) {{ $item->title }}</span>
 @include('admin.includes._header_block')
 @endsection
 
@@ -24,6 +24,44 @@ $page = 'admin.settings.';
 
         @include('admin.includes._result_messages')
 
+
+
+
+
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages" type="button" role="tab" aria-controls="messages" aria-selected="false">Messages</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Settings</button>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
+            <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+            <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">...</div>
+            <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">...</div>
+        </div>
+
+        <script>
+            var firstTabEl = document.querySelector('#myTab li:last-child a')
+            var firstTab = new bootstrap.Tab(firstTabEl)
+
+            firstTab.show()
+        </script>
+
+
+
+
+
         <div class="col-lg-12 catalog-content">
             <div class="row">
 
@@ -32,13 +70,13 @@ $page = 'admin.settings.';
                         <ul class="nav nav-tabs flex-row flex-wrap d-flex box" role="tablist">
                             <li class="nav-item basic">
                                 <a class="nav-link active" href="#basic" data-bs-toggle="tab" role="tab"
-                                   aria-expanded="true" aria-controls="basic" tabindex="1">
+                                   aria-expanded="true" aria-controls="basic">
                                     Основные данные
                                 </a>
                             </li>
                             <li class="nav-item other">
                                 <a class="nav-link" href="#other" data-bs-toggle="tab" role="tab"
-                                   aria-expanded="true" aria-controls="basic" tabindex="1">
+                                   aria-expanded="true" aria-controls="other">
                                     Прочие данные
                                 </a>
                             </li>

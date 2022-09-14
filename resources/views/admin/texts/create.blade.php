@@ -34,7 +34,7 @@ $page = 'admin.texts.';
                         <ul class="nav nav-tabs flex-row flex-wrap d-flex box" role="tablist">
                             <li class="nav-item basic">
                                 <a class="nav-link active" href="#basic" data-bs-toggle="tab" role="tab"
-                                    aria-expanded="true" aria-controls="basic" tabindex="1">
+                                    aria-expanded="true" aria-controls="basic">
                                     Ввод данных
                                 </a>
                             </li>
