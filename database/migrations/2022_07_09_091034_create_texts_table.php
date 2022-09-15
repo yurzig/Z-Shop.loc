@@ -17,17 +17,17 @@ return new class extends Migration
         Schema::create('texts', function (Blueprint $table) {
             $table->id();
             $table->string('title', 255)->nullable();
-            $table->text('content', 255);
+            $table->text('content');
             $table->unsignedTinyInteger('type')->default(1);
             $table->timestamps();
             $table->softDeletes();
             $table->foreignId('editor');
         });
 
-        Schema::create('text_model', function (Blueprint $table) {
+        Schema::create('textables', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Text::class)->index()->references('id')->on('texts')->onDelete('CASCADE');
-            $table->morphs('text_model');
+            $table->morphs('textable');
         });
     }
 
@@ -38,7 +38,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('text_model');
+        Schema::dropIfExists('textables');
         Schema::dropIfExists('texts');
     }
 };

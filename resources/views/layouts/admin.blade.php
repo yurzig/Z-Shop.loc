@@ -9,9 +9,8 @@
 
     <!-- Styles -->
     {{--    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">--}}
-{{--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">--}}
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="{{ asset('css/flatpickr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/summernote-lite.min.css') }}">
     @vite('resources/css/admin.css')
     {{--    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">--}}
@@ -64,10 +63,11 @@
 </div>
 
 <!-- Scripts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>--}}
+<script src="{{ asset('js/jquery-3.6.0.min.js') }}" defer></script>
 <script src="{{ asset('js/bootstrap.bundle.min.js') }}" defer></script>
-<script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
-<script src="https://npmcdn.com/flatpickr/dist/l10n/ru.js"></script>
+<script src="{{ asset('js/flatpickr.min.js') }}" defer></script>
+<script src="{{ asset('js/flatpickr-ru.js') }}" defer></script>
 <script src="{{ asset('js/summernote-lite.min.js') }}" defer></script>
 <script src="{{ asset('js/lang/summernote-ru-RU.min.js') }}" defer></script>
 @vite('resources/js/app.js')

@@ -11,9 +11,11 @@ document.querySelectorAll(".btn-theme").forEach(item => {
     });
 });
 
-$(document).ready(function () {
-    $('.flatpickr-input').flatpickr({"locale": "ru"});
+flatpickr('.flatpickr-input', {
+    "locale": "ru"
+});
 
+$(document).ready(function () {
     $('.row-delete').on('click', function () {
         const text = $(this).closest('tr').find('.js-title').text(),
             modalDelete = new bootstrap.Modal(document.getElementById('confirmDelete'), {});

@@ -180,6 +180,8 @@ class TextController extends Controller
             }
         }
         $item->texts()->sync($ids);
+
+        return true;
     }
     public function ajaxGetRow(Request $request)
     {
