@@ -27,9 +27,10 @@ class Text extends Model
     {
         return $this->morphedByMany(Category::class, 'textable');
     }
-//    public function textable()
-//    {
-////        return $this->morphToMany(Textable::class, 'textable');
+    public function textable()
+    {
+        return $this->morphedByMany(Textable::class, 'textable');
+//        return $this->morphToMany(Text::class, 'textable');
 //        return $this->morphTo();
-//    }
+    }
 }

@@ -18,7 +18,8 @@ $page = 'admin.texts.';
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-2 mb-3">
-    <form id="edit-form" class="item w-100" method="POST" enctype="multipart/form-data" action="{{ route($page . 'update', $item) }}">
+    <form id="edit-form" class="item w-100" method="POST" enctype="multipart/form-data"
+          action="{{ route($page . 'update', $item) }}">
         @csrf
         @method('PATCH')
 
@@ -31,17 +32,21 @@ $page = 'admin.texts.';
                     <div class="navbar-content">
                         <ul class="nav nav-tabs flex-row flex-wrap d-flex box" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="basic-tab" data-bs-toggle="tab"
-                                        data-bs-target="#basic" type="button" role="tab"
-                                        aria-controls="basic" aria-selected="true">
+                                <button class="nav-link active" id="basic-tab" data-bs-toggle="tab" type="button"
+                                        role="tab" data-bs-target="#basic" aria-controls="basic" aria-selected="true">
                                     Основные данные
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="other-tab" data-bs-toggle="tab"
-                                        data-bs-target="#other" type="button" role="tab"
-                                        aria-controls="other" aria-selected="false">
+                                <button class="nav-link" id="other-tab" data-bs-toggle="tab" type="button" role="tab"
+                                        data-bs-target="#other" aria-controls="other" aria-selected="false">
                                     Прочие данные
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="usage-tab" data-bs-toggle="tab" type="button" role="tab"
+                                        data-bs-target="#usage" aria-controls="usage" aria-selected="false">
+                                    Использование
                                 </button>
                             </li>
                         </ul>
@@ -49,7 +54,7 @@ $page = 'admin.texts.';
                 </div>
 
                 <div class="col-xl-12 item-content tab-content">
-                    <div class="tab-pane active fade show" id="basic" role="tabpanel" aria-labelledby="basic-tab">
+                    <div class="tab-pane fade active show" id="basic" role="tabpanel" aria-labelledby="basic-tab">
                         <div class="box">
                             <div class="row justify-content-center">
                                 <div class="col-xl-6">
@@ -77,8 +82,8 @@ $page = 'admin.texts.';
                                     <div class="form-group row">
                                         <div class="col-sm-12 help-text">{{ $help['content'] }}</div>
                                         <textarea name="content"
-                                                  class="form-control item-content summernote">{{ old('content') }}</textarea>
-                                        </div>
+                                                  class="form-control item-content summernote"
+                                        >{{ old('content', $item->content) }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -117,6 +122,11 @@ $page = 'admin.texts.';
                                 </div>
                             </div>
 
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="usage" role="tabpanel" aria-labelledby="usage-tab">
+                        <div class="box">
+Использование
                         </div>
                     </div>
 

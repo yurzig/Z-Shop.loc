@@ -30,24 +30,24 @@ $page = 'admin.settings.';
                 <div class="col-xl-12 item-navbar">
                     <div class="navbar-content">
                         <ul class="nav nav-tabs flex-row flex-wrap d-flex box" role="tablist">
-                            <li class="nav-item basic">
-                                <a class="nav-link active" href="#basic" data-bs-toggle="tab" role="tab"
-                                   aria-expanded="true" aria-controls="basic" tabindex="1">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="basic-tab" data-bs-toggle="tab" type="button"
+                                        role="tab" data-bs-target="#basic" aria-controls="basic" aria-selected="true">
                                     Основные данные
-                                </a>
+                                </button>
                             </li>
-                            <li class="nav-item other">
-                                <a class="nav-link" href="#other" data-bs-toggle="tab" role="tab"
-                                   aria-expanded="true" aria-controls="basic" tabindex="1">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="other-tab" data-bs-toggle="tab" type="button" role="tab"
+                                        data-bs-target="#other" aria-controls="other" aria-selected="false">
                                     Прочие данные
-                                </a>
+                                </button>
                             </li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="col-xl-12 item-content tab-content">
-                    <div id="basic" class="item-basic tab-pane fade show active" role="tabpanel" aria-labelledby="basic">
+                    <div id="basic" class="tab-pane fade show active" role="tabpanel" aria-labelledby="basic-tab">
                         <div class="box">
                             <div class="row justify-content-center">
                                 <div class="col-xl-6">
@@ -119,7 +119,7 @@ $page = 'admin.settings.';
                             </div>
                         </div>
                     </div>
-                    <div id="other" class="item-basic tab-pane fade show" role="tabpanel" aria-labelledby="basic">
+                    <div id="other" class="tab-pane fade" role="tabpanel" aria-labelledby="other-tab">
                         <div class="box">
                             <div class="row justify-content-center">
                                 <div class="col-xl-6 block">

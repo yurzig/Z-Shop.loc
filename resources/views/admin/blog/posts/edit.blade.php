@@ -49,29 +49,29 @@ $page = 'admin.blog.posts.';
                     <div class="col-xl-12 item-navbar">
                         <div class="navbar-content">
                             <ul class="nav nav-tabs flex-row flex-wrap d-flex box" role="tablist">
-                                <li class="nav-item basic">
-                                    <a class="nav-link active" href="#basic" data-bs-toggle="tab" role="tab"
-                                       aria-expanded="true" aria-controls="basic">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="basic-tab" data-bs-toggle="tab" type="button"
+                                            role="tab" data-bs-target="#basic" aria-controls="basic" aria-selected="true">
                                         Основные данные
-                                    </a>
+                                    </button>
                                 </li>
-                                <li class="nav-item basic">
-                                    <a class="nav-link" href="#content" data-bs-toggle="tab" role="tab"
-                                       aria-expanded="true" aria-controls="content">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="content-tab" data-bs-toggle="tab" type="button" role="tab"
+                                            data-bs-target="#content" aria-controls="content" aria-selected="false">
                                         Текст статьи
-                                    </a>
+                                    </button>
                                 </li>
-                                <li class="nav-item basic">
-                                    <a class="nav-link" href="#review" data-bs-toggle="tab" role="tab"
-                                       aria-expanded="true" aria-controls="review">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="review-tab" data-bs-toggle="tab" type="button" role="tab"
+                                            data-bs-target="#review" aria-controls="review" aria-selected="false">
                                         Отзывы
-                                    </a>
+                                    </button>
                                 </li>
-                                <li class="nav-item other">
-                                    <a class="nav-link" href="#other" data-bs-toggle="tab" role="tab"
-                                       aria-expanded="true" aria-controls="other">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="other-tab" data-bs-toggle="tab" type="button" role="tab"
+                                            data-bs-target="#other" aria-controls="other" aria-selected="false">
                                         SEO и прочие данные
-                                    </a>
+                                    </button>
                                 </li>
                             </ul>
                         </div>
@@ -80,7 +80,7 @@ $page = 'admin.blog.posts.';
                     <div class="col-xl-12 item-content tab-content">
 
                         <div id="basic" class="item-basic tab-pane fade show active" role="tabpanel"
-                             aria-labelledby="basic">
+                             aria-labelledby="basic-tab">
                             <div class="box">
                                 <div class="row justify-content-center">
                                     <div class="col-xl-6 block">
@@ -150,8 +150,7 @@ $page = 'admin.blog.posts.';
                                 </div>
                             </div>
                         </div>
-                        <div id="content" class="item-basic tab-pane fade" role="tabpanel"
-                             aria-labelledby="content">
+                        <div id="content" class="tab-pane fade" role="tabpanel" aria-labelledby="content-tab">
                             <div class="box">
                                 <div class="form-group row">
                                     <label class="form-control-label justify-content-center">Аннотация</label>
@@ -168,12 +167,12 @@ $page = 'admin.blog.posts.';
                                 </div>
                             </div>
                         </div>
-                        <div id="review" class="item-basic tab-pane fade" role="tabpanel" aria-labelledby="review">
+                        <div id="review" class="tab-pane fade" role="tabpanel" aria-labelledby="review-tab">
                             <div class="box">
                                 @include('admin.blog.posts._reviews')
                             </div>
                         </div>
-                        <div id="other" class="item-basic tab-pane fade" role="tabpanel" aria-labelledby="basic">
+                        <div id="other" class="tab-pane fade" role="tabpanel" aria-labelledby="other-tab">
                             <div class="box">
                                 <div class="form-group row">
                                     <label class="col-sm-4 form-control-label">meta-title</label>

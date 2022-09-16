@@ -32,7 +32,7 @@ class TextController extends Controller
         $sort = session('texts_sort', ['id', 'asc']);
         $filter = session('texts_filter', []);
         $items = $this->textRepository->getAll($sort, $filter, $this->perPage);
-        $columns = session('texts_columns', ['id', 'title']);
+        $columns = session('texts_columns', ['id', 'type', 'title']);
 
         return view('admin.texts.index', compact('items',
                                                        'columns',
@@ -78,6 +78,9 @@ class TextController extends Controller
      */
     public function edit($id)
     {
+        $usages = $this->textRepository->getUsage($id);
+        dd($usages);
+
         $item = $this->textRepository->getRow($id);
         if (empty($item)) {
             abort(404);

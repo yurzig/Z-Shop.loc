@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Text as Model;
+use App\Models\Textable;
 
 /**
  * Class TextRepository
@@ -12,24 +13,24 @@ use App\Models\Text as Model;
 class TextRepository extends CoreRepository
 {
     /**
-    * @return string
-    */
+     * @return string
+     */
     protected function getModelClass()
     {
         return Model::class;
     }
 
     /**
-    * Получить список
-    *
-    * @param int|null $perPage
-    *
-    * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
-    */
+     * Получить список
+     *
+     * @param int|null $perPage
+     *
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
     public function getAll(array $sort, array $filter, ?int $perPage = null)
     {
         $where = [];
-        if($filter) {
+        if ($filter) {
             foreach ($filter['val'] as $key => $item) {
                 if ($item) {
                     $where[] = [$key, $filter['op'][$key], $filter['op'][$key] === 'like' ? "%$item%" : $item];
@@ -56,6 +57,7 @@ class TextRepository extends CoreRepository
     {
         return $this->startConditions()->find($id);
     }
+
     public function getForSelect()
     {
         $texts = $this->startConditions()
@@ -66,5 +68,15 @@ class TextRepository extends CoreRepository
             ->get();
 
         return $texts;
+    }
+
+    public function getUsage(int $id)
+    {
+        $items = Textable::where('text_id', $id)
+            ->orderBy('textable_type')
+            ->toBase()
+            ->get();
+
+        return $items;
     }
 }

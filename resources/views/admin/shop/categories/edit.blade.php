@@ -45,43 +45,46 @@ $page = 'admin.shop.categories.';
                     <div class="col-xl-12 item-navbar">
                         <div class="navbar-content">
                             <ul class="nav nav-tabs flex-row flex-wrap d-flex box" role="tablist">
-                                <li class="nav-item basic">
-                                    <a class="nav-link active" href="#basic" data-bs-toggle="tab" role="tab"
-                                       aria-expanded="true" aria-controls="basic">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="basic-tab" data-bs-toggle="tab" type="button"
+                                            role="tab" data-bs-target="#basic" aria-controls="basic" aria-selected="true">
                                         Основные данные
-                                    </a>
+                                    </button>
                                 </li>
-                                <li class="nav-item description">
-                                    <a class="nav-link" href="#description" data-bs-toggle="tab" role="tab"
-                                       aria-expanded="true" aria-controls="description">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="description-tab" data-bs-toggle="tab" type="button"
+                                            role="tab" data-bs-target="#description" aria-controls="description"
+                                            aria-selected="false">
                                         Описание
-                                    </a>
+                                    </button>
                                 </li>
-                                <li class="nav-item properties">
-                                    <a class="nav-link" href="#properties" data-bs-toggle="tab" role="tab"
-                                       aria-expanded="true" aria-controls="properties">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="properties-tab" data-bs-toggle="tab" type="button"
+                                            role="tab" data-bs-target="#properties" aria-controls="properties"
+                                            aria-selected="false">
                                         Свойства товаров категории
-                                    </a>
+                                    </button>
                                 </li>
-                                <li class="nav-item media">
-                                    <a class="nav-link" href="#media" data-bs-toggle="tab" role="tab"
-                                       aria-expanded="true" aria-controls="media">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="media-tab" data-bs-toggle="tab" type="button"
+                                            role="tab" data-bs-target="#media" aria-controls="media"
+                                            aria-selected="false">
                                         Изображения
-                                    </a>
+                                    </button>
                                 </li>
-                                <li class="nav-item other">
-                                    <a class="nav-link" href="#other" data-bs-toggle="tab" role="tab"
-                                       aria-expanded="true" aria-controls="other">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="other-tab" data-bs-toggle="tab" type="button"
+                                            role="tab" data-bs-target="#other" aria-controls="other"
+                                            aria-selected="false">
                                         SEO и прочие данные
-                                    </a>
+                                    </button>
                                 </li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="col-xl-12 item-content tab-content">
-
-                        <div id="basic" class="item-basic tab-pane fade active show" role="tabpanel" aria-labelledby="basic">
+                        <div class="tab-pane fade active show" id="basic" role="tabpanel" aria-labelledby="basic-tab">
                             <div class="box">
                                 <div class="row justify-content-center">
                                     <div class="col-xl-6 block">
@@ -121,29 +124,18 @@ $page = 'admin.shop.categories.';
                                 </div>
                             </div>
                         </div>
-                        <div id="description" class="item-basic tab-pane fade" role="tabpanel" aria-labelledby="description">
+                        <div class="tab-pane fade" id="description" role="tabpanel" aria-labelledby="description-tab">
                             @include('admin.includes._texts')
-{{--                            <div class="box">--}}
-{{--                                <div class="row justify-content-center">--}}
-{{--                                    <div class="col-xl-12 block">--}}
-{{--                                        <div class="form-group row">--}}
-{{--                                            Text--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
                         </div>
-                        <div id="properties" class="item-basic js-block-start tab-pane fade" role="tabpanel"
-                             aria-labelledby="properties">
+                        <div class="tab-pane fade" id="properties" role="tabpanel" aria-labelledby="properties-tab">
                             Свойства
 {{--                            @include('admin.shop.categories._properties')--}}
                         </div>
-                        <div id="media" class="item-media js-block-start tab-pane fade" role="tabpanel"
-                             aria-labelledby="media">
+                        <div class="tab-pane fade" id="media" role="tabpanel" aria-labelledby="media-tab">
                             Медиа
 {{--                            @include('admin.shop.includes._medias')--}}
                         </div>
-                        <div id="other" class="item-basic tab-pane fade show" role="tabpanel" aria-labelledby="other">
+                        <div class="tab-pane fade" id="other" role="tabpanel" aria-labelledby="other-tab">
                             <div class="box">
                                 <div class="form-group row">
                                     <label class="col-sm-4 form-control-label">meta-title</label>
