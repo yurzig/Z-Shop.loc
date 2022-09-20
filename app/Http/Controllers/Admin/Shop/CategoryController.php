@@ -8,9 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Shop\CategoryCreateRequest;
 use App\Http\Requests\Shop\CategoryUpdateRequest;
 use App\Models\Shop\Category;
+use App\Repositories\SettingRepository;
 use App\Repositories\Shop\CategoryRepository;
 use App\Repositories\TextRepository;
-use Illuminate\Support\Facades\DB;
 
 //use App\Repositories\MediaRepository;
 //use App\Repositories\ShopPropertyListRepository;
@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 class CategoryController extends Controller
 {
     private $categoryRepository;
+    private $settingRepository;
 //    private $propertyListRepository;
 //    private $propertyOptionRepository;
 //    private $mediaRepository;
@@ -27,6 +28,7 @@ class CategoryController extends Controller
     public function __construct()
     {
         $this->categoryRepository = app(CategoryRepository::class);
+        $this->settingRepository = app(SettingRepository::class);
 //        $this->shopPropertyListRepository = app(ShopPropertyListRepository::class);
 //        $this->shopPropertyOptionRepository = app(ShopPropertyOptionRepository::class);
 //        $this->mediaRepository = app(MediaRepository::class);
@@ -83,6 +85,7 @@ class CategoryController extends Controller
         if (empty($item)) {
             abort(404);
         }
+        $types = $this->settingRepository->getSetting('text-types');
         $texts = $this->textRepository->getForSelect();
         $categories = $this->categoryRepository->getTree();
 //        $properties = $this->shopPropertyListRepository->getByCategory($id);
@@ -90,6 +93,7 @@ class CategoryController extends Controller
 //        $medias = $this->mediaRepository->getByObject($id, 'category');
 
         return view('admin.shop.categories.edit', compact('item',
+            'types',
             'texts',
             'categories'));
     }

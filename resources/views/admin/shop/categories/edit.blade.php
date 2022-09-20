@@ -47,7 +47,8 @@ $page = 'admin.shop.categories.';
                             <ul class="nav nav-tabs flex-row flex-wrap d-flex box" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" id="basic-tab" data-bs-toggle="tab" type="button"
-                                            role="tab" data-bs-target="#basic" aria-controls="basic" aria-selected="true">
+                                            role="tab" data-bs-target="#basic" aria-controls="basic"
+                                            aria-selected="true">
                                         Основные данные
                                     </button>
                                 </li>
@@ -125,15 +126,15 @@ $page = 'admin.shop.categories.';
                             </div>
                         </div>
                         <div class="tab-pane fade" id="description" role="tabpanel" aria-labelledby="description-tab">
-                            @include('admin.includes._texts')
+                            @include('admin.includes.text._texts')
                         </div>
                         <div class="tab-pane fade" id="properties" role="tabpanel" aria-labelledby="properties-tab">
                             Свойства
-{{--                            @include('admin.shop.categories._properties')--}}
+                            {{--                            @include('admin.shop.categories._properties')--}}
                         </div>
                         <div class="tab-pane fade" id="media" role="tabpanel" aria-labelledby="media-tab">
                             Медиа
-{{--                            @include('admin.shop.includes._medias')--}}
+                            {{--                            @include('admin.shop.includes._medias')--}}
                         </div>
                         <div class="tab-pane fade" id="other" role="tabpanel" aria-labelledby="other-tab">
                             <div class="box">
@@ -224,7 +225,7 @@ $page = 'admin.shop.categories.';
                         <tbody>
                         @foreach($texts as $itemText)
                             <tr>
-                                <td>{{ \App\Models\Text::TYPES[$itemText->type] }}</td>
+                                <td>{{ $types[$itemText->type] }}</td>
                                 <td>{{ $itemText->title }}</td>
                                 <td>
                                     <button type="button" class="btn btn-primary js-add-text act-add fa"

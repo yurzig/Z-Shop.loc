@@ -1,6 +1,6 @@
 @php
 $typeOptions = '';
-foreach (\App\Models\Text::TYPES as $key => $type) {
+foreach ($types as $key => $type) {
     $typeOptions .= "<option value='$key'>$type</option>";
  }
 @endphp

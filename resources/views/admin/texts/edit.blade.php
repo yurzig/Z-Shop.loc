@@ -62,7 +62,7 @@ $page = 'admin.texts.';
                                     <div class="form-group row">
                                         <label class="col-sm-4 form-control-label">Тип</label>
                                         <div class="col-sm-8">
-                                            {{ \App\Models\Text::TYPES[$item->type] }}
+                                            {{ $types[$item->type] }}
                                         </div>
                                         <div class="col-sm-12 help-text">{{ $help['type'] }}</div>
                                     </div>
@@ -126,7 +126,27 @@ $page = 'admin.texts.';
                     </div>
                     <div class="tab-pane fade" id="usage" role="tabpanel" aria-labelledby="usage-tab">
                         <div class="box">
-Использование
+                            <table class="list-items table table-hover table-striped">
+                                <thead class="list-header">
+                                <tr>
+                                    <th>Таблица</th>
+                                    <th>id</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($objects as $object)
+                                    <tr>
+                                        <td>{{ $object->textable_type }}</td>
+                                        <td>
+                                            <a href="{{ route(\App\Models\Text::ROUTES[$object->textable_type],$object->textable_id) }}"
+                                            title="ссылка на объект">
+                                                {{ $object->textable_id }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 

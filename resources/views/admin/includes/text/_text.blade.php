@@ -1,7 +1,7 @@
 @php
     $type = '';
     if(isset($text->type)) {
-        $type = \App\Models\Text::TYPES[$text->type];
+        $type = $types[$text->type];
     }
 @endphp
 <div class="group-item card js-block">

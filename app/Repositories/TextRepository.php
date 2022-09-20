@@ -39,10 +39,11 @@ class TextRepository extends CoreRepository
         }
         $result = $this
             ->startConditions()
+            ->with('textable')
             ->where($where)
             ->orderBy($sort[0], $sort[1])
             ->paginate($perPage);
-
+//dd($result, $result[4]->textable->count());
         return $result;
     }
 
@@ -63,9 +64,11 @@ class TextRepository extends CoreRepository
         $texts = $this->startConditions()
             ->leftJoin('textables', 'texts.id', 'text_id')
             ->where('textable_type', 'shopCategory')
+            ->orWhereNull('textable_type')
             ->select('texts.id', 'title', 'type')
             ->orderBy('type')
-            ->get();
+            ->get()
+            ->unique('id');
 
         return $texts;
     }

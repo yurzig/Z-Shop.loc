@@ -17,10 +17,8 @@ class Text extends Model
         'editor',
     ];
 
-    public const TYPES = [
-        '1' => 'Основной текст',
-        '2' => 'Аннотация',
-        '3' => 'Реклама',
+    public const ROUTES = [
+        'shopCategory' => 'admin.shop.categories.edit',
     ];
 
     public function categories()
@@ -29,8 +27,6 @@ class Text extends Model
     }
     public function textable()
     {
-        return $this->morphedByMany(Textable::class, 'textable');
-//        return $this->morphToMany(Text::class, 'textable');
-//        return $this->morphTo();
+        return $this->hasMany(Textable::class, 'text_id', 'id');
     }
 }

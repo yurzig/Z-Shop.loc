@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TextCreateRequest;
 use App\Http\Requests\TextUpdateRequest;
 use App\Models\Text;
+use App\Repositories\SettingRepository;
 use App\Repositories\TextRepository;
 use App\Services\TextService;
 use Illuminate\Http\Request;
@@ -14,11 +15,13 @@ use Illuminate\Support\Facades\Auth;
 class TextController extends Controller
 {
     private $textRepository;
+    private $settingRepository;
     private $perPage;
 
     public function __construct()
     {
         $this->textRepository = app(TextRepository::class);
+        $this->settingRepository = app(SettingRepository::class);
         $this->perPage = 25;
     }
 
@@ -33,11 +36,13 @@ class TextController extends Controller
         $filter = session('texts_filter', []);
         $items = $this->textRepository->getAll($sort, $filter, $this->perPage);
         $columns = session('texts_columns', ['id', 'type', 'title']);
+        $types = $this->settingRepository->getSetting('text-types');
 
         return view('admin.texts.index', compact('items',
                                                        'columns',
                                                                  'filter',
-                                                                 'sort'));
+                                                                 'sort',
+                                                                 'types'));
     }
 
     /**
@@ -78,15 +83,16 @@ class TextController extends Controller
      */
     public function edit($id)
     {
-        $usages = $this->textRepository->getUsage($id);
-        dd($usages);
-
         $item = $this->textRepository->getRow($id);
         if (empty($item)) {
             abort(404);
         }
+        $objects = $this->textRepository->getUsage($id);
+        $types = $this->settingRepository->getSetting('text-types');
 
-        return view('admin.texts.edit', compact('item'));
+        return view('admin.texts.edit', compact('item',
+            'objects',
+            'types'));
     }
 
     /**
@@ -188,8 +194,9 @@ class TextController extends Controller
     }
     public function ajaxGetRow(Request $request)
     {
+        $types = $this->settingRepository->getSetting('text-types');
         $text = $this->textRepository->getRow($request->input('id'));
-        $text->type = Text::TYPES[$text->type];
+        $text->type = $types[$text->type];
 
         return response()->json($text);
     }

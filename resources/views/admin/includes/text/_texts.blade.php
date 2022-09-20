@@ -10,17 +10,17 @@ $help = [
 
 @php $j = 0; @endphp
 @foreach ($item->texts as $text)
-    @include('admin.includes._text', ['j' => $j, 'collapsed' => 'collapsed'])
+    @include('admin.includes.text._text', ['j' => $j, 'collapsed' => 'collapsed'])
     @php $j++ @endphp
 @endforeach
 
 @php $text = new \App\Models\Text(); @endphp
 
 <template id="tpl-text">
-    @include('admin.includes._text', ['j' => 'xxx', 'collapsed' => ''])
+    @include('admin.includes.text._text', ['j' => 'xxx', 'collapsed' => ''])
 </template>
 <template id="tpl-text-new">
-    @include('admin.includes._text_new', ['j' => 'xxx'])
+    @include('admin.includes.text._text_new', ['j' => 'xxx'])
 </template>
 
 <div id="card-tools-more" data-id="{{ $j }}">

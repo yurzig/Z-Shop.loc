@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Setting as Model;
+use function PHPUnit\Framework\isNull;
 
 /**
  * Class SettingRepository
@@ -54,6 +55,30 @@ class SettingRepository extends CoreRepository
     public function getEdit(int $id)
     {
         return $this->startConditions()->find($id);
+    }
+    /**
+     * Получить массив настроек.
+     *
+     * @param string $slug
+     *
+     * @return array
+     */
+    public function getSetting($slug)
+    {
+//        dd(__METHOD__,$slug);
+        $items = $this->startConditions()
+                      ->where('slug', $slug)
+                      ->value('setting');
+
+        if(!isset($items)) {
+            return [];
+        }
+        $setting = [];
+        foreach ($items as $item) {
+            $setting[$item['key']] = $item['value'];
+        }
+
+        return $setting;
     }
 
 }
