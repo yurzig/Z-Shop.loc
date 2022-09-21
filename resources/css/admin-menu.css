@@ -63,8 +63,10 @@ body {
 .admin header {
     background: linear-gradient(135deg, var(--bs-menu-bg, #30a0e0) 0, var(--bs-menu-alt-bg, #00b0a0) 100%);
     position: sticky;
-    top: -12px;
+    top: 0;
     color: var(--bs-bg-light, #ffffff);
+    align-items: center;
+    z-index: 90;
 }
 .admin .header-content {
     display: flex;
@@ -102,7 +104,7 @@ body {
 .admin #sidebarMenu {
     background: linear-gradient(180deg, var(--bs-menu-bg, #30a0e0) 2.5rem, var(--bs-menu-alt-bg, #00b0a0) 100%);
     padding-right: 0;
-    min-height: 94vh;
+    min-height: 93vh;
 }
 .admin #sidebarMenu a {
     color: var(--bs-menu, #ffffff);
@@ -137,9 +139,9 @@ body.light .btn-theme.light-mode {
     margin: 0.5rem 0;
     padding: 1rem;
 }
-.admin .list-header {
+.admin .list-header tr {
     position: sticky;
-    top: 40px;
+    top: 54px;
 }
 .admin .list-items th {
     background-color: var(--bs-primary, #30a0e0);

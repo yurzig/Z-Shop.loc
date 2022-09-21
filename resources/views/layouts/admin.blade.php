@@ -26,7 +26,7 @@
 </head>
 <body class="admin {{ ( $_COOKIE['grand_backend_theme'] ?? '' ) == 'dark' ? 'dark' : 'light' }}">
 <div class="container-fluid">
-    <header class="row navbar flex-md-nowrap p-0">
+    <header class="row flex-md-nowrap">
         <div class="col-md-3 col-lg-2 px-3 d-flex justify-content-between">
             <div>
                 <button class="navbar-toggler icon d-md-none collapsed" type="button" data-bs-toggle="collapse"

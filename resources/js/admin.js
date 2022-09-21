@@ -11,6 +11,11 @@ document.querySelectorAll(".btn-theme").forEach(item => {
     });
 });
 
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+
 flatpickr('.flatpickr-input', {
     "locale": "ru"
 });

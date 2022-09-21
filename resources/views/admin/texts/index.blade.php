@@ -152,16 +152,16 @@ $page = 'admin.texts.';
                         @endforeach
                         <td class="actions">
                             <a class="btn act-edit fa"
-                               data-count="{{ $item->textable->count() }}"
+                               data-bs-toggle="tooltip"
+                               data-bs-html="true"
                                href="{{ route($page . 'edit', $item) }}"
-                               title="Редактировать">
+                               title="Редактировать.{{ $item->textable->count() > 0 ? ' <b>Внимание!</b> Есть связанные объекты (' . $item->textable->count() . ') ' : '' }}">
                             </a>
                             <button type="button" class="btn act-delete fa row-delete"
                                     data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
-                                    data-count="{{ $item->textable->count() }}"
+                                    data-bs-html="true"
                                     data-action="{{ route($page . 'destroy', $item) }}"
-                                    title="Удалить эту запись">
+                                    title="Удалить.{{ $item->textable->count() > 0 ? ' <b>Внимание!</b> Есть связанные объекты (' . $item->textable->count() . ') ' : '' }}">
                             </button>
                         </td>
                     </tr>
