@@ -24,7 +24,8 @@ $page = 'admin.shop.categories.';
         <a class="btn btn-secondary act-cancel" title="Переход на список" href="{{ route($page . 'index') }}">Список</a>
 
         <div class="btn-group">
-            <button type="submit" form="edit-form" class="btn btn-primary act-save" title="Сохранить запись">Сохранить
+            <button type="submit" form="edit-form" id="id-edit-form" class="btn btn-primary act-save"
+                    title="Сохранить запись">Сохранить
             </button>
         </div>
     </div>
@@ -33,7 +34,7 @@ $page = 'admin.shop.categories.';
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-2 mb-3">
         <form id="edit-form" class="item w-100" method="POST" enctype="multipart/form-data"
-              action="{{ route($page . 'update', $item) }}">
+              action="{{ route($page . 'update', $item) }}" novalidate>
             @csrf
             @method('PATCH')
 
@@ -113,7 +114,7 @@ $page = 'admin.shop.categories.';
                                         <div class="form-group row mandatory">
                                             <label class="col-sm-4 form-control-label">Родитель</label>
                                             <div class="col-sm-8">
-                                                <select class="form-select item-status" name="parent_id">
+                                                <select class="form-select item-status" name="parent_id" required="required">
                                                     <option value="0">1-й уровень</option>
                                                     {!! \App\Services\Shop\CategoryService::selectTree($categories, $item->parent_id) !!}
                                                 </select>

@@ -524,3 +524,17 @@ body.light .btn-theme.light-mode {
 .admin #card-tools-more {
     margin: 0.5rem 0;
 }
+.form-control.is-invalid::placeholder,
+.form-select.is-invalid {
+    color: var(--bs-danger, #dc3545);
+}
+.nav-tabs .nav-link.is-invalid {
+	background-color: var(--bs-danger, #dc3545);
+}
+.btn.is-invalid {
+    background-color: var(--bs-danger, #dc3545);
+    border-color: var(--bs-danger, #dc3545);
+}
+.form-group.is-invalid {
+    border: 2px solid var(--bs-danger, #dc3545);
+}

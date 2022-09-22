@@ -188,9 +188,9 @@ textarea {
 /*	color: var(--bs-menu, #ffffff);*/
 /*}*/
 
-.nav-tabs .nav-link.is-invalid {
-	background-color: var(--bs-danger, #dc3545);
-}
+/*.nav-tabs .nav-link.is-invalid {*/
+/*	background-color: var(--bs-danger, #dc3545);*/
+/*}*/
 
 .card {
 	background-color: var(--bs-bg-light, #ffffff);
@@ -205,10 +205,10 @@ textarea {
 /*	border-top: none;*/
 /*}*/
 
-.btn.is-invalid {
-	background-color: var(--bs-danger, #dc3545);
-	border-color: var(--bs-danger, #dc3545);
-}
+/*.btn.is-invalid {*/
+/*	background-color: var(--bs-danger, #dc3545);*/
+/*	border-color: var(--bs-danger, #dc3545);*/
+/*}*/
 
 td.is-invalid .form-control,
 td.is-invalid .form-select {
@@ -341,10 +341,10 @@ td.is-invalid .form-select {
 	color: var(--bs-secondary-light, #9098a0);
 }
 
-.form-control.is-invalid::placeholder,
-.form-select.is-invalid {
-	color: var(--bs-danger, #dc3545);
-}
+/*.form-control.is-invalid::placeholder,*/
+/*.form-select.is-invalid {*/
+/*	color: var(--bs-danger, #dc3545);*/
+/*}*/
 
 @media (max-width: 767px) {
 	.form-group.row .form-control-label {

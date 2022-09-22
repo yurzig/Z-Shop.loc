@@ -124,6 +124,37 @@ $(document).ready(function () {
     }
     summernoteInit();
 
+    $(document).on('submit','#edit-form',function(e) {
+        let id,
+            fl = true;
+
+        $('.is-invalid').removeClass('is-invalid');
+
+        $('input, select, textarea').each(function () {
+            if($(this).attr('required') === 'required' && $(this).val() === '') {
+                if($(this).hasClass('summernote') && $(this).summernote('isEmpty')) {
+                    $(this).closest('.form-group').addClass('is-invalid');
+                } else {
+                    $(this).addClass('is-invalid');
+                }
+                id = $(this).closest('.tab-pane').attr('aria-labelledby');
+                $('#'+id).addClass('is-invalid');
+                $('#id-edit-form').addClass('is-invalid');
+                fl = false;
+            }
+        });
+
+        return fl;
+    });
+    $(document).on('change','.is-invalid',function() {
+        if($(this).val() !== '') {
+            $(this).removeClass('is-invalid').addClass('is-valid');
+        }
+    });
+    $(document).on('summernote.change','.form-group.is-invalid .summernote',function() {
+        $(this).closest('.form-group').removeClass('is-invalid');
+    });
+
     // $(document).on('click','.opt-delete',function(){
     //     const id = $(this).data('id'),
     //           target = $(this).closest('table').find('.option-end');

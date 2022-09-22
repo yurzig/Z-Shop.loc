@@ -26,7 +26,7 @@ foreach ($types as $key => $type) {
                 <label class="col-sm-4 form-control-label">Тип</label>
                 <div class="col-sm-3">
                     <input type="hidden" class="js-repl" name="text[{{ $j }}][id]" value="{{ $text->id }}">
-                    <select class="form-select item-status js-repl" name="text[{{ $j }}][type]">
+                    <select class="form-select item-status js-repl" name="text[{{ $j }}][type]" required="required">
                         {!! $typeOptions !!}
                     </select>
                     <div class="col-sm-12 help-text">{{ $help['type'] }}</div>
