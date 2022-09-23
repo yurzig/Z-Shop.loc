@@ -50,6 +50,10 @@ $page = 'admin.texts.';
                         @endif
                     @endforeach
                     <th class="actions">
+                        <a class="btn fa act-add" tabindex="1"
+                           href="{{ route($page . 'create') }}"
+                           title="Добавить новую запись">
+                        </a>
                         <button type="button" class="btn act-columns fa"
                                 data-bs-toggle="modal"
                                 data-bs-target="#columns-form"

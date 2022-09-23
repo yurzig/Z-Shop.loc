@@ -5,10 +5,9 @@ $help = [
     'type' => '',
 ];
 $typeOptions = '';
-foreach (\App\Models\Text::TYPES as $key => $type) {
+foreach ($types as $key => $type) {
     $typeOptions .= "<option value='$key'>$type</option>";
 }
-
 $pageName = 'Новый текст';
 $page = 'admin.texts.';
 ?>
@@ -23,7 +22,8 @@ $page = 'admin.texts.';
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-2 mb-3">
-    <form id="edit-form" class="item w-100" method="POST" enctype="multipart/form-data" action="{{ route($page . 'store') }}">
+    <form id="edit-form" class="item w-100" method="POST" enctype="multipart/form-data"
+          action="{{ route($page . 'store') }}" novalidate>
         @csrf
         @include('admin.includes._result_messages')
 
@@ -32,21 +32,31 @@ $page = 'admin.texts.';
                 <div class="col-xl-12 item-navbar">
                     <div class="navbar-content">
                         <ul class="nav nav-tabs flex-row flex-wrap d-flex box" role="tablist">
-                            <li class="nav-item basic">
-                                <a class="nav-link active" href="#basic" data-bs-toggle="tab" role="tab"
-                                    aria-expanded="true" aria-controls="basic">
+                            <li class="nav-item basic" role="presentation">
+                                <button class="nav-link active" id="basic-tab" data-bs-toggle="tab" type="button"
+                                        role="tab" data-bs-target="#basic" aria-controls="basic" aria-selected="true">
                                     Ввод данных
-                                </a>
+                                </button>
                             </li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="col-xl-12 item-content tab-content">
-                    <div id="basic" class="item-basic tab-pane fade show active" role="tabpanel" aria-labelledby="basic">
+                    <div id="basic" class="tab-pane fade show active" role="tabpanel" aria-labelledby="basic-tab">
                         <div class="box">
                             <div class="row justify-content-center">
                                 <div class="col-xl-12">
+                                    <div class="form-group row mandatory">
+                                        <label class="col-sm-4 form-control-label">Тип</label>
+                                        <div class="col-sm-3">
+                                            <select class="form-select item-status" name="type" required="required">
+                                                {!! $typeOptions !!}
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-12 help-text">{{ $help['type'] }}</div>
+                                    </div>
+
                                     <div class="form-group row mandatory">
                                         <label class="col-sm-4 form-control-label">Наименование</label>
                                         <div class="col-sm-8">
@@ -58,23 +68,16 @@ $page = 'admin.texts.';
                                         </div>
                                         <div class="col-sm-12 help-text">{{ $help['title'] }}</div>
                                     </div>
-                                    <div class="form-group row mandatory">
-                                        <label class="col-sm-4 form-control-label">Тип</label>
-                                        <div class="col-sm-3">
-                                            <select class="form-select item-status" name="type">
-                                                {!! $typeOptions !!}
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-12 help-text">{{ $help['type'] }}</div>
-                                    </div>
                                 </div>
                                 <div class="col-xl-12">
 
                                     <div class="form-group row">
-                                        <label class="col-sm-12 form-control-label text-center">Текст</label>
                                         <div class="col-sm-12 help-text">{{ $help['content'] }}</div>
                                         <div class="col-sm-12">
-                                            <textarea name="content" class="form-control item-content summernote">{{ old('content') }}</textarea>
+                                            <textarea name="content"
+                                                      class="form-control item-content summernote"
+                                                      required="required"
+                                            >{{ old('content') }}</textarea>
                                         </div>
                                     </div>
                                 </div>

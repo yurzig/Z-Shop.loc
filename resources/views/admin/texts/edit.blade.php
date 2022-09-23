@@ -19,7 +19,7 @@ $page = 'admin.texts.';
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-2 mb-3">
     <form id="edit-form" class="item w-100" method="POST" enctype="multipart/form-data"
-          action="{{ route($page . 'update', $item) }}">
+          action="{{ route($page . 'update', $item) }}" novalidate>
         @csrf
         @method('PATCH')
 
@@ -27,7 +27,6 @@ $page = 'admin.texts.';
 
         <div class="col-lg-12 catalog-content">
             <div class="row">
-
                 <div class="col-xl-12 item-navbar">
                     <div class="navbar-content">
                         <ul class="nav nav-tabs flex-row flex-wrap d-flex box" role="tablist">

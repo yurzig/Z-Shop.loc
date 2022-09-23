@@ -52,7 +52,9 @@ class TextController extends Controller
      */
     public function create()
     {
-        return view('admin.texts.create');
+        $types = $this->settingRepository->getSetting('text-types');
+
+        return view('admin.texts.create', compact('types'));
     }
 
     /**
