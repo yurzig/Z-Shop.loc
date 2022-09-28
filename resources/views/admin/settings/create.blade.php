@@ -18,7 +18,8 @@ $page = 'admin.settings.';
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-2 mb-3">
-    <form id="edit-form" class="item w-100" method="POST" enctype="multipart/form-data" action="{{ route($page . 'store') }}">
+    <form id="edit-form" class="item w-100" method="POST" enctype="multipart/form-data"
+          action="{{ route($page . 'store') }}" novalidate>
         @csrf
         @include('admin.includes._result_messages')
 
@@ -67,10 +68,10 @@ $page = 'admin.settings.';
 <template id="block-template">
     <div class="row block-element">
         <div class="col-md-4">
-            <input type="text" name="setting[--id--][key]" class="form-control" placeholder="Ключ">
+            <input type="text" name="setting[--id--][key]" class="form-control" required="required" placeholder="Ключ">
         </div>
         <div class="col-md-7">
-            <input type="text" name="setting[--id--][value]" class="form-control" placeholder="Значение">
+            <input type="text" name="setting[--id--][value]" class="form-control" required="required" placeholder="Значение">
         </div>
         <div class="col-md-1">
             <div class="btn act-delete mt-1 fa option-delete" title="Удалить строку"></div>
@@ -83,10 +84,12 @@ $page = 'admin.settings.';
                                         <div class="col-sm-12 help-text">{{ $help['setting'] }}</div>
                                         <div class="row block-element">
                                             <div class="col-md-4">
-                                                <input type="text" name="setting[1][key]" class="form-control" placeholder="Ключ">
+                                                <input type="text" name="setting[1][key]" class="form-control"
+                                                       required="required" placeholder="Ключ">
                                             </div>
                                             <div class="col-md-7">
-                                                <input type="text" name="setting[1][value]" class="form-control" placeholder="Значение">
+                                                <input type="text" name="setting[1][value]" class="form-control"
+                                                       required="required" placeholder="Значение">
                                             </div>
                                             <div class="col-md-1">
                                                 <div class="btn act-delete mt-1 fa js-delete-block" title="Удалить строку"></div>

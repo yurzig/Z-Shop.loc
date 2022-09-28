@@ -3,7 +3,7 @@
 namespace App\Services;
 
 class SettingService {
-    public static function actionAfterSaving ($item, $action)
+    public static function actionAfterSaving ($item, string $action)
     {
         if (!$item) {
             return back()

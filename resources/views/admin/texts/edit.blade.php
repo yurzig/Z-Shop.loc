@@ -80,7 +80,7 @@ $page = 'admin.texts.';
                                 <div class="col-xl-12">
                                     <div class="form-group row">
                                         <div class="col-sm-12 help-text">{{ $help['content'] }}</div>
-                                        <textarea name="content"
+                                        <textarea name="content" required="required"
                                                   class="form-control item-content summernote"
                                         >{{ old('content', $item->content) }}</textarea>
                                     </div>

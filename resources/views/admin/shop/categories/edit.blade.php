@@ -114,7 +114,8 @@ $page = 'admin.shop.categories.';
                                         <div class="form-group row mandatory">
                                             <label class="col-sm-4 form-control-label">Родитель</label>
                                             <div class="col-sm-8">
-                                                <select class="form-select item-status" name="parent_id" required="required">
+                                                <select class="form-select item-status" name="parent_id"
+                                                        required="required">
                                                     <option value="0">1-й уровень</option>
                                                     {!! \App\Services\Shop\CategoryService::selectTree($categories, $item->parent_id) !!}
                                                 </select>

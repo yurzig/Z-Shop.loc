@@ -33,9 +33,8 @@ $page = 'admin.blog.categories.';
             </ul>
         </div>
         <div class="col-lg-8 ps-2">
-            <form id="edit-form" class="item w-100" method="POST"
-                  enctype="multipart/form-data"
-                  action="{{ route($page . 'update', $item) }}">
+            <form id="edit-form" class="item w-100" method="POST" enctype="multipart/form-data"
+                  action="{{ route($page . 'update', $item) }}" novalidate>
                 @csrf
                 @method('PATCH')
 

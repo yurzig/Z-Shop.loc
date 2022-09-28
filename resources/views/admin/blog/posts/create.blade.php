@@ -36,7 +36,7 @@ $page = 'admin.blog.posts.';
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-2 mb-3">
         <form id="edit-form" class="item w-100" method="POST" enctype="multipart/form-data"
-              action="{{ route($page . 'store') }}">
+              action="{{ route($page . 'store') }}" novalidate>
             @csrf
             @include('admin.includes._result_messages')
             <div class="col-lg-12 catalog-content">
@@ -72,7 +72,8 @@ $page = 'admin.blog.posts.';
                                         <div class="form-group row mandatory">
                                             <label class="col-sm-4 form-control-label">Категория</label>
                                             <div class="col-sm-8">
-                                                <select class="form-select item-status" name="category_id">
+                                                <select class="form-select item-status" name="category_id"
+                                                        required="required">
                                                     {!! \App\Services\Blog\CategoryService::selectTree($categories, 0) !!}
                                                 </select>
                                             </div>
@@ -109,7 +110,7 @@ $page = 'admin.blog.posts.';
                                             </div>
                                             <div class="col-sm-12 help-text">{{ $help['slug'] }}</div>
                                         </div>
-                                        <div class="form-group row">
+                                        <div class="form-group row mandatory">
                                             <label class="col-sm-4 form-control-label">Статус</label>
                                             <div class="col-sm-8">
                                                 <select class="form-select item-status" required="required"
@@ -146,7 +147,7 @@ $page = 'admin.blog.posts.';
                                 <div class="form-group">
                                     <label class="form-control-label justify-content-center">Статья</label>
                                     <div class="col-sm-12 help-text">{{ $help['content'] }}</div>
-                                    <textarea name="content"
+                                    <textarea name="content" required="required"
                                               class="summernote form-control item-content">{{ old('content') }}</textarea>
                                 </div>
                             </div>

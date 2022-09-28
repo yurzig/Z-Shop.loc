@@ -38,7 +38,7 @@ $page = 'admin.blog.posts.';
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-2 mb-3">
         <form id="edit-form" class="item w-100" method="POST" enctype="multipart/form-data"
-              action="{{ route($page . 'update', $item) }}">
+              action="{{ route($page . 'update', $item) }}" novalidate>
             @csrf
             @method('PATCH')
 
@@ -125,7 +125,7 @@ $page = 'admin.blog.posts.';
                                             </div>
                                             <div class="col-sm-12 help-text">{{ $help['slug'] }}</div>
                                         </div>
-                                        <div class="form-group row">
+                                        <div class="form-group row mandatory">
                                             <label class="col-sm-4 form-control-label">Статус</label>
                                             <div class="col-sm-8">
                                                 <select class="form-select item-status" required="required"
@@ -162,7 +162,7 @@ $page = 'admin.blog.posts.';
                                 <div class="form-group">
                                     <label class="form-control-label justify-content-center">Статья</label>
                                     <div class="col-sm-12 help-text">{{ $help['content'] }}</div>
-                                    <textarea name="content"
+                                    <textarea name="content" required="required"
                                               class="summernote form-control item-content">{{ old('content', $item->content) }}</textarea>
                                 </div>
                             </div>

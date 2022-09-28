@@ -4,7 +4,7 @@ $help = [
     'content' => '',
     'type' => '',
 ];
-$typeOptions = '';
+$typeOptions = "<option value=''>Выберите тип текста</option>";
 foreach ($types as $key => $type) {
     $typeOptions .= "<option value='$key'>$type</option>";
 }

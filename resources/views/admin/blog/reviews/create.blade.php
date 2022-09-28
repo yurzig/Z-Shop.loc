@@ -8,7 +8,7 @@ $help = [
     'status' => '',
 ];
 
-$postOptions = '';
+$postOptions = "<option value=''>Выберите статью</option>";
 foreach($posts as $post) {
     $postOptions .= "<option value={$post->id}>{$post->title}</option>";
 }
@@ -34,7 +34,8 @@ $page = 'admin.blog.reviews.';
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-2 mb-3">
-    <form id="edit-form" class="item w-100" method="POST" enctype="multipart/form-data" action="{{ route($page . 'store') }}">
+    <form id="edit-form" class="item w-100" method="POST" enctype="multipart/form-data"
+          action="{{ route($page . 'store') }}" novalidate>
         @csrf
         @include('admin.includes._result_messages')
         <div class="col-lg-12 catalog-content">

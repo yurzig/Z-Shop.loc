@@ -4,7 +4,7 @@
         Список
     </a>
     <div class="btn-group">
-        <button type="submit" form="edit-form" class="btn btn-primary act-save" title="Сохранить запись">Сохранить</button>
+        <button type="submit" form="edit-form" class="btn btn-primary act-save" title="Сохранить запись" name="action" value="close">Сохранить</button>
         <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"></button>
         <ul class="dropdown-menu">
             <li><button type="submit" form="edit-form" class="btn btn-primary w-100" name="action" value="close">и закрыть</button></li>

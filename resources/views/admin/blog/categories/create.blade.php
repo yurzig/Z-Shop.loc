@@ -29,7 +29,7 @@ $page = 'admin.blog.categories.';
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-2 mb-3">
         <form id="edit-form" class="item w-100" method="POST" enctype="multipart/form-data"
-              action="{{ route($page . 'store') }}">
+              action="{{ route($page . 'store') }}" novalidate>
             @csrf
             @include('admin.includes._result_messages')
             <div class="col-lg-12 catalog-content">

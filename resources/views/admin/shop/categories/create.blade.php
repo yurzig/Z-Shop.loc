@@ -33,7 +33,7 @@ $page = 'admin.shop.categories.';
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-2 mb-3">
         <form id="edit-form" class="item w-100" method="POST" enctype="multipart/form-data"
-              action="{{ route($page . 'store') }}">
+              action="{{ route($page . 'store') }}" novalidate>
             @csrf
             @include('admin.includes._result_messages')
             <div class="col-lg-12 catalog-content">
@@ -82,7 +82,8 @@ $page = 'admin.shop.categories.';
                                         <div class="form-group row mandatory">
                                             <label class="col-sm-4 form-control-label">Родитель</label>
                                             <div class="col-sm-8">
-                                                <select class="form-select item-status" name="parent_id">
+                                                <select class="form-select item-status" name="parent_id"
+                                                        required="required">
                                                     <option value="0">1-й уровень</option>
                                                     {!! \App\Services\Shop\CategoryService::selectTree($categories, $parent) !!}
                                                 </select>

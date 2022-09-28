@@ -25,10 +25,10 @@ return new class extends Migration
             $table->foreignId('editor');
         });
 
-        Schema::create('media_model', function (Blueprint $table) {
+        Schema::create('mediables', function (Blueprint $table) {
             $table->id();
-            $table->foreignId(Media::class)->references('id')->on('medias')->onDelete('CASCADE');
-            $table->morphs('media_model');
+            $table->foreignId(Media::class)->index()->references('id')->on('medias')->onDelete('CASCADE');
+            $table->morphs('mediable');
         });
 
     }
