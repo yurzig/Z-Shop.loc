@@ -72,7 +72,7 @@ class CategoryRepository extends CoreRepository
      *
      * @return Model
      */
-    public function getEdit(int $id)
+    public function getRow(int $id)
     {
         return $this->startConditions()->find($id);
     }

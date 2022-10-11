@@ -27,6 +27,10 @@ class Category extends Model
     {
         return $this->morphToMany(Text::class, 'textable');
     }
+    public function medias()
+    {
+        return $this->morphToMany(Media::class, 'mediable');
+    }
     /**
      * Получить родительскую категорию
      *

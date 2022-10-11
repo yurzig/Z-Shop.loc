@@ -64,11 +64,10 @@ $menuItems = [
                 'url' => route('admin.texts.index'),
                 'role' => 'admin',
             ],
-            'shop.products' => [
-                'name' => 'Товары',
-                'class' => 'fa-cube',
-                'url' => '#',
-//        'url' => route('admin.shop.products.index'),
+            'medias' => [
+                'name' => 'Галерея',
+                'class' => 'fa-picture-o',
+                'url' => route('admin.medias.index'),
                 'role' => 'manage-shop',
             ],
 
@@ -109,13 +108,7 @@ $menuItems = [
 //        'url' => route('admin.shop.propvalues.index'),
         'role' => 'manage-shop',
     ],
-    'media' => [
-        'name' => 'Галерея',
-        'class' => 'fa-picture-o',
-        'url' => '#',
-//        'url' => route('admin.media.index'),
-        'role' => 'manage-shop',
-    ],
+
     'shop-orders' => [
         'name' => 'Заказы',
         'class' => 'fa-shopping-cart',

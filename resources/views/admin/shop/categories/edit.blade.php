@@ -136,7 +136,7 @@ $page = 'admin.shop.categories.';
                         </div>
                         <div class="tab-pane fade" id="media" role="tabpanel" aria-labelledby="media-tab">
                             Медиа
-                            {{--                            @include('admin.shop.includes._medias')--}}
+                            @include('admin.includes.media._medias')
                         </div>
                         <div class="tab-pane fade" id="other" role="tabpanel" aria-labelledby="other-tab">
                             <div class="box">

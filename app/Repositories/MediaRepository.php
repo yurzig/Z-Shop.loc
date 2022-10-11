@@ -51,25 +51,9 @@ class MediaRepository extends CoreRepository
      *
      * @return Model
      */
-    public function getEdit(int $id)
+    public function getRow(int $id)
     {
         return $this->startConditions()->find($id);
-    }
-
-    /**
-     * Получить список по категории
-     *
-     * @return \App\Models\Media
-     */
-    public function getByObject($ref_id, $object = 'product')
-    {
-        $result = $this
-            ->startConditions()
-            ->where('ref_id', $ref_id)
-            ->where('object', $object)
-            ->toBase()
-            ->get();
-        return $result;
     }
 
 }

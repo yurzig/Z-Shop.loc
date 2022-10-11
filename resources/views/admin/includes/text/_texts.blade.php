@@ -23,7 +23,7 @@ $help = [
     @include('admin.includes.text._text_new', ['j' => 'xxx'])
 </template>
 
-<div id="card-tools-more" data-id="{{ $j }}">
+<div class="card-tools-more" data-id="{{ $j }}">
     <button type="button" class="btn btn-primary js-add-text-new act-add fa" data-tpl="#tpl-text-new"
             title="Добавить новый текст"></button>
     <button type="button" class="btn btn-primary act-add fa" data-bs-toggle="modal" data-bs-target="#listTextsModal"

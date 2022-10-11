@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Shop\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Media extends Model
 {
     use SoftDeletes;
+
+    protected  $table = 'medias';
 
     protected $fillable = [
         'title',
@@ -16,9 +19,8 @@ class Media extends Model
         'status',
         'editor',
     ];
-    public const PLACEMENT = [
-        '1' => 'Первая картинка',
-        '2' => 'Вторая картинка',
-        '3' => 'Галерея',
-    ];
+    public function categories()
+    {
+        return $this->morphedByMany(Category::class, 'mediable');
+    }
 }

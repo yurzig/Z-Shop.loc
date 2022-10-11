@@ -30,6 +30,16 @@ Route::group(
             ->except(['show'])
             ->names('texts');
 
+        Route::post('medias/uploadimg', 'MediaController@uploadImg')->name('medias.uploadimg');
+        Route::post('medias/columns', 'MediaController@columnsSave')->name('medias.columns');
+        Route::post('medias/search', 'MediaController@search')->name('medias.search');
+        Route::post('medias/reset', 'MediaController@reset')->name('medias.reset');
+        Route::get('medias/sort', 'MediaController@sort')->name('medias.sort');
+
+        Route::resource('medias', 'MediaController')
+            ->except(['show'])
+            ->names('medias');
+
         Route::group(
             [
                 'prefix' => 'blog',

@@ -538,3 +538,39 @@ body.light .btn-theme.light-mode {
 .form-group.is-invalid {
     border: 2px solid var(--bs-danger, #dc3545);
 }
+/* Images */
+
+.admin .media-preview {
+    border: 2px dashed #B0B0B0;
+    border-radius: .25rem;
+    position: relative;
+    height: 17rem;
+    margin: 2rem 0 2rem 1rem;
+}
+
+.admin .media-preview p {
+    transform: translate(-50%, -50%);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
+.admin .media-preview img {
+    max-height: calc(17rem - 4px);
+    max-width: 100%;
+    display: block;
+    margin: auto;
+    top: 50%;
+    position: relative;
+    transform: translate(0, -50%);
+}
+
+.admin .media-preview .fileupload {
+    height: calc(12.25rem - 4px);
+    position: absolute;
+    overflow: hidden;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0;
+    z-index: 1;
+}

@@ -38,11 +38,13 @@ class MediaController extends Controller
         $filter = session('media-filter', []);
         $items = $this->mediaRepository->getAll($sort, $filter, $this->perPage);
         $columns = session('media-columns', ['id', 'ref_id', 'object', 'title', 'link']);
+        $placements = $this->settingRepository->getSetting('media-types');
 
-        return view('admin.media.index', compact('items',
+        return view('admin.medias.index', compact('items',
             'columns',
             'filter',
-            'sort'));
+            'sort',
+            'placements'));
     }
 
     /**
@@ -99,17 +101,6 @@ class MediaController extends Controller
         }
     }
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Media  $media
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Media $media)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Media  $media
@@ -117,12 +108,13 @@ class MediaController extends Controller
      */
     public function edit($id)
     {
-        $item = $this->mediaRepository->getEdit($id);
+        $item = $this->mediaRepository->getRow($id);
         if (empty($item)) {
             abort(404);
         }
+        $placements = $this->settingRepository->getSetting('media-placements');
 
-        return view('admin.media.edit', compact('item'));
+        return view('admin.medias.edit', compact('item', 'placements'));
     }
 
     /**
@@ -270,42 +262,6 @@ class MediaController extends Controller
                 break;
         }
         return $this->index();
-    }
-    public function uploadImg(Request $request)
-    {
-        $fileOld = session('media-file');
-        if ($fileOld) {
-            Storage::delete($fileOld);
-        }
-        $data = array();
-        $validator = Validator::make($request->all(), [
-            'file' => 'required|mimes:png,jpg,jpeg,csv,txt,pdf|max:2048'
-        ]);
-
-        if ($validator->fails()) {
-            $data['success'] = 0;
-            $data['message'] = $validator->errors()->first('file');// Error response
-            return response()->json($data);
-        }
-
-        if($request->file('file')) {
-            $file = $request->file('file');
-            $filename = time() . '_' . $file->getClientOriginalName();
-
-            $file->move('storage/tmp', $filename);
-
-            $filepath = url('storage/tmp/' . $filename);
-            session(['media-file' => 'tmp/' . $filename]);
-
-            $data['success'] = 1;
-            $data['filepath'] = $filepath;
-            $data['fileold'] = $fileOld;
-
-        }else{
-            $data['success'] = 2;
-            $data['message'] = 'Файл не загружен.';
-        }
-        return response()->json($data);
     }
 
 }

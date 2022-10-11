@@ -81,11 +81,12 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $item = $this->categoryRepository->getEdit($id);
+        $item = $this->categoryRepository->getRow($id);
         if (empty($item)) {
             abort(404);
         }
         $types = $this->settingRepository->getSetting('text-types');
+        $placements = $this->settingRepository->getSetting('media-placements');
         $texts = $this->textRepository->getForSelect();
         $categories = $this->categoryRepository->getTree();
 //        $properties = $this->shopPropertyListRepository->getByCategory($id);
@@ -94,6 +95,7 @@ class CategoryController extends Controller
 
         return view('admin.shop.categories.edit', compact('item',
             'types',
+            'placements',
             'texts',
             'categories'));
     }

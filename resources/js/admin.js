@@ -63,10 +63,19 @@ $(document).ready(function () {
         $(this).closest('.block-element').remove();
     });
 
+    $(document).on('click', '.js-add-new', function() {
+        add_block(this);
+    });
+
     $(document).on('click', '.js-add-text-new', function() {
-        const template = document.querySelector($(this).attr('data-tpl')),
+        add_block(this);
+        summernoteInit();
+    });
+
+    function add_block(element) {
+        const template = document.querySelector($(element).attr('data-tpl')),
             el = template.content.cloneNode(true),
-            dataId = $('#card-tools-more');
+            dataId = $(element).closest('.card-tools-more');
         let id = dataId.data('id'),
             item;
 
@@ -83,11 +92,10 @@ $(document).ready(function () {
                 }
             });
         });
-        summernoteInit();
 
         id = id + 1;
         dataId.removeData('id').attr('data-id', id);
-    });
+    }
 
     $(document).on('click','.block-delete',function(){
         $(this).closest('.js-block').remove();
@@ -137,6 +145,7 @@ $(document).ready(function () {
                 } else {
                     $(this).addClass('is-invalid');
                 }
+                console.log($(this).attr('name'));
                 id = $(this).closest('.tab-pane').attr('aria-labelledby');
                 $('#'+id).addClass('is-invalid');
                 $('#id-edit-form').addClass('is-invalid');
@@ -153,6 +162,15 @@ $(document).ready(function () {
     });
     $(document).on('summernote.change','.form-group.is-invalid .summernote',function() {
         $(this).closest('.form-group').removeClass('is-invalid');
+    });
+
+    $(document).on('change','.js-img',function(event){
+        var reader = new FileReader();
+        reader.onload = function () {
+            var output = document.getElementById('upload-img');
+            output.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
     });
 
     // $(document).on('click','.opt-delete',function(){

@@ -16,8 +16,7 @@
         </div>
         <span class="item-label header-label">{{ $type }} | {{ $text->title }}</span>
         <div class="card-tools-end">
-            <div class="btn btn-card-header act-delete fa block-delete" title="Удалить этот блок"
-            ></div>
+            <div class="btn btn-card-header act-delete fa block-delete" title="Удалить этот блок"></div>
         </div>
     </div>
     <div id="text-group-{{ $j }}" class="card-block collapse row js-repl{{ $collapsed === 'collapsed' ? '' : ' show'}}"
