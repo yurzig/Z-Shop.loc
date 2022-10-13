@@ -90,7 +90,7 @@
 
                                             <div class="form-group media-preview">
                                                 <input class="fileupload js-img" type="file" name="imagefile">
-                                                <img id="upload-img" class="item-preview" src="{{ asset($item->link) }}" alt="">
+                                                <img src="{{ asset($item->link) }}" alt="">
                                             </div>
                                         </div>
                                         <div class="col-xl-6">

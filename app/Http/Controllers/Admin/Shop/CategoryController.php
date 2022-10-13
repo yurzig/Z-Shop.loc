@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Shop;
 
-//use App\Http\Controllers\Admin\MediaController;
+use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\TextController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Shop\CategoryCreateRequest;
@@ -113,21 +113,19 @@ class CategoryController extends Controller
 //        if ($request->prop) {
 //            app(PropertyListController::class)->updatingList($request->prop, $id);
 //        }
-//        if ($request->medi) {
-//            app(MediaController::class)->updatingList($request->medi, $id, 'category');
-//        }
 
-        $item = $this->categoryRepository->getEdit($id);
+        $item = $this->categoryRepository->getRow($id);
+        if (empty($item)) {
+            return back()->withErrors(['msg' => "Запись id=[{$id}] не найдена"])->withInput();
+        }
 
         if ($request->input('text')) {
             app(TextController::class)->textsUpdating($item, $request->input('text'));
         }
-
-        if (empty($item)) {
-            return back()
-                ->withErrors(['msg' => "Запись id=[{$id}] не найдена"])
-                ->withInput();
+        if ($request->input('media')) {
+            app(MediaController::class)->updatingList($request->input('media'), $id, 'category');
         }
+
 
         $data = $request->all();
         $result = $item->update($data);

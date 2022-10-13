@@ -165,10 +165,11 @@ $(document).ready(function () {
     });
 
     $(document).on('change','.js-img',function(event){
-        var reader = new FileReader();
+        let reader = new FileReader(),
+            output = $(this).closest('.media-preview').find('img');
+
         reader.onload = function () {
-            var output = document.getElementById('upload-img');
-            output.src = reader.result;
+            output.attr('src', reader.result);
         }
         reader.readAsDataURL(event.target.files[0]);
     });

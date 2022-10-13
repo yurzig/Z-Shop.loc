@@ -74,7 +74,7 @@
 {{--                                                <input class="d-none" type="file" name="media[0][preview]">--}}
                                                 <input class="fileupload js-img" type="file" name="imagefile">
 {{--                                                <input class="item-url" type="hidden" name="media[0][media.url]" value="">--}}
-                                                <img id="upload-img" class="item-preview" src="" alt="">
+                                                <img src="" alt="">
                                             </div>
                                         </div>
                                         <div class="col-xl-6">

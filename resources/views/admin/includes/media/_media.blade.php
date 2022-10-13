@@ -21,7 +21,7 @@
             <div class="form-group media-preview">
                 <input type="hidden" class="js-repl" name="medi[{{ $j }}][id]" value="{{ $media->id }}">
                 <input class="fileupload js-img js-repl" type="file" name="medi[{{ $j }}][imagefile]">
-                <img class="item-preview" src="{{ asset($media->link) }}" alt="">
+                <img src="{{ asset($media->link) }}" alt="">
             </div>
         </div>
         <div class="col-xl-6">

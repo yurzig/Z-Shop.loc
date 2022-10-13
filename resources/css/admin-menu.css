@@ -548,12 +548,12 @@ body.light .btn-theme.light-mode {
     margin: 2rem 0 2rem 1rem;
 }
 
-.admin .media-preview p {
-    transform: translate(-50%, -50%);
-    position: absolute;
-    left: 50%;
-    top: 50%;
-}
+/*.admin .media-preview p {*/
+/*    transform: translate(-50%, -50%);*/
+/*    position: absolute;*/
+/*    left: 50%;*/
+/*    top: 50%;*/
+/*}*/
 
 .admin .media-preview img {
     max-height: calc(17rem - 4px);
@@ -565,7 +565,7 @@ body.light .btn-theme.light-mode {
     transform: translate(0, -50%);
 }
 
-.admin .media-preview .fileupload {
+.admin .media-preview input {
     height: calc(12.25rem - 4px);
     position: absolute;
     overflow: hidden;

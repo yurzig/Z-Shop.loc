@@ -24,11 +24,8 @@
         <div class="col-xl-6">
 
             <div class="form-group media-preview">
-                <input class="fileupload js-img" type="file" name="imagefile">
-                <img id="upload-img" class="item-preview" src="" alt="">
-
-{{--                <input class="fileupload js-img js-repl" type="file" name="media[{{ $j }}][imagefile]">--}}
-{{--                <img class="item-preview" src="" alt="">--}}
+                <input class="js-img js-repl" type="file" name="media[{{ $j }}][file]">
+                <img src="" alt="">
             </div>
         </div>
         <div class="col-xl-6">
