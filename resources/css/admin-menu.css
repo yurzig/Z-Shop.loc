@@ -538,9 +538,9 @@ body.light .btn-theme.light-mode {
 .form-group.is-invalid {
     border: 2px solid var(--bs-danger, #dc3545);
 }
-/* Images */
 
-.admin .media-preview {
+/* Images */
+.media-preview {
     border: 2px dashed #B0B0B0;
     border-radius: .25rem;
     position: relative;
@@ -555,7 +555,7 @@ body.light .btn-theme.light-mode {
 /*    top: 50%;*/
 /*}*/
 
-.admin .media-preview img {
+.media-preview img {
     max-height: calc(17rem - 4px);
     max-width: 100%;
     display: block;
@@ -565,7 +565,7 @@ body.light .btn-theme.light-mode {
     transform: translate(0, -50%);
 }
 
-.admin .media-preview input {
+.media-preview input {
     height: calc(12.25rem - 4px);
     position: absolute;
     overflow: hidden;

@@ -181,6 +181,27 @@ class MediaController extends Controller
             return back()->withErrors(['msg' => 'Ошибка удаления']);
         }
     }
+//todo миграции media
+    public function mediasUpdating($item, $mediaItems)
+    {
+        $ids = [];
+        foreach ($mediaItems as $mediaItem) {
+            if (is_null($mediaItem['id'])) {
+                if(isset($mediaItem['file'])){
+                    $mediaItem['link'] = $this->saveImage($media['imagefile'], $object);
+                }
+
+
+
+
+                $mediaNew = $item->medias()->create($mediaItem);
+                $ids[] = $mediaNew->id;
+            } else {
+                $ids = $mediaItem['id'];
+            }
+        }
+        $item->medias()->sync($ids);
+    }
 
     public function updatingList($medias, $ref_id, $object) {
         foreach ($medias as $key => $media) {

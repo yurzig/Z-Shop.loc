@@ -54,7 +54,6 @@ class CategoryController extends Controller
         return view('admin.shop.categories.create', compact('categories','parent'));
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
