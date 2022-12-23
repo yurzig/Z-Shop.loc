@@ -17,18 +17,19 @@ return new class extends Migration
         Schema::create('medias', function (Blueprint $table) {
             $table->id();
             $table->string('title', 255)->nullable();
+            $table->string('object', 255)->nullable();
+            $table->string('subobject', 255)->nullable();
             $table->string('link', 255);
-            $table->unsignedTinyInteger('placement')->default(0);
-            $table->boolean('status')->default(true);
+            $table->unsignedInteger('sort')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignId('editor');
         });
 
         Schema::create('mediables', function (Blueprint $table) {
             $table->id();
             $table->foreignId(Media::class)->index()->references('id')->on('medias')->onDelete('CASCADE');
             $table->morphs('mediable');
+            $table->unsignedTinyInteger('placement')->default(0);
         });
 
     }
@@ -40,7 +41,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('media_model');
+        Schema::dropIfExists('mediables');
         Schema::dropIfExists('medias');
     }
 };

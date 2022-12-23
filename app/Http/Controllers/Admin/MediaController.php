@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 
@@ -32,13 +31,14 @@ class MediaController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function index()
+    public function index2()
     {
         $sort = session('media-sort', ['id', 'asc']);
         $filter = session('media-filter', []);
         $items = $this->mediaRepository->getAll($sort, $filter, $this->perPage);
-        $columns = session('media-columns', ['id', 'ref_id', 'object', 'title', 'link']);
-        $placements = $this->settingRepository->getSetting('media-types');
+//        dd($items);
+        $columns = session('media-columns', ['id', 'title', 'link']);
+        $placements = $this->settingRepository->getSetting('media-placements');
 
         return view('admin.medias.index', compact('items',
             'columns',
@@ -46,7 +46,13 @@ class MediaController extends Controller
             'sort',
             'placements'));
     }
+    public function index()
+    {
+        $items = $this->mediaRepository->getGallery($this->perPage);
+        $placements = $this->settingRepository->getSetting('media-placements');
 
+        return view('admin.medias.gallery', compact('items', 'placements'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -78,7 +84,7 @@ class MediaController extends Controller
             Storage::delete($fileOld);
         }
         if ($item) {
-            return redirect()->route('admin.media.edit', $item)
+            return to_route('admin.media.edit', $item)
                 ->with(['success' => 'Успешно сохранено']);
         } else {
             return back()->withErrors(['msg' => 'Ошибка сохранения'])
@@ -181,66 +187,31 @@ class MediaController extends Controller
             return back()->withErrors(['msg' => 'Ошибка удаления']);
         }
     }
-//todo миграции media
-    public function mediasUpdating($item, $mediaItems)
+    public function mediasUpdating($item, $request, $object, $subobject=null)
     {
         $ids = [];
-        foreach ($mediaItems as $mediaItem) {
+        foreach ($request->input('media') as $key => $mediaItem) {
             if (is_null($mediaItem['id'])) {
-                if(isset($mediaItem['file'])){
-                    $mediaItem['link'] = $this->saveImage($media['imagefile'], $object);
-                }
+                $validatedData = $request->validate([
+                    'media' . $key => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                ]);
 
+                $imageFile = $request->file('media' . $key);
 
+                $path = (is_null($subobject)) ? $object : $object . '/' . $subobject;
+                $imageFile->store($path);
+//                dd(__METHOD__, $path, $name, $imageFile->hashName());
+                $mediaItem['object'] = $object;
+                $mediaItem['subobject'] = $subobject;
+                $mediaItem['link'] = $imageFile->hashName();
 
-
-                $mediaNew = $item->medias()->create($mediaItem);
+                $mediaNew = $item->medias()->create($mediaItem,['placement' => $mediaItem['placement']]);
                 $ids[] = $mediaNew->id;
             } else {
-                $ids = $mediaItem['id'];
+                $ids[] = $mediaItem['id'];
             }
         }
         $item->medias()->sync($ids);
-    }
-
-    public function updatingList($medias, $ref_id, $object) {
-        foreach ($medias as $key => $media) {
-            if ($key === 'delete') {
-                foreach ($media as $id => $value) {
-                    Media::destroy($id);
-                }
-            } else if (array_key_exists('id', $media) && $media['id'] != '') {
-                $item = $this->mediaRepository->getEdit($media['id']);
-
-                $data = [
-                    'title' => $media['title'],
-                    'placement' => $media['placement'],
-                    'status' => $media['status'],
-                    'editor' => Auth::user()->email,
-                ];
-
-                if(isset($media['imagefile'])) {
-                    Storage::delete($item->link);
-                    $data['link'] = $this->saveImage($media['imagefile'], $object);
-                }
-
-                $item->update($data);
-            } else {
-                $data = [
-                    'ref_id' => $ref_id,
-                    'object' => $object,
-                    'title' => $media['title'],
-                    'placement' => $media['placement'],
-                    'status' => $media['status'],
-                    'editor' => Auth::user()->email,
-                ];
-                if(isset($media['imagefile'])){
-                    $data['link'] = $this->saveImage($media['imagefile'], $object);
-                }
-
-                (new Media())->create($data);
-            }
-        }
     }
 
     /**

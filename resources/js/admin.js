@@ -19,7 +19,15 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 flatpickr('.flatpickr-input', {
     "locale": "ru"
 });
-
+const startDate = flatpickr ('.flatpickrStart', {
+    locale: "ru",
+    onChange: function(dateStr, dateObj) {
+        endDate.set("minDate", dateObj);
+    }
+});
+const endDate = flatpickr ('.flatpickrEnd', {
+    locale: "ru",
+});
 $(document).ready(function () {
     $('.row-delete').on('click', function () {
         const text = $(this).closest('tr').find('.js-title').text(),
@@ -142,10 +150,12 @@ $(document).ready(function () {
             if($(this).attr('required') === 'required' && $(this).val() === '') {
                 if($(this).hasClass('summernote') && $(this).summernote('isEmpty')) {
                     $(this).closest('.form-group').addClass('is-invalid');
+                } if($(this).attr('type') === 'file') {
+                    $(this).closest('.media-preview').addClass('is-invalid');
                 } else {
                     $(this).addClass('is-invalid');
                 }
-                console.log($(this).attr('name'));
+                // console.log($(this).attr('name'));
                 id = $(this).closest('.tab-pane').attr('aria-labelledby');
                 $('#'+id).addClass('is-invalid');
                 $('#id-edit-form').addClass('is-invalid');

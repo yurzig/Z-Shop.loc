@@ -139,7 +139,7 @@ class SettingController extends Controller
     public function search(Request $request)
     {
         session(['settings_filter' => $request->filter]);
-        return redirect()->route('admin.settings.index');
+        return to_route('admin.settings.index');
     }
 
     public function sort(Request $request)
@@ -153,12 +153,12 @@ class SettingController extends Controller
         }
 
         session(['settings_sort' => [$request->order, $direction]]);
-        return redirect()->route('admin.settings.index');
+        return to_route('admin.settings.index');
     }
 
     public function reset()
     {
         session(['settings_filter' => []]);
-        return redirect()->route('admin.settings.index');
+        return to_route('admin.settings.index');
     }
 }

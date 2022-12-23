@@ -118,13 +118,13 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="form-group row mandatory">
-                                                <label class="col-sm-4 form-control-label">Статус</label>
+                                            <div class="form-group row">
+                                                <label class="col-sm-4 form-control-label">Номер п/п</label>
                                                 <div class="col-sm-8">
-                                                    <select class="form-select item-status" required="required" name="status">
-                                                        <option value="1">Активна</option>
-                                                        <option value="0">Скрыта</option>
-                                                    </select>
+                                                    <input class="form-control" type="text"
+                                                           name="sort"
+                                                           placeholder="Сортировка"
+                                                           value="{{ old('sort') }}">
                                                 </div>
                                             </div>
                                         </div>

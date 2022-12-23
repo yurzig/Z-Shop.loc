@@ -74,7 +74,7 @@ class ReviewController extends Controller
         $item = (new Review())->create($data);
 
         if ($item) {
-            return redirect()->route('admin.blog.reviews.edit', $item)
+            return to_route('admin.blog.reviews.edit', $item)
                 ->with(['success' => 'Успешно сохранено']);
         } else {
             return back()->withErrors(['msg' => 'Ошибка сохранения'])
@@ -170,7 +170,7 @@ class ReviewController extends Controller
     private function search(Request $request)
     {
         session(['blog_reviews_filter' => $request->filter]);
-        return redirect()->route('admin.blog.reviews.index');
+        return to_route('admin.blog.reviews.index');
     }
 
     public function sort(Request $request)
@@ -184,12 +184,12 @@ class ReviewController extends Controller
         }
 
         session(['blog_reviews_sort' => [$request->order, $direction]]);
-        return redirect()->route('admin.blog.reviews.index');
+        return to_route('admin.blog.reviews.index');
     }
 
     public function reset()
     {
         session(['blog_reviews_filter' => []]);
-        return redirect()->route('admin.blog.reviews.index');
+        return to_route('admin.blog.reviews.index');
     }
 }

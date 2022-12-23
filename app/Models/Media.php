@@ -15,12 +15,21 @@ class Media extends Model
     protected $fillable = [
         'title',
         'link',
-        'placement',
-        'status',
-        'editor',
+        'object',
+        'subobject',
+        'sort',
+    ];
+    public const OBJECTS = [
+        'category' => 'категория',
+        'product' => 'товар',
+        'text' => 'блог',
     ];
     public function categories()
     {
         return $this->morphedByMany(Category::class, 'mediable');
+    }
+    public function mediable()
+    {
+        return $this->hasMany(Mediable::class, 'media_id', 'id');
     }
 }

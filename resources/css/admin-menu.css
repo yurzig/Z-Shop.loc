@@ -566,7 +566,7 @@ body.light .btn-theme.light-mode {
 }
 
 .media-preview input {
-    height: calc(12.25rem - 4px);
+    height: 100%; /*calc(12.25rem - 4px);*/
     position: absolute;
     overflow: hidden;
     cursor: pointer;

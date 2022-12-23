@@ -43,7 +43,7 @@ class CategoryController extends Controller
         if (!$item) {
             return back()->withErrors(['msg' => 'Ошибка сохранения'])->withInput();
         }
-        return redirect()->route('admin.blog.categories.edit', $item)->with(['success' => 'Успешно сохранено']);
+        return to_route('admin.blog.categories.edit', $item)->with(['success' => 'Успешно сохранено']);
     }
     public function add($parent)
     {
@@ -92,7 +92,7 @@ class CategoryController extends Controller
         if (!$result) {
             return back()->withErrors(['msg' => 'Ошибка сохранения'])->withInput();
         }
-        return redirect()->route('admin.blog.categories.edit', $item)->with(['success' => 'Успешно сохранено']);
+        return to_route('admin.blog.categories.edit', $item)->with(['success' => 'Успешно сохранено']);
     }
 
     /**

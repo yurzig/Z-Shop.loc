@@ -29,7 +29,7 @@ class Category extends Model
     }
     public function medias()
     {
-        return $this->morphToMany(Media::class, 'mediable');
+        return $this->morphToMany(Media::class, 'mediable')->withPivot('placement');
     }
     /**
      * Получить родительскую категорию

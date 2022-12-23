@@ -29,6 +29,7 @@ class MediaCreateRequest extends FormRequest
             'placement' => 'required|integer',
             'status' => 'required|integer',
             'editor' => 'required|integer',
+            'sort' => 'integer',
         ];
     }
 }

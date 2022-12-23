@@ -11,6 +11,7 @@ use App\Models\Shop\Category;
 use App\Repositories\SettingRepository;
 use App\Repositories\Shop\CategoryRepository;
 use App\Repositories\TextRepository;
+use Illuminate\Support\Facades\Storage;
 
 //use App\Repositories\MediaRepository;
 //use App\Repositories\ShopPropertyListRepository;
@@ -68,8 +69,9 @@ class CategoryController extends Controller
         if (!$item) {
             return back()->withErrors(['msg' => 'Ошибка сохранения'])->withInput();
         }
-
-        return redirect()->route('admin.shop.categories.edit', $item)->with(['success' => 'Успешно сохранено']);
+//TODO orWhereFullText применить полнотекстовый поиск
+//TODO в роутере объединить классы в одну группу Route::controller(UsersController::class)->group(function () {Route::get('/users', 'index');
+        return to_route('admin.shop.categories.edit', $item)->with(['success' => 'Успешно сохранено']);
     }
 
     /**
@@ -84,6 +86,7 @@ class CategoryController extends Controller
         if (empty($item)) {
             abort(404);
         }
+//        dd(__METHOD__, $item, $item->medias,$item->medias[0]->pivot->placement);
         $types = $this->settingRepository->getSetting('text-types');
         $placements = $this->settingRepository->getSetting('media-placements');
         $texts = $this->textRepository->getForSelect();
@@ -91,7 +94,7 @@ class CategoryController extends Controller
 //        $properties = $this->shopPropertyListRepository->getByCategory($id);
 //        $options = $this->shopPropertyOptionRepository->getByCategory($id);
 //        $medias = $this->mediaRepository->getByObject($id, 'category');
-
+//dd(__METHOD__, storage_path(), public_path(), Storage::files(storage_path()), Storage::files(public_path()));
         return view('admin.shop.categories.edit', compact('item',
             'types',
             'placements',
@@ -122,7 +125,7 @@ class CategoryController extends Controller
             app(TextController::class)->textsUpdating($item, $request->input('text'));
         }
         if ($request->input('media')) {
-            app(MediaController::class)->updatingList($request->input('media'), $id, 'category');
+            app(MediaController::class)->mediasUpdating($item, $request, 'category');
         }
 
 
@@ -133,7 +136,7 @@ class CategoryController extends Controller
             return back()->withErrors(['msg' => 'Ошибка сохранения'])->withInput();
         }
 
-        return redirect()->route('admin.shop.categories.edit', $item)->with(['success' => 'Успешно сохранено']);
+        return to_route('admin.shop.categories.edit', $item)->with(['success' => 'Успешно сохранено']);
     }
 
     /**
@@ -152,7 +155,7 @@ class CategoryController extends Controller
             return back()->withErrors(['msg' => 'Ошибка удаления']);
         }
 
-        return redirect()->route('admin.shop.categories.index')
+        return to_route('admin.shop.categories.index')
             ->with(['success' => "Удалена запись id[$id] - $item->title"]);
     }
 

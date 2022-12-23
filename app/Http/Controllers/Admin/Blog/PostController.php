@@ -160,7 +160,7 @@ class PostController extends Controller
     public function search(Request $request)
     {
         session(['posts_filter' => $request->filter]);
-        return redirect()->route('admin.blog.posts.index');
+        return to_route('admin.blog.posts.index');
     }
 
     public function sort(Request $request)
@@ -174,12 +174,12 @@ class PostController extends Controller
         }
 
         session(['posts_sort' => [$request->order, $direction]]);
-        return redirect()->route('admin.blog.posts.index');
+        return to_route('admin.blog.posts.index');
     }
 
     public function reset()
     {
         session(['posts_filter' => []]);
-        return redirect()->route('admin.blog.posts.index');
+        return to_route('admin.blog.posts.index');
     }
 }

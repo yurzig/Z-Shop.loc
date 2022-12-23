@@ -27,8 +27,6 @@ class MediaUpdateRequest extends FormRequest
             'title' => 'string|max:200',
             'link' => 'required|string',
             'placement' => 'required|integer',
-            'status' => 'required|integer',
-            'editor' => 'required|integer',
         ];
     }
 }

@@ -136,7 +136,7 @@ class TextController extends Controller
             return back()->withErrors(['msg' => 'Ошибка удаления']);
         }
 
-        return redirect()->route('admin.text.index')
+        return to_route('admin.text.index')
                 ->with(['success' => "Удалена запись id[$id] - $item->title"]);
     }
 
@@ -148,13 +148,13 @@ class TextController extends Controller
     public function columnsSave(Request $request)
     {
         session(['texts_columns' => $request->field]);
-        return redirect()->route('admin.texts.index');
+        return to_route('admin.texts.index');
     }
 
     public function search(Request $request)
     {
         session(['texts_filter' => $request->filter]);
-        return redirect()->route('admin.texts.index');
+        return to_route('admin.texts.index');
     }
 
     public function sort(Request $request)
@@ -169,13 +169,13 @@ class TextController extends Controller
 
         session(['texts_sort' => [$request->order, $direction]]);
 
-        return redirect()->route('admin.texts.index');
+        return to_route('admin.texts.index');
     }
 
     public function reset()
     {
         session(['texts_filter' => []]);
-        return redirect()->route('admin.texts.index');
+        return to_route('admin.texts.index');
     }
 
     public function textsUpdating($item, $textItems)

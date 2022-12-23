@@ -12,20 +12,15 @@ $help = [
     @php $j++ @endphp
 @endforeach
 
-@php $media = new \App\Models\Media(); @endphp
-
-<template id="tpl-media">
-    @include('admin.includes.media._media', ['j' => 'xxx', 'collapsed' => ''])
-</template>
 <template id="tpl-media-new">
     @include('admin.includes.media._media_new', ['j' => 'xxx'])
 </template>
 
-<div class="card-tools-more" data-id="{{ $j }}">
+<div class="card-tools-more mt-2" data-id="{{ $j }}">
     <button type="button" class="btn btn-primary js-add-new act-add fa" data-tpl="#tpl-media-new"
             title="Добавить новую картинку"></button>
     <button type="button" class="btn btn-primary act-add fa" data-bs-toggle="modal" data-bs-target="#listMediaModal"
             title="Добавить картинку из галереи">
         <span>Из галереи</span>
     </button>
-</div
+</div>

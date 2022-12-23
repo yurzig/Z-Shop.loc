@@ -38,9 +38,27 @@ class MediaRepository extends CoreRepository
         }
         $result = $this
             ->startConditions()
+            ->with('mediable')
             ->where($where)
             ->orderBy($sort[0], $sort[1])
             ->paginate($perPage);
+
+        return $result;
+    }
+    /**
+     * Получить список медиа с фильтром.
+     *
+     * @param array $param
+     *
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getGallery($perPage = null)
+    {
+        $result = $this
+            ->startConditions()
+            ->with('mediable')
+            ->paginate($perPage);
+
         return $result;
     }
 

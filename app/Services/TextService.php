@@ -11,9 +11,9 @@ class TextService {
                 ->withInput();
         }
         return match ($action) {
-            'edit' => redirect()->route('admin.texts.edit', $item)->with(['success' => 'Успешно сохранено']),
-            'new' => redirect()->route('admin.texts.create')->with(['success' => 'Успешно сохранено']),
-            default => redirect()->route('admin.texts.index')->with(['success' => 'Успешно сохранено']),
+            'edit' => to_route('admin.texts.edit', $item)->with(['success' => 'Успешно сохранено']),
+            'new' => to_route('admin.texts.create')->with(['success' => 'Успешно сохранено']),
+            default => to_route('admin.texts.index')->with(['success' => 'Успешно сохранено']),
         };
     }
 }

@@ -1,15 +1,12 @@
 <?php
 $fields = [
     ['name' => 'Id',              'dbName' => 'id',         'type' => 'text',   'op' => '=',    'class' => ''],
-    ['name' => 'Заголовок',       'dbName' => 'title',      'type' => 'text',   'op' => 'like', 'class' => ' class=js-title'],
-    ['name' => 'Ссылка',          'dbName' => 'link',       'type' => 'text',   'op' => 'like', 'class' => ''],
+    ['name' => 'Название',        'dbName' => 'title',      'type' => 'text',   'op' => 'like', 'class' => ' class=js-title'],
+    ['name' => 'Изображение',     'dbName' => 'link',       'type' => 'image',  'op' => '',     'class' => ''],
     ['name' => 'Расположение',    'dbName' => 'placement',  'type' => 'select', 'op' => '=',    'class' => ''],
-    ['name' => 'Статус',          'dbName' => 'status',     'type' => 'text',   'op' => '=',    'class' => ''],
     ['name' => 'Дата создания',   'dbName' => 'created_at', 'type' => 'date',   'op' => '=',    'class' => ' class="flatpickr-input"'],
     ['name' => 'Дата обновления', 'dbName' => 'updated_at', 'type' => 'date',   'op' => '=',    'class' => ' class="flatpickr-input"'],
-    ['name' => 'Редактор',        'dbName' => 'editor',     'type' => 'text',   'op' => '=',    'class' => ''],
 ];
-
 $placement_items = $placements;
 $placement_options = '<option value="">Все</option>';
 foreach($placements as $key => $placementItem) {
@@ -131,9 +128,18 @@ $page = 'admin.medias.';
                                 switch ($field['type']) {
                                     case 'select':
                                         $dbName = $field['dbName'];
-                                        $key = $item->$dbName;
-                                        $arrayName = $dbName . '_items';
-                                        $value = $$arrayName[$key];
+                                        if ($dbName === 'placement' && (!is_null($item->mediable))) {
+                                            $value = '';
+                                            foreach ($item->mediable as $mediable) {
+                                                if($mediable->placement > 0) {
+                                                    $value .= $placement_items[$mediable->placement] . ' ';
+                                                }
+                                            }
+                                        } else {
+                                            $key = $item->$dbName;
+                                            $arrayName = $dbName . '_items';
+                                            $value = $$arrayName[$key];
+                                        }
                                         break;
                                     case 'switch':
                                         $dbName = $field['dbName'];
@@ -146,6 +152,9 @@ $page = 'admin.medias.';
                                     case 'date':
                                         $dbName = $field['dbName'];
                                         $value = \Carbon\Carbon::parse($item->$dbName)->format('Y-m-d');
+                                        break;
+                                    case 'image':
+                                        $value = '<img src="' . imgSmall($item->link) . '" alt="">';
                                         break;
                                     case 'text':
                                         $dbName = $field['dbName'];
@@ -162,13 +171,13 @@ $page = 'admin.medias.';
                                data-bs-toggle="tooltip"
                                data-bs-html="true"
                                href="{{ route($page . 'edit', $item) }}"
-                               title="Редактировать.{{ $item->mediable->count() > 0 ? ' <b>Внимание!</b> Есть связанные объекты (' . $item->textable->count() . ') ' : '' }}">
+                               title="Редактировать.{{ $item->mediable->count() > 0 ? ' <b>Внимание!</b> Есть связанные объекты (' . $item->mediable->count() . ') ' : '' }}">
                             </a>
                             <button type="button" class="btn act-delete fa row-delete"
                                     data-bs-toggle="tooltip"
                                     data-bs-html="true"
                                     data-action="{{ route($page . 'destroy', $item) }}"
-                                    title="Удалить.{{ $item->mediable->count() > 0 ? ' <b>Внимание!</b> Есть связанные объекты (' . $item->textable->count() . ') ' : '' }}">
+                                    title="Удалить.{{ $item->mediable->count() > 0 ? ' <b>Внимание!</b> Есть связанные объекты (' . $item->mediable->count() . ') ' : '' }}">
                             </button>
                         </td>
                     </tr>
