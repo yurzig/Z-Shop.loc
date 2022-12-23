@@ -69,8 +69,6 @@ class CategoryController extends Controller
         if (!$item) {
             return back()->withErrors(['msg' => 'Ошибка сохранения'])->withInput();
         }
-//TODO orWhereFullText применить полнотекстовый поиск
-//TODO в роутере объединить классы в одну группу Route::controller(UsersController::class)->group(function () {Route::get('/users', 'index');
         return to_route('admin.shop.categories.edit', $item)->with(['success' => 'Успешно сохранено']);
     }
 

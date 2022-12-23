@@ -19,8 +19,8 @@ return new class extends Migration
             $table->foreignId('user_id')->references('id')->on('users');
             $table->string('title', 255);
             $table->string('slug', 255)->unique();
-            $table->text('excerpt')->nullable();
-            $table->text('content');
+            $table->text('excerpt')->fulltext()->nullable();
+            $table->text('content')->fulltext();
             $table->boolean('status')->default(false);
             $table->string('meta_title', 255)->nullable();
             $table->string('meta_description', 255)->nullable();
