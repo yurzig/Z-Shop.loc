@@ -34,7 +34,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrapFive();
 
-        BlogCategory::observe(BlogCategoryObserver::class);
         Post::observe(BlogPostObserver::class);
         ShopCategory::observe(ShopCategoryObserver::class);
 

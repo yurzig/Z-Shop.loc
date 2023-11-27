@@ -13,7 +13,7 @@ $page = 'admin.blog.categories.';
 @section('title', $pageName)
 
 @section('header-block')
-    <span>{{ $pageName }}: ({{ $item->id }}) {{ $item->title }}</span>
+    <span>{{ $pageName }}: ({{ $category->id }}) {{ $category->title }}</span>
     <div class="item-actions my-1">
         <a class="btn btn-secondary js-help" role="button" data-bs-toggle="button" aria-pressed="false"
            title="Подсказки" href="#">?</a>
@@ -29,12 +29,12 @@ $page = 'admin.blog.categories.';
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap py-2">
         <div class="col-lg-4 box">
             <ul class="menu-tree">
-                {!! \App\Services\Blog\CategoryService::menuTree($categories, $item->id) !!}
+                {!! \App\Services\Blog\CategoryService::menuTree($categories, $category->id) !!}
             </ul>
         </div>
         <div class="col-lg-8 ps-2">
             <form id="edit-form" class="item w-100" method="POST" enctype="multipart/form-data"
-                  action="{{ route($page . 'update', $item) }}" novalidate>
+                  action="{{ route($page . 'update', $category) }}" novalidate>
                 @csrf
                 @method('PATCH')
 
@@ -74,7 +74,7 @@ $page = 'admin.blog.categories.';
                                                     <input class="form-control" type="text"
                                                            name="title"
                                                            placeholder="Название категории"
-                                                           value="{{ old('title', $item->title) }}"
+                                                           value="{{ old('title', $category->title) }}"
                                                            required="required">
                                                 </div>
                                                 <div class="col-sm-12 help-text">{{ $help['title'] }}</div>
@@ -85,7 +85,7 @@ $page = 'admin.blog.categories.';
                                                     <input class="form-control" type="text"
                                                            name="slug"
                                                            placeholder="Уникальный идентификатор"
-                                                           value="{{ old('slug', $item->slug) }}">
+                                                           value="{{ old('slug', $category->slug) }}">
                                                 </div>
                                                 <div class="col-sm-12 help-text">{{ $help['slug'] }}</div>
                                             </div>
@@ -94,7 +94,7 @@ $page = 'admin.blog.categories.';
                                                 <div class="col-sm-8">
                                                     <select class="form-select" required="required" name="parent_id">
                                                         <option value="0">1-й уровень</option>
-                                                        {!! \App\Services\Blog\CategoryService::selectTree($categories, $item->parent_id) !!}
+                                                        {!! \App\Services\Blog\CategoryService::selectTree($categories, $category->parent_id) !!}
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-12 help-text">{{ $help['parent_id'] }}</div>
@@ -111,7 +111,7 @@ $page = 'admin.blog.categories.';
                                             <div class="form-group row">
                                                 <label class="col-sm-4 form-control-label">Дата создания</label>
                                                 <div class="col-sm-8">
-                                                    {{ $item->created_at }}
+                                                    {{ $category->created_at }}
                                                 </div>
                                             </div>
                                         </div>
@@ -121,7 +121,7 @@ $page = 'admin.blog.categories.';
                                             <div class="form-group row">
                                                 <label class="col-sm-4 form-control-label">Дата обновления</label>
                                                 <div class="col-sm-8">
-                                                    {{ $item->updated_at }}
+                                                    {{ $category->updated_at }}
                                                 </div>
                                             </div>
                                         </div>
