@@ -1,9 +1,6 @@
 <?php
 
-<<<<<<< HEAD
-=======
 use App\Http\Controllers\ProfileController;
->>>>>>> 9b395dd (Start laravel 10)
 use Illuminate\Support\Facades\Route;
 
 /*
