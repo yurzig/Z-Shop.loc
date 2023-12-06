@@ -30,9 +30,8 @@ class CategoryController extends Controller
      */
     public function add($parent): View
     {
-        $categories = postCategories()->getTree();
 
-        return view('admin.blog.categories.create', compact('categories','parent'));
+        return view('admin.blog.categories.create', compact('parent'));
     }
 
     /**

@@ -37,6 +37,7 @@ class PostController extends Controller
      */
     public function index()
     {
+        posts()->test();
         $sort = session('posts_sort', ['id', 'asc']);
         $filter = session('posts_filter', []);
         $items = $this->postRepository->getAll($sort, $filter, $this->perPage);

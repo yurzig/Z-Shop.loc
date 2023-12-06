@@ -78,8 +78,8 @@ $page = 'admin.blog.categories.';
                                             <label class="col-sm-4 form-control-label">Родитель</label>
                                             <div class="col-sm-8">
                                                 <select class="form-select item-status" name="parent_id">
-                                                    <option value="0">1-й уровень</option>
-                                                    {!! \App\Services\Blog\CategoryService::selectTree($categories, $parent) !!}
+                                                    <option value="0">0-й уровень</option>
+                                                    {!! postCategories()->selectTree($parent) !!}
                                                 </select>
                                             </div>
                                             <div class="col-sm-12 help-text">{{ $help['parent_id'] }}</div>
