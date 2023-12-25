@@ -21,9 +21,8 @@ class CategoryController extends Controller
      */
     public function index(): View
     {
-        $categories = postCategories()->getTree();
 
-        return view('admin.blog.categories.index', compact('categories'));
+        return view('admin.blog.categories.index');
     }
     /**
      * Добавление новой категории(форма)
@@ -37,10 +36,10 @@ class CategoryController extends Controller
     /**
      * Добавление новой категории(сохранить)
      */
-    public function store(Request $request): RedirectResponse {
+    public function store(Request $request): RedirectResponse
+    {
 
         return postCategories()->store($request);
-
     }
 
     /**

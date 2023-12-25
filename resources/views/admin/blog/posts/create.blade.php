@@ -1,17 +1,17 @@
 <?php
 $help = [
-    'category_id' => '',
-    'user_id' => '',
-    'title' => '',
-    'slug' => '',
-    'excerpt' => '',
-    'content' => '',
-    'status' => '',
-    'published_at' => '',
+    'category_id' => 'Необходимо привязать статью к категории',
+    'user_id' => 'Необходимо указать автора статьи',
+    'title' => 'Заголовок статьи',
+    'slug' => 'Url статьи(формируется автоматически)',
+    'excerpt' => 'Краткое описание статьи',
+    'content' => 'Текст статьи',
+    'status' => 'Укажите статус статьи(по-умолчанию - черновик)',
+    'published_at' => 'Дата публикации статьи',
 ];
 $userOptions = '';
 $user_id = Auth::id();
-foreach ($users as $user) {
+foreach (users()->getForSelect() as $user) {
     $selected = ($user->id === $user_id) ? ' selected="selected"' : '';
     $userOptions .= "<option value='$user->id'$selected>$user->name</option>";
 }
@@ -64,8 +64,7 @@ $page = 'admin.blog.posts.';
 
                     <div class="col-xl-12 item-content tab-content">
 
-                        <div id="basic" class="tab-pane fade show active" role="tabpanel"
-                             aria-labelledby="basic-tab">
+                        <div id="basic" class="tab-pane fade show active" role="tabpanel" aria-labelledby="basic-tab">
                             <div class="box">
                                 <div class="row justify-content-center">
                                     <div class="col-xl-6 block">
@@ -74,7 +73,7 @@ $page = 'admin.blog.posts.';
                                             <div class="col-sm-8">
                                                 <select class="form-select item-status" name="category_id"
                                                         required="required">
-                                                    {!! \App\Services\Blog\CategoryService::selectTree($categories, 0) !!}
+                                                    {!! postCategories()->selectTree(0) !!}
                                                 </select>
                                             </div>
                                             <div class="col-sm-12 help-text">{{ $help['category_id'] }}</div>

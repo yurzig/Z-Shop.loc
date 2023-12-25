@@ -13,25 +13,32 @@ $fields = [
     ['name' => 'Дата обновления', 'dbName' => 'updated_at',   'type' => 'date',   'op' => '=',    'class' => ' class="flatpickr-input"'],
 ];
 
+$sort = session('posts_sort', ['id', 'asc']);
+$filter = session('posts_filter', []);
+$columns = session('posts_columns', ['id', 'category_id', 'user_id', 'title', 'published_at']);
+
 $category_id_items = [];
 $category_id_options = '<option value="">Все</option>';
-foreach($categories as $categoryItem) {
+foreach(postCategories()->getForSelect() as $categoryItem) {
     $category_id_items[$categoryItem->id] = $categoryItem->title;
+
+    $selected = '';
     if(is_array($filter) && !empty($filter) && $filter['val']['category_id'] == $categoryItem->id) {
-        $category_id_options .= "<option value='$categoryItem->id' selected='selected'>$categoryItem->title</option>";
-    } else {
-        $category_id_options .= "<option value='$categoryItem->id'>$categoryItem->title</option>";
+        $selected = " selected='selected'";
     }
+    $category_id_options .= "<option value='$categoryItem->id'$selected>$categoryItem->title</option>";
 }
+
 $user_id_items = [];
 $user_id_options = '<option value="">Все</option>';
-foreach($users as $userItem) {
+foreach(users()->getForSelect() as $userItem) {
     $user_id_items[$userItem->id] = $userItem->name;
+
+    $selected = '';
     if(is_array($filter) && !empty($filter) && $filter['val']['user_id'] == $userItem->id) {
-        $user_id_options .= "<option value='$userItem->id' selected='selected'>$userItem->name</option>";
-    } else {
-        $user_id_options .= "<option value='$userItem->id'>$userItem->name</option>";
+        $selected = " selected='selected'";
     }
+    $user_id_options .= "<option value='$userItem->id'$selected>$userItem->name</option>";
 }
 $pageName = 'Статьи';
 $page = 'admin.blog.posts.';

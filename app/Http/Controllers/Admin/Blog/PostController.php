@@ -10,8 +10,10 @@ use App\Repositories\Blog\CategoryRepository;
 use App\Repositories\Blog\ReviewRepository;
 use App\Repositories\UserRepository;
 use App\Services\Blog\PostService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Repositories\Blog\PostRepository;
+use Illuminate\View\View;
 
 class PostController extends Controller
 {
@@ -31,63 +33,37 @@ class PostController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * Список постов
      */
-    public function index()
+    public function index(): View
     {
-        posts()->test();
-        $sort = session('posts_sort', ['id', 'asc']);
-        $filter = session('posts_filter', []);
-        $items = $this->postRepository->getAll($sort, $filter, $this->perPage);
-        $categories = $this->categoryRepository->getForSelect();
-        $columns = session('posts_columns', ['id', 'category_id', 'user_id', 'title']);
-        $users = $this->userRepository->getForSelect();
+        $items = posts()->getAll($this->perPage);
 
-        return view('admin.blog.posts.index', compact('items',
-            'categories',
-            'columns',
-            'filter',
-            'sort',
-            'users'));
+        return view('admin.blog.posts.index', compact('items'));
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * Создание поста(форма)
      */
-    public function create()
+    public function create(): View
     {
-        $categories = $this->categoryRepository->getTree();
-        $users = $this->userRepository->getForSelect();
 
-        return view('admin.blog.posts.create', compact('categories', 'users'));
+        return view('admin.blog.posts.create');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * Создание поста(сохранение)
      */
-    public function store(PostCreateRequest $request)
+    public function store(Request $request): RedirectResponse
     {
-        $data = $request->input();
 
-        $item = (new Post())->create($data);
-
-        return PostService::actionAfterSaving($item, $request->action);
+        return posts()->store($request);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * Редактирование поста(форма)
      */
-    public function edit($id)
+    public function edit($id): View
     {
         $item = $this->postRepository->getEdit($id);
         if (empty($item)) {

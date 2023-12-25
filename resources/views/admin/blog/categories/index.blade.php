@@ -14,7 +14,7 @@ $pageName = 'Категории статей';
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap py-2">
         <div class="col-lg-4 box">
             <ul class="menu-tree">
-                {!! \App\Services\Blog\CategoryService::menuTree($categories, 0) !!}
+                {!! postCategories()->menuTree(0) !!}
             </ul>
         </div>
         <div class="col-lg-8 ps-2"></div>
