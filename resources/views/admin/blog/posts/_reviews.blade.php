@@ -13,9 +13,10 @@
             </tr>
         </thead>
         <tbody>
-        @foreach($reviews as $review)
+
+        @foreach($post->reviews as $review)
             <tr class="list-item">
-                <td>{{ $review->created_at->format('Y-m-d') }}</td>
+                <td>{{ $review->created_at === '' ?? $review->created_at->format('Y-m-d') }}</td>
                 <td>{{ \App\Models\Blog\Review::STATUSES[$review->status] }}</td>
                 <td>{{ $review->rating }}</td>
                 <td>{{ $review->comment }}</td>
@@ -25,4 +26,3 @@
         </tbody>
     </table>
 </div>
-@include('admin.includes._modal_delete')

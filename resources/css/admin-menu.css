@@ -205,6 +205,10 @@ body.light .btn-theme.light-mode {
     text-decoration: underline;
     text-decoration-skip-ink: all;
 }
+.admin .act-add:hover {
+    text-decoration: none !important;
+}
+
 .btn {
     box-shadow: none;
     background: transparent;
@@ -225,7 +229,7 @@ body.light .btn-theme.light-mode {
     content: "\f00d";
     color: #c81e1e;
 }
-.admin .btn.act-search.fa:before {
+.admin .btn.act-filter.fa:before {
     content: "\f002";
 }
 .admin .btn.act-reset.fa:before {
@@ -574,3 +578,4 @@ body.light .btn-theme.light-mode {
     opacity: 0;
     z-index: 1;
 }
+

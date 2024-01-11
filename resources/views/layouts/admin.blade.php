@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ asset('css/flatpickr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/summernote-lite.min.css') }}">
     @vite('resources/css/admin.css')
+    @stack('styles')
     {{--    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">--}}
     {{--    <link rel="stylesheet" href="{{ asset('css/common.css') }}">--}}
     {{--    <link rel="stylesheet" href="{{ asset('css/menu.css') }}">--}}
@@ -71,6 +72,7 @@
 <script src="{{ asset('js/summernote-lite.min.js') }}" defer></script>
 <script src="{{ asset('js/lang/summernote-ru-RU.min.js') }}" defer></script>
 @vite('resources/js/app.js')
+@stack('scripts')
 
 {{--<script src="https://cdn.jsdelivr.net/npm/suggestions-jquery@21.12.0/dist/js/jquery.suggestions.min.js"></script>--}}
 

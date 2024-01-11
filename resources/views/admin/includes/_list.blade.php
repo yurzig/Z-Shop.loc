@@ -31,17 +31,18 @@
         </thead>
         <tbody>
         <tr class="list-search">
-            <form method="POST" action="{{ route($page . 'search') }}">
+            <form method="POST" action="{{ route($page . 'filter') }}">
                 @csrf
                 @foreach($fields as $field)
                     @if(!in_array($field['dbName'], $columns))
                         @continue
                     @endif
                     <td{{ $field['class'] }}>
-                        <input type="hidden" name="filter[op][{{ $field['dbName'] }}]" value="{{ $field['op'] }}">
+                        <input type="hidden" name="filters[op][{{ $field['dbName'] }}]" value="{{ $field['op'] }}">
+
                         @switch($field['type'])
                             @case('select')
-                                <select class="form-select" name="filter[val][{{ $field['dbName'] }}]">
+                                <select class="form-select" name="filters[val][{{ $field['dbName'] }}]">
                                     @php $var = $field['dbName'] . '_options';
                                          echo $$var
                                     @endphp
@@ -50,7 +51,7 @@
                             @case('switch')
                                 <div class="form-check form-switch">
                                     <input type="checkbox"
-                                           name="filter[val][{{ $field['dbName'] }}]"
+                                           name="filters[val][{{ $field['dbName'] }}]"
                                            class="form-check-input"
                                            value="1"
                                         {{ (isset($filter['val'][$field['dbName']]) &&
@@ -60,21 +61,21 @@
                                 @break
                             @case('date')
                                 <input class="form-control flatpickr-input" type="text"
-                                       name="filter[val][{{ $field['dbName'] }}]"
+                                       name="filters[val][{{ $field['dbName'] }}]"
                                        value="{{ $filter['val'][$field['dbName']] ?? '' }}">
                                 @break
                             @case('text')
                                 <input class="form-control" type="{{ $field['type'] }}"
-                                       name="filter[val][{{ $field['dbName'] }}]"
+                                       name="filters[val][{{ $field['dbName'] }}]"
                                        value="{{ $filter['val'][$field['dbName']] ?? '' }}">
                                 @break
                         @endswitch
                     </td>
                 @endforeach
                 <td class="actions">
-                    <button type="submit" class="btn act-search fa"
+                    <button type="submit" class="btn act-filter fa"
                             name="action"
-                            value="search"
+                            value="filter"
                             title="Поиск">
                     </button>
                     <a class="btn fa act-reset" tabindex="1"
@@ -109,7 +110,7 @@
                             break;
                         case 'date':
                             $dbName = $field['dbName'];
-                            $value = \Carbon\Carbon::parse($item->$dbName)->format('Y-m-d');
+                            $value = $item->$dbName ? \Carbon\Carbon::parse($item->$dbName)->format('Y-m-d') : '';
                             break;
                         case 'text':
                             $dbName = $field['dbName'];
@@ -117,7 +118,7 @@
                             break;
                     }
                 @endphp
-            <td{!! $field['class'] !!}>
+            <td{!! $field['class'] === ' class=js-title' ? ' class=js-title' : '' !!}>
                 {!! $value !!}
             </td>
             @endforeach

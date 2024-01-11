@@ -34,7 +34,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrapFive();
 
-        Post::observe(BlogPostObserver::class);
         ShopCategory::observe(ShopCategoryObserver::class);
 
         Relation::enforceMorphMap([

@@ -11,16 +11,6 @@ $help = [
     'meta_title' => '',
     'meta_description' => '',
 ];
-$userOptions = '';
-foreach ($users as $user) {
-    $selected = ($item->user_id === $user->id) ? ' selected="selected"' : '';
-    $userOptions .= "<option value='$user->id' selected='selected'>$user->name</option>";
-}
-$statusOptions = '';
-foreach (\App\Models\Blog\Post::STATUS as $key => $status) {
-    $selected = ($item->status === $key) ? ' selected="selected"' : '';
-    $statusOptions .= "<option value='$key'$selected>$status</option>";
-}
 
 $pageName = 'Редактирование статьи';
 $page = 'admin.blog.posts.';
@@ -31,14 +21,14 @@ $page = 'admin.blog.posts.';
 @section('title', $pageName)
 
 @section('header-block')
-    <span>{{ $pageName }}: ({{ $item->id }}) {{ $item->title }}</span>
+    <span>{{ $pageName }}: ({{ $post->id }}) {{ $post->title }}</span>
     @include('admin.includes._header_block')
 @endsection
 
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-2 mb-3">
         <form id="edit-form" class="item w-100" method="POST" enctype="multipart/form-data"
-              action="{{ route($page . 'update', $item) }}" novalidate>
+              action="{{ route($page . 'update', $post) }}" novalidate>
             @csrf
             @method('PATCH')
 
@@ -89,7 +79,7 @@ $page = 'admin.blog.posts.';
                                             <div class="col-sm-8">
                                                 <select class="form-select item-status" required="required"
                                                         name="category_id">
-                                                    {!! \App\Services\Blog\CategoryService::selectTree($categories, $item->category_id) !!}
+                                                    {!! postCategories()->selectTree($post->category_id) !!}
                                                 </select>
                                             </div>
                                             <div class="col-sm-12 help-text">{{ $help['category_id'] }}</div>
@@ -99,7 +89,9 @@ $page = 'admin.blog.posts.';
                                             <div class="col-sm-8">
                                                 <select class="form-select item-status" required="required"
                                                         name="user_id">
-                                                    {!! $userOptions !!}
+                                                    @foreach (users()->getForSelect() as $user)
+                                                        <option value={{ $user->id }} @selected($post->user_id === $user->id)>{{ $user->name }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-sm-12 help-text">{{ $help['user_id'] }}</div>
@@ -110,7 +102,7 @@ $page = 'admin.blog.posts.';
                                                 <input class="form-control" type="text"
                                                        name="title"
                                                        placeholder="Заголовок статьи"
-                                                       value="{{ old('title', $item->title) }}"
+                                                       value="{{ old('title', $post->title) }}"
                                                        required="required">
                                             </div>
                                             <div class="col-sm-12 help-text">{{ $help['title'] }}</div>
@@ -121,7 +113,7 @@ $page = 'admin.blog.posts.';
                                                 <input class="form-control" type="text"
                                                        name="slug"
                                                        placeholder="Уникальный идентификатор"
-                                                       value="{{ old('slug', $item->slug) }}">
+                                                       value="{{ old('slug', $post->slug) }}">
                                             </div>
                                             <div class="col-sm-12 help-text">{{ $help['slug'] }}</div>
                                         </div>
@@ -130,7 +122,9 @@ $page = 'admin.blog.posts.';
                                             <div class="col-sm-8">
                                                 <select class="form-select item-status" required="required"
                                                         name="status">
-                                                    {!! $statusOptions !!}
+                                                    @foreach (posts()->getStatuses() as $key => $status) {
+                                                    <option value='{{ $key }}' @selected($post->status === $key)>{{ $status }}</option>";
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-sm-12 help-text">{{ $help['status'] }}</div>
@@ -141,7 +135,7 @@ $page = 'admin.blog.posts.';
                                                 <input class="form-control flatpickr-input" type="text"
                                                        name="published_at"
                                                        placeholder="Дата публикации статьи"
-                                                       value="{{ old('published_at', $item->published_at) }}">
+                                                       value="{{ old('published_at', $post->published_at) }}">
                                             </div>
                                             <div class="col-sm-12 help-text">{{ $help['published_at'] }}</div>
                                         </div>
@@ -156,14 +150,14 @@ $page = 'admin.blog.posts.';
                                     <label class="form-control-label justify-content-center">Аннотация</label>
                                     <div class="col-sm-12 help-text">{{ $help['excerpt'] }}</div>
                                     <textarea name="excerpt"
-                                              class="form-control item-content">{{ old('excerpt', $item->excerpt) }}</textarea>
+                                              class="form-control item-content">{{ old('excerpt', $post->excerpt) }}</textarea>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="form-control-label justify-content-center">Статья</label>
                                     <div class="col-sm-12 help-text">{{ $help['content'] }}</div>
                                     <textarea name="content" required="required"
-                                              class="summernote form-control item-content">{{ old('content', $item->content) }}</textarea>
+                                              class="summernote form-control item-content">{{ old('content', $post->content) }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -180,7 +174,7 @@ $page = 'admin.blog.posts.';
                                         <input class="form-control" type="text"
                                                name="meta_title"
                                                placeholder="title"
-                                               value="{{ old('meta_title', $item->meta_title) }}">
+                                               value="{{ old('meta_title', $post->meta_title) }}">
                                     </div>
                                     <div class="col-sm-12 help-text">{{ $help['meta_title'] }}</div>
                                 </div>
@@ -190,7 +184,7 @@ $page = 'admin.blog.posts.';
                                         <input class="form-control" type="text"
                                                name="meta_description"
                                                placeholder="description"
-                                               value="{{ old('meta_description', $item->meta_description) }}">
+                                               value="{{ old('meta_description', $post->meta_description) }}">
                                     </div>
                                     <div class="col-sm-12 help-text">{{ $help['meta_description'] }}</div>
                                 </div>
@@ -200,7 +194,7 @@ $page = 'admin.blog.posts.';
                                         <div class="form-group row">
                                             <label class="col-sm-4 form-control-label">Дата создания</label>
                                             <div class="col-sm-8">
-                                                {{ $item->created_at }}
+                                                {{ $post->created_at }}
                                             </div>
                                         </div>
                                     </div>
@@ -210,7 +204,7 @@ $page = 'admin.blog.posts.';
                                         <div class="form-group row">
                                             <label class="col-sm-4 form-control-label">Дата обновления</label>
                                             <div class="col-sm-8">
-                                                {{ $item->updated_at }}
+                                                {{ $post->updated_at }}
                                             </div>
                                         </div>
                                     </div>

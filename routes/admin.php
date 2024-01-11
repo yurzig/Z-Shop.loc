@@ -1,4 +1,7 @@
 <?php
+
+use App\Http\Controllers\Admin\Blog\PostController;
+
 Route::group(
     [
         'middleware' => 'auth',
@@ -49,9 +52,9 @@ Route::group(
         Route::resource('categories', 'CategoryController')->except(['show', 'create'])->names('categories');
 
         Route::controller(PostController::class)->group(function () {
-            Route::post('posts/columns', 'columnsSave')->name('posts.columns');
-            Route::post('posts/search', 'search')->name('posts.search');
-            Route::get('posts/reset', 'reset')->name('posts.reset');
+            Route::post('posts/columns', 'columns')->name('posts.columns');
+            Route::post('posts/filter', 'filter')->name('posts.filter');
+            Route::get('posts/reset', 'filtersReset')->name('posts.reset');
             Route::get('posts/sort', 'sort')->name('posts.sort');
         });
         Route::resource('posts', 'PostController')->except(['show'])->names('posts');

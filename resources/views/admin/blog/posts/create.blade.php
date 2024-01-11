@@ -9,16 +9,6 @@ $help = [
     'status' => 'Укажите статус статьи(по-умолчанию - черновик)',
     'published_at' => 'Дата публикации статьи',
 ];
-$userOptions = '';
-$user_id = Auth::id();
-foreach (users()->getForSelect() as $user) {
-    $selected = ($user->id === $user_id) ? ' selected="selected"' : '';
-    $userOptions .= "<option value='$user->id'$selected>$user->name</option>";
-}
-$statusOptions = '';
-foreach (\App\Models\Blog\Post::STATUS as $key => $status) {
-    $statusOptions .= "<option value='$key'>$status</option>";
-}
 
 $pageName = 'Новая статья';
 $page = 'admin.blog.posts.';
@@ -83,7 +73,9 @@ $page = 'admin.blog.posts.';
                                             <div class="col-sm-8">
                                                 <select class="form-select item-status" required="required"
                                                         name="user_id">
-                                                    {!! $userOptions !!}
+                                                    @foreach (users()->getForSelect() as $user)
+                                                        <option value={{ $user->id }} @selected($user->id === Auth::id())>{{ $user->name }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-sm-12 help-text">{{ $help['user_id'] }}</div>
@@ -114,7 +106,9 @@ $page = 'admin.blog.posts.';
                                             <div class="col-sm-8">
                                                 <select class="form-select item-status" required="required"
                                                         name="status">
-                                                    {!! $statusOptions !!}
+                                                    @foreach (posts()->getStatuses() as $key => $status) {
+                                                    <option value='{{ $key }}'>{{ $status }}</option>";
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-sm-12 help-text">{{ $help['status'] }}</div>

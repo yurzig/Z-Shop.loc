@@ -14,7 +14,7 @@
                             <label tabindex="tabindex">
                                 <input class="form-check-input"
                                        type="checkbox"
-                                       name="field[]"
+                                       name="fields[]"
                                        {{ in_array($field['dbName'], $columns) ? ' checked' : ''}}
                                        value="{{ $field['dbName'] }}">
                                 {{ $field['name'] }}

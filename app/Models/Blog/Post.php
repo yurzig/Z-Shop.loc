@@ -2,7 +2,10 @@
 
 namespace App\Models\Blog;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -63,10 +66,20 @@ class Post extends Model
         'published_at',
     ];
 
-    public const STATUS = [
-        1 => 'черновик',
-        2 => 'опубликована',
-    ];
+    // к посту привязываем отзывы
+    public function reviews(): HasMany
+    {
 
+        return $this->hasMany(Review::class,'post_id', 'id');
+    }
+
+    // Добавляем в модель уникальное поле slug
+    protected function slug(): Attribute
+    {
+
+        return new Attribute(
+            set: fn () => posts()->setSlug($this),
+        );
+    }
 
 }
