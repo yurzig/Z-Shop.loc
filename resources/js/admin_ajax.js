@@ -1,3 +1,36 @@
+window.requestAjax = function ( url, data, success_func, error_func ){
+
+    if( $.isArray(data) ){
+        data.push({name: 'ajax', value: true});
+    }else{
+        data.ajax = true;
+    }
+
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        cache: false,
+        headers:  {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        success: function( response, textStatus, xhr ){
+
+            if( success_func )
+                success_func(response, textStatus, xhr);
+
+        },
+        error: function (error,i,code) {
+
+            if( error_func )
+                error_func(error,code);
+
+        }
+    });
+
+};
+
 $(document).ready(function () {
     $.ajaxSetup({
         method: 'POST',

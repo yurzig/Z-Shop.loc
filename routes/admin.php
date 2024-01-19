@@ -49,6 +49,7 @@ Route::group(
     ],
     function () {
         Route::get('categories/add/{parent}', 'CategoryController@add')->name('categories.add');
+        Route::post('categories/sortable', 'CategoryController@sortable')->name('categories.sortable');
         Route::resource('categories', 'CategoryController')->except(['show', 'create'])->names('categories');
 
         Route::controller(PostController::class)->group(function () {

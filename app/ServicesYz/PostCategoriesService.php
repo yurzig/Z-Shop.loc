@@ -3,7 +3,6 @@
 namespace App\ServicesYz;
 
 use App\Models\Blog\Category;
-use App\Models\Blog\Category as Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -18,6 +17,7 @@ class PostCategoriesService
     public function getTree():array
     {
         $categories = Category::select('id', 'title', 'parent_id')
+            ->orderBy('sort')
             ->toBase()
             ->get();
 
@@ -192,25 +192,32 @@ class PostCategoriesService
      */
     public function menuTree(int $active_id): string
     {
+        $level = 1;
+        $string = '<ul class="menu-tree node" data-level="' . $level . '" data-id="0" data-url="' . route("admin.blog.categories.sortable") . '">';
 
-        return self::menuItems(postCategories()->getTree(), $active_id);
+        $string .= self::menuItems(postCategories()->getTree(), $active_id, $level);
+
+        $string .= '</ul>';
+
+        return $string;
     }
 
-    private static function menuItems(array $categories, int $active_id): string
+
+    private static function menuItems(array $categories, int $active_id, int $level): string
     {
         $string = '';
         foreach ($categories as $category) {
-            $string .= self::menuRow($category, $active_id);
+            $string .= self::menuRow($category, $active_id, $level);
         }
 
         return $string;
     }
 
-    private static function menuRow(array $category, int $active_id): string
+    private static function menuRow(array $category, int $active_id, int $level): string
     {
         $active = ($active_id === $category['id']) ? ' active' : '';
-        $row = '<li>
-                <div class="menu-tree-item d-flex justify-content-between' . $active . '">
+        $row = '<li class="menu-tree-item' . $active . '" data-id="' . $category['id'] . '" data-level="' . $level . '">
+                <div class="menu-tree-line d-flex justify-content-between">
                     <div>
                         <a class="btn fa act-add"
                             href="' . route('admin.blog.categories.add', $category['id']) . '"
@@ -228,10 +235,25 @@ class PostCategoriesService
                 </div>';
 
         if (isset($category['children'])) {
-            $row .= '<ul>' . self::menuItems($category['children'], $active_id) . '</ul>';
+            $level = ++$level;
+            $row .= '<ul class="node" data-level="' . $level . '" data-id="' . $category['id'] . '">' . self::menuItems($category['children'], $active_id, $level) . '</ul>';
         }
         $row .= '</li>';
 
         return $row;
     }
+
+    /**
+        Сохранить сортировку блока категорий
+     */
+    public function setSortable(mixed $data): void
+    {
+        $parent_id = $data->node;
+        $ids = explode(',', rtrim($data->ids, ','));
+
+        foreach ($ids as $key => $id) {
+            Category::find($id)->update(['parent_id' => $parent_id, 'sort' => $key]);
+        }
+    }
+
 }

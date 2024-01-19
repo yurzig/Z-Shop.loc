@@ -69,4 +69,16 @@ class CategoryController extends Controller
 
         return postCategories()->delete($category);
     }
+
+    /**
+        Сортировка категорий.
+     */
+    public function sortable( Request $request)
+    {
+
+        postCategories()->setSortable($request);
+        return response()->json('Ok');
+
+    }
+
 }

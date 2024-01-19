@@ -43,6 +43,7 @@ class Category extends Model
         'parent_id',
         'title',
         'slug',
+        'sort',
         'editor',
     ];
 

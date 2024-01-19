@@ -1,0 +1,11 @@
+.menu-tree .act-add,
+.menu-tree .act-delete {
+    opacity: 0;
+}
+.menu-tree-line:hover .act-add,
+.menu-tree-line:hover .act-delete {
+    opacity: 1;
+}
+.menu-tree-line {
+    background: #F6F9FC;
+}

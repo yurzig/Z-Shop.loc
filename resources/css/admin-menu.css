@@ -480,8 +480,8 @@ body.light .btn-theme.light-mode {
 .menu-tree-text:hover {
     text-decoration: underline;
 }
-.menu-tree-item.active,
-.menu-tree-item:hover {
+.menu-tree-item.active .menu-tree-line,
+.menu-tree-line:hover{
     background-color: var(--bs-line-light, #DEE2E6);
 }
 .menu-tree .act-add:hover {
