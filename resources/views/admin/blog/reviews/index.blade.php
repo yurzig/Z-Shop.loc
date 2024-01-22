@@ -11,30 +11,42 @@ $fields = [
     ['name' => 'Дата обновления', 'dbName' => 'updated_at', 'type' => 'date',   'op' => '=',    'class' => ''],
     ['name' => 'Редактор',        'dbName' => 'editor',     'type' => 'text',   'op' => 'like', 'class' => ''],
 ];
-$status_items = [];
-$status_options = '<option value="">Все</option>';
-foreach (\App\Models\Blog\Review::STATUSES as $key => $statusItem) {
-    $status_items[$key] = $statusItem;
-    if (is_array($filter) && !empty($filter) && $filter['val']['status'] == $key) {
-        $status_options .= "<option value='{$key}' selected='selected'>{$statusItem}</option>";
-    } else {
-        $status_options .= "<option value='{$key}'>{$statusItem}</option>";
+
+$sort = postReviews()->getSort(['status', 'asc']);
+$filter = postReviews()->getFilters();
+$columns = postReviews()->getColumns(['post_id', 'user_id', 'rating', 'status', 'created_at']);
+
+if (in_array('status',$columns)) {
+    $status_items = [];
+    $status_options = '<option value="">Все</option>';
+
+    foreach (postReviews()->getStatuses() as $key => $statusItem) {
+        $status_items[$key] = $statusItem;
+
+        $selected = '';
+        if (is_array($filter) && !empty($filter) && $filter['val']['status'] == $key) {
+            $selected = " selected='selected'";
+        }
+        $status_options .= "<option value='{$key}'{$selected}>{$statusItem}</option>";
     }
 }
 
-$user_id_items = [];
-$user_id_options = '<option value="">Все</option>';
-foreach($users as $userItem) {
-    $user_id_items[$userItem->id] = $userItem->name;
-    if(is_array($filter) && !empty($filter) && $filter['val']['user_id'] == $userItem->id) {
-        $user_id_options .= "<option value='$userItem->id' selected='selected'>$userItem->name</option>";
-    } else {
-        $user_id_options .= "<option value='$userItem->id'>$userItem->name</option>";
+if (in_array('user_id',$columns)) {
+    $user_id_items = [];
+    $user_id_options = '<option value="">Все</option>';
+    foreach (users()->getForSelect() as $userItem) {
+        $user_id_items[$userItem->id] = $userItem->name;
+
+        $selected = '';
+        if (is_array($filter) && !empty($filter) && $filter['val']['user_id'] == $userItem->id) {
+            $selected = " selected='selected'";
+        }
+        $user_id_options .= "<option value='$userItem->id'$selected>$userItem->name</option>";
     }
 }
+
 $pageName = 'Отзывы';
 $page = 'admin.blog.reviews.';
-
 ?>
 @extends('layouts.admin')
 

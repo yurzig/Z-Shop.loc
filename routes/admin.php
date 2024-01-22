@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Blog\PostController;
+use App\Http\Controllers\Admin\Blog\ReviewController;
 
 Route::group(
     [
@@ -62,8 +63,8 @@ Route::group(
 
         Route::controller(ReviewController::class)->group(function () {
             Route::post('reviews/columns', 'columnsSave')->name('reviews.columns');
-            Route::post('reviews/search', 'search')->name('reviews.search');
-            Route::post('reviews/reset', 'reset')->name('reviews.reset');
+            Route::post('reviews/filter', 'filter')->name('reviews.filter');
+            Route::post('reviews/reset', 'filterReset')->name('reviews.reset');
             Route::get('reviews/sort', 'sort')->name('reviews.sort');
         });
         Route::resource('reviews', 'ReviewController')->except(['show'])->names('reviews');

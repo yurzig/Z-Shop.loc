@@ -9,6 +9,7 @@ use App\Models\Blog\Review;
 use App\Repositories\Blog\PostRepository;
 use App\Repositories\Blog\ReviewRepository;
 use App\Repositories\UserRepository;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,23 +29,13 @@ class ReviewController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * Список отзывов поста
      */
     public function index()
     {
-        $sort = session('blog_reviews_sort', ['status', 'asc']);
-        $filter = session('blog_reviews_filter', []);
-        $items = $this->reviewRepository->getAll($sort, $filter, $this->perPage);
-        $columns = session('blog_reviews_columns', ['post_id', 'user_id', 'rating', 'status', 'created_at']);
-        $users = $this->userRepository->getForSelect();
+        $items = postReviews()->getAll($this->perPage);
 
-        return view('admin.blog.reviews.index', compact('items',
-            'columns',
-            'filter',
-            'sort',
-            'users'));
+        return view('admin.blog.reviews.index', compact('items'));
     }
 
     /**
@@ -158,38 +149,42 @@ class ReviewController extends Controller
 
     /**
      * Сохранение в сессии списка видимых колонок.
-     *
-     * @param  \Illuminate\Http\Request  $request
      */
-    public function columnsSave(Request $request)
+    public function columns(Request $request): RedirectResponse
     {
-        session(['blog_reviews_columns' => $request->field]);
-        return $this->index();
-    }
+        postReviews()->setColumns($request->fields);
 
-    private function search(Request $request)
-    {
-        session(['blog_reviews_filter' => $request->filter]);
         return to_route('admin.blog.reviews.index');
     }
 
-    public function sort(Request $request)
+    /**
+     * Сохранение в сессии примененных фильтров.
+     */
+    private function filter(Request $request): RedirectResponse
     {
-        $direction = 'asc';
-        if ($request->session()->has('blog_reviews_sort')) {
-            $sort = session('blog_reviews_sort');
-            if ($sort[0] === $request->order) {
-                $direction = $sort[1] === 'asc' ? 'desc' : 'asc';
-            }
-        }
+        postReviews()->getFilters($request->filters);
 
-        session(['blog_reviews_sort' => [$request->order, $direction]]);
         return to_route('admin.blog.reviews.index');
     }
 
-    public function reset()
+    /**
+     * Сброс и сохранение в сессии примененных фильтров.
+     */
+    public function filtersReset()
     {
-        session(['blog_reviews_filter' => []]);
+        postReviews()->filtersReset();
+
         return to_route('admin.blog.reviews.index');
     }
+
+    /**
+     * Сохранение в сессии поля и направления сортировки.
+     */
+    public function sort(Request $request): RedirectResponse
+    {
+        postReviews()->setSort($request);
+
+        return to_route('admin.blog.reviews.index');
+    }
+
 }
