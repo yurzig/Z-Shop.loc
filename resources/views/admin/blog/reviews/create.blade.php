@@ -8,18 +8,6 @@ $help = [
     'status' => '',
 ];
 
-$postOptions = "<option value=''>Выберите статью</option>";
-foreach($posts as $post) {
-    $postOptions .= "<option value={$post->id}>{$post->title}</option>";
-}
-$userOptions = '';
-foreach ($users as $user) {
-    $userOptions .= "<option value='$user->id'>$user->name</option>";
-}
-$statusOptions = '';
-foreach (\App\Models\Blog\Review::STATUSES as $key => $status) {
-    $statusOptions .= "<option value='$key'>$status</option>";
-}
 $pageName = 'Новый отзыв';
 $page = 'admin.blog.reviews.';
 ?>
@@ -64,7 +52,9 @@ $page = 'admin.blog.reviews.';
                                         <label class="col-sm-4 form-control-label">Статья</label>
                                         <div class="col-sm-8">
                                             <select class="form-select item-status" required="required" name="post_id">
-                                                {!! $postOptions !!}
+                                                @foreach(posts()->getForSelect() as $post)
+                                                    <option value={{ $post->id }}>{{ $post->title }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -72,7 +62,9 @@ $page = 'admin.blog.reviews.';
                                         <label class="col-sm-4 form-control-label">Пользователь</label>
                                         <div class="col-sm-8">
                                             <select class="form-select item-status" required="required" name="user_id">
-                                                {!! $userOptions !!}
+                                                @foreach (users()->getForSelect() as $user)
+                                                    <option value={{ $user->id }} @selected($user->id === Auth::id())>{{ $user->name }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -81,7 +73,7 @@ $page = 'admin.blog.reviews.';
                                         <div class="col-sm-8">
                                             <input class="form-control" type="number"
                                                    name="rating"
-                                                   placeholder="Рейтинг товара(1-5)"
+                                                   placeholder="Рейтинг(1-5)"
                                                    min="1" max="5"
                                                    value="{{ old('rating') }}">
                                         </div>
@@ -95,7 +87,7 @@ $page = 'admin.blog.reviews.';
                                     <div class="form-group row">
                                         <label class="col-sm-4 form-control-label">Ответ</label>
                                         <div class="col-sm-8">
-                                            <input class="form-control flatpickr-input" type="text"
+                                            <input class="form-control" type="text"
                                                    name="response"
                                                    placeholder="Ответ на комментарий"
                                                    value="{{ old('response') }}">
@@ -105,7 +97,9 @@ $page = 'admin.blog.reviews.';
                                         <label class="col-sm-4 form-control-label">Статус</label>
                                         <div class="col-sm-8">
                                             <select class="form-select item-status" required="required" name="status">
-                                                {!! $statusOptions !!}
+                                                @foreach(postReviews()->getStatuses() as $key => $status)
+                                                    <option value={{ $key }}>{{ $status }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>

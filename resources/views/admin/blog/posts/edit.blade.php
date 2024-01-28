@@ -122,7 +122,7 @@ $page = 'admin.blog.posts.';
                                             <div class="col-sm-8">
                                                 <select class="form-select item-status" required="required"
                                                         name="status">
-                                                    @foreach (posts()->getStatuses() as $key => $status) {
+                                                    @foreach (posts()->getStatuses() as $key => $status)
                                                     <option value='{{ $key }}' @selected($post->status === $key)>{{ $status }}</option>";
                                                     @endforeach
                                                 </select>

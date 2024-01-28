@@ -3,28 +3,17 @@
 namespace App\Http\Controllers\Admin\Blog;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Blog\ReviewUpdateRequest;
-use App\Http\Requests\Blog\ReviewCreateRequest;
 use App\Models\Blog\Review;
-use App\Repositories\Blog\PostRepository;
-use App\Repositories\Blog\ReviewRepository;
-use App\Repositories\UserRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class ReviewController extends Controller
 {
-    private $reviewRepository;
-    private $postRepository;
-    private $userRepository;
     private $perPage;
 
     public function __construct()
     {
-        $this->reviewRepository = app(ReviewRepository::class);
-        $this->postRepository = app(PostRepository::class);
-        $this->userRepository = app(UserRepository::class);
         $this->perPage = 25;
     }
 
@@ -39,100 +28,45 @@ class ReviewController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * Создание отзыва(форма)
      */
-    public function create()
+    public function create(): View
     {
-        $posts = $this->postRepository->getForSelect();
-        $users = $this->userRepository->getForSelect();
 
-        return view('admin.blog.reviews.create', compact('posts', 'users'));
+        return view('admin.blog.reviews.create');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * Создание отзыва(сохранение)
      */
-    public function store(ReviewCreateRequest $request)
+    public function store(Request $request): RedirectResponse
     {
-        $data = $request->input();
-        $data['editor'] = Auth::id();
 
-        $item = (new Review())->create($data);
-
-        if ($item) {
-            return to_route('admin.blog.reviews.edit', $item)
-                ->with(['success' => 'Успешно сохранено']);
-        } else {
-            return back()->withErrors(['msg' => 'Ошибка сохранения'])
-                ->withInput();
-        }
+        return postReviews()->store($request);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * Редактирование отзыва(форма)
      */
-    public function edit($id)
+    public function edit(Review $review): View
     {
-        $item = $this->reviewRepository->getEdit($id);
-        if (empty($item)) {
-            abort(404);
-        }
-        $post = $this->postRepository->getEdit($item->post_id);
-        $users = $this->userRepository->getForSelect();
 
-        return view('admin.blog.reviews.edit', compact('item',
-            'post',
-            'users'));
+        return view('admin.blog.reviews.edit', compact('review'));
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * Редактирование отзыва(сохранение)
      */
-    public function update(ReviewUpdateRequest $request, $id)
+    public function update(Request $request, Review $review): RedirectResponse
     {
-        $item = $this->reviewRepository->getEdit($id);
 
-        if (empty($item)) {
-            return back()
-                ->withErrors(['msg' => "Запись id=[{$id}] не найдена"])
-                ->withInput();
-        }
-
-        $data = $request->all();
-        $data['editor'] = Auth::id();
-
-        $result = $item->update($data);
-
-        if ($result) {
-            return redirect()
-                ->route('admin.blog.reviews.edit', $item->id)
-                ->with(['success' => 'Успешно сохранено']);
-        } else {
-            return back()
-                ->withErrors(['msg' => 'Ошибка сохранения'])
-                ->withInput();
-        }
+        return postReviews()->update($request, $review);
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * Удаление отзыва поста.
      */
-    public function destroy($id)
+    public function destroy(Review $review)
     {
         $item = $this->reviewRepository->getEdit($id);
 

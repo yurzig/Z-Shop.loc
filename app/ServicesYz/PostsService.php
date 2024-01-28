@@ -221,4 +221,13 @@ class PostsService
 
         return $slug_new;
     }
+
+    /**
+     * Получить список постов для вывода в выпадающем списке
+     */
+    public function getForSelect()
+    {
+
+        return Post::select('id', 'title')->toBase()->get();
+    }
 }
