@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\Blog\PostController;
 use App\Http\Controllers\Admin\Blog\ReviewController;
+use App\Http\Controllers\Admin\Blog\TagController;
 
 Route::group(
     [
@@ -68,6 +69,14 @@ Route::group(
             Route::get('reviews/sort', 'sort')->name('reviews.sort');
         });
         Route::resource('reviews', 'ReviewController')->except(['show'])->names('reviews');
+
+        Route::controller(TagController::class)->group(function () {
+            Route::post('tags/columns', 'columnsSave')->name('tags.columns');
+            Route::post('tags/filter', 'filter')->name('tags.filter');
+            Route::post('tags/reset', 'filterReset')->name('tags.reset');
+            Route::get('tags/sort', 'sort')->name('tags.sort');
+        });
+        Route::resource('tags', 'TagController')->except(['show'])->names('tags');
     }
 );
 

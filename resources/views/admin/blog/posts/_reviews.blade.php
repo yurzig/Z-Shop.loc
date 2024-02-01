@@ -17,7 +17,7 @@
         @foreach($post->reviews as $review)
             <tr class="list-item">
                 <td>{{ $review->created_at === '' ?? $review->created_at->format('Y-m-d') }}</td>
-                <td>{{ \App\Models\Blog\Review::STATUSES[$review->status] }}</td>
+                <td>{{ postReviews()->getStatus($review->status) }}</td>
                 <td>{{ $review->rating }}</td>
                 <td>{{ $review->comment }}</td>
                 <td>{{ $review->response }}</td>

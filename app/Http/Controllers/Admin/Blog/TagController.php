@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Admin\Blog;
 
 use App\Http\Controllers\Controller;
 use App\Models\Blog\Review;
+use App\Models\Blog\Tag;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class ReviewController extends Controller
+class TagController extends Controller
 {
     private $perPage;
 
@@ -18,55 +19,55 @@ class ReviewController extends Controller
     }
 
     /**
-     * Список отзывов поста
+     * Список тегов
      */
     public function index()
     {
-        $items = postReviews()->getAll($this->perPage);
+        $items = postTags()->getAll($this->perPage);
 
-        return view('admin.blog.reviews.index', compact('items'));
+        return view('admin.blog.tags.index', compact('items'));
     }
 
     /**
-     * Создание отзыва(форма)
+     * Создание тега(форма)
      */
     public function create(): View
     {
 
-        return view('admin.blog.reviews.create');
+        return view('admin.blog.tags.create');
     }
 
     /**
-     * Создание отзыва(сохранение)
+     * Создание тега(сохранение)
      */
     public function store(Request $request): RedirectResponse
     {
 
-        return postReviews()->store($request);
+        return postTags()->store($request);
     }
 
     /**
-     * Редактирование отзыва(форма)
+     * Редактирование тега(форма)
      */
-    public function edit(Review $review): View
+    public function edit(Tag $tag): View
     {
 
-        return view('admin.blog.reviews.edit', compact('review'));
+        return view('admin.blog.tags.edit', compact('tag'));
     }
 
     /**
-     * Редактирование отзыва(сохранение)
+     * Редактирование тега(сохранение)
      */
-    public function update(Request $request, Review $review): RedirectResponse
+    public function update(Request $request, Tag $tag): RedirectResponse
     {
 
-        return postReviews()->update($request, $review);
+        return postTags()->update($request, $tag);
     }
 
     /**
-     * Удаление отзыва поста.
+     * Удаление тега.
      */
-    public function destroy(Review $review): RedirectResponse
+    public function destroy(Tag $tag)
     {
 
         return postReviews()->delete($review);
@@ -77,9 +78,9 @@ class ReviewController extends Controller
      */
     public function columns(Request $request): RedirectResponse
     {
-        postReviews()->setColumns($request->fields);
+        postTags()->setColumns($request->fields);
 
-        return to_route('admin.blog.reviews.index');
+        return to_route('admin.blog.tags.index');
     }
 
     /**
@@ -87,9 +88,9 @@ class ReviewController extends Controller
      */
     private function filter(Request $request): RedirectResponse
     {
-        postReviews()->setFilters($request->filters);
+        postTags()->setFilters($request->filters);
 
-        return to_route('admin.blog.reviews.index');
+        return to_route('admin.blog.tags.index');
     }
 
     /**
@@ -97,9 +98,9 @@ class ReviewController extends Controller
      */
     public function filtersReset()
     {
-        postReviews()->filtersReset();
+        postTags()->filtersReset();
 
-        return to_route('admin.blog.reviews.index');
+        return to_route('admin.blog.tags.index');
     }
 
     /**
@@ -107,9 +108,9 @@ class ReviewController extends Controller
      */
     public function sort(Request $request): RedirectResponse
     {
-        postReviews()->setSort($request);
+        postTags()->setSort($request);
 
-        return to_route('admin.blog.reviews.index');
+        return to_route('admin.blog.tags.index');
     }
 
 }

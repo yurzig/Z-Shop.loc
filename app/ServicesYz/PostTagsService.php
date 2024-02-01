@@ -3,6 +3,7 @@
 namespace App\ServicesYz;
 
 use App\Models\Blog\Review;
+use App\Models\Blog\Tag;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -10,22 +11,17 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 
-class PostReviewsService
+class PostTagsService
 {
-    public const STATUS = [
-        1 => 'Скрыт',
-        2 => 'Опубликован',
-    ];
-
     /**
-     * Получить список отзывов постов
+     * Получить список тегов
      */
     public function getAll(?int $perPage = null): object
     {
         $filter = self::getFilters();
-        $sort = self::getSort(['status', 'asc']);
+        $sort = self::getSort(['id', 'asc']);
 
-        $query = Review::query();
+        $query = Tag::query();
         if($filter) {
             foreach ($filter['val'] as $key => $item) {
                 if ($item) {
@@ -41,66 +37,58 @@ class PostReviewsService
     }
 
     /**
-        Сохранение отзыва
+        Сохранение тега
      */
     public function store(Request $request): RedirectResponse
     {
         $data = $request->input();
-        $data['editor'] = Auth::id();
-        if (!isset($data['name']) and $data['user_id']) {
-            $user = users()->getUser($data['user_id']);
-            $data['name'] = $user->name;
-            $data['email'] = $user->email;
-        }
 
         $this->saveValidate($data);
 
-        $review = (new Review())->create($data);
+        $tag = (new Tag())->create($data);
 
-        if (!$review) {
+        if (!$tag) {
 
             return back()->withErrors(['msg' => 'Ошибка сохранения'])->withInput();
         }
 
-        return to_route('admin.blog.reviews.edit', $review)->with(['success' => 'Успешно сохранено']);
+        return to_route('admin.blog.tags.edit', $tag)->with(['success' => 'Успешно сохранено']);
     }
 
     /**
-        Обновить отзыв поста
+        Обновить тег
      */
-    public function update(Request $request, Review $review): RedirectResponse
+    public function update(Request $request, Tag $tag): RedirectResponse
     {
-        if (empty($review)) {
+        if (empty($tag)) {
 
             return back()
-                ->withErrors(['msg' => "Запись id=[{$review->id}] не найдена"])
+                ->withErrors(['msg' => "Запись id=[{$tag->id}] не найдена"])
                 ->withInput();
         }
 
         $data = $request->all();
-        $data['editor'] = Auth::id();
-
 
         $this->saveValidate($data);
 
-        $result = $review->update($data);
+        $result = $tag->update($data);
 
         if (!$result) {
 
             return back()->withErrors(['msg' => 'Ошибка сохранения'])->withInput();
         }
 
-        return to_route('admin.blog.reviews.edit', $review)->with(['success' => 'Успешно сохранено']);
+        return to_route('admin.blog.tags.edit', $tag)->with(['success' => 'Успешно сохранено']);
     }
 
     /**
-        Удалить отзыв поста
+        Удалить тег
      */
-    public function delete (Review $review): RedirectResponse
+    public function delete (Tag $tag): RedirectResponse
     {
-        $item = $review;
+        $item = $tag;
 
-        $result = $review->delete();
+        $result = $tag->delete();
 
         if (!$result) {
 
@@ -108,8 +96,8 @@ class PostReviewsService
         }
 
         return redirect()
-            ->route('admin.blog.reviews.index')
-            ->with(['success' => "Удалена запись id[$item->id] для статьи - $item->post->title"]);
+            ->route('admin.blog.tags.index')
+            ->with(['success' => "Удалена запись id[$item->id] - $item->title"]);
     }
 
     /**
@@ -118,13 +106,7 @@ class PostReviewsService
     public function saveValidate( array $data ): void
     {
         Validator::make( $data, [
-            'post_id' => 'required|integer|exists:blog_posts,id',
-            'user_id' => 'required|integer|exists:users,id',
-            'rating' => 'nullable|integer',
-            'comment' => 'string|max:2000',
-            'response' => 'nullable|string',
-            'status' => 'integer',
-            'editor' => 'integer',
+            'title' => 'required',
         ])->validate();
     }
 
@@ -133,7 +115,7 @@ class PostReviewsService
      */
     public function setColumns(array $fields): void
     {
-        session(['post_reviews_columns' => $fields]);
+        session(['post_tags_columns' => $fields]);
     }
 
     /**
@@ -142,7 +124,7 @@ class PostReviewsService
     public function getColumns(array $defaultFields): array
     {
 
-        return session('post_reviews_columns', $defaultFields);
+        return session('post_tags_columns', $defaultFields);
     }
 
     /**
@@ -150,7 +132,7 @@ class PostReviewsService
      */
     public function setFilters(array $filters): void
     {
-        session(['post_reviews_filter' => $filters]);
+        session(['post_tags_filter' => $filters]);
     }
 
     /**
@@ -159,7 +141,7 @@ class PostReviewsService
     public function getFilters(): array
     {
 
-        return session('post_reviews_filter', []);
+        return session('post_tags_filter', []);
     }
 
     /**
@@ -167,7 +149,7 @@ class PostReviewsService
      */
     public function filtersReset(): void
     {
-        session(['post_reviews_filter' => []]);
+        session(['post_tags_filter' => []]);
     }
 
     /**
@@ -176,14 +158,14 @@ class PostReviewsService
     public function setSort(Request $request): void
     {
         $direction = 'asc';
-        if ($request->session()->has('post_reviews_sort')) {
-            $sort = session('post_reviews_sort');
+        if ($request->session()->has('post_tags_sort')) {
+            $sort = session('post_tags_sort');
             if ($sort[0] === $request->order) {
                 $direction = $sort[1] === 'asc' ? 'desc' : 'asc';
             }
         }
 
-        session(['post_reviews_sort' => [$request->order, $direction]]);
+        session(['post_tags_sort' => [$request->order, $direction]]);
     }
 
     /**
@@ -192,34 +174,7 @@ class PostReviewsService
     public function getSort(array $defaultSort): array
     {
 
-        return session('post_reviews_sort', $defaultSort);
+        return session('post_tags_sort', $defaultSort);
     }
 
-    /*
-     * Получить статусы отзыва
-    */
-    public function getStatuses(): array
-    {
-        return self::STATUS;
-    }
-    /*
-     * Получить статус отзыва
-    */
-    public function getStatus(int $id): string
-    {
-        return self::STATUS[$id];
-    }
-
-    /**
-     * Получение даты/времени по Москве
-     */
-    public function getMoscowTime($value): string
-    {
-        if($value) {
-
-            return Carbon::createFromFormat('Y-m-d H:i:s', $value)->timezone('Europe/Moscow');
-        }
-
-        return '';
-    }
 }

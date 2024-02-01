@@ -27,6 +27,12 @@ $menuItems = [
                 'url' => route('admin.blog.reviews.index'),
                 'role' => 'manage-blog',
             ],
+            'blog.tags' => [
+                'name' => 'Теги',
+                'class' => 'fa-tags',
+                'url' => route('admin.blog.tags.index'),
+                'role' => 'manage-blog',
+            ],
 
         ]
     ],
