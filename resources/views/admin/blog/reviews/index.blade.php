@@ -1,7 +1,7 @@
 <?php
 $fields = [
     ['name' => 'Id',              'dbName' => 'id',         'type' => 'text',   'op' => '=',    'class' => ''],
-    ['name' => 'Статья',          'dbName' => 'post_id',    'type' => 'select', 'op' => '=',    'class' => ''],
+    ['name' => 'Статья',          'dbName' => 'post_id',    'type' => 'text',   'op' => '=',    'class' => ''],
     ['name' => 'Пользователь',    'dbName' => 'user_id',    'type' => 'select', 'op' => '=',    'class' => ''],
     ['name' => 'Рейтинг',         'dbName' => 'rating',     'type' => 'text',   'op' => '=',    'class' => ''],
     ['name' => 'Комментарий',     'dbName' => 'comment',    'type' => 'text',   'op' => 'like', 'class' => ''],
@@ -42,20 +42,6 @@ if (in_array('user_id',$columns)) {
             $selected = " selected='selected'";
         }
         $user_id_options .= "<option value='$userItem->id'$selected>$userItem->name</option>";
-    }
-}
-
-if (in_array('post_id',$columns)) {
-    $post_id_items = [];
-    $post_id_options = '<option value="">Все</option>';
-    foreach (posts()->getForSelect() as $postItem) {
-        $post_id_items[$postItem->id] = $postItem->title;
-
-        $selected = '';
-        if (is_array($filter) && !empty($filter) && $filter['val']['post_id'] == $postItem->id) {
-            $selected = " selected='selected'";
-        }
-        $post_id_options .= "<option value='$postItem->id'$selected>$postItem->title</option>";
     }
 }
 

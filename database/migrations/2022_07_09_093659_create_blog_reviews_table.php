@@ -17,12 +17,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('post_id')->index()->references('id')->on('blog_posts')->onDelete('CASCADE');
             $table->foreignId('user_id')->references('id')->on('users');
-            $table->string('name')->nullable();
-            $table->string('email')->nullable();
             $table->unsignedTinyInteger('rating');
             $table->text('comment');
             $table->string('response', 255)->nullable();
-            $table->unsignedTinyInteger('status');
+            $table->boolean('status')->default(false);
             $table->timestamps();
             $table->softDeletes();
             $table->foreignId('editor');
