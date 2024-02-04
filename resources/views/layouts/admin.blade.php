@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/flatpickr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/summernote-lite.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+    @vite('resources/css/select2-yz.css')
     @vite('resources/css/admin.css')
     @stack('styles')
     {{--    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">--}}
@@ -71,6 +73,7 @@
 <script src="{{ asset('js/flatpickr-ru.js') }}" defer></script>
 <script src="{{ asset('js/summernote-lite.min.js') }}" defer></script>
 <script src="{{ asset('js/lang/summernote-ru-RU.min.js') }}" defer></script>
+<script src="{{ asset('js/select2/select2.min.js') }}" defer></script>
 @vite('resources/js/app.js')
 @stack('scripts')
 
