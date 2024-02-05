@@ -18,6 +18,10 @@ $page = 'admin.blog.posts.';
 
 @extends('layouts.admin')
 
+@push('styles')
+    @vite('resources/css/admin/blog_posts.css')
+@endpush
+
 @section('title', $pageName)
 
 @section('header-block')
@@ -87,7 +91,7 @@ $page = 'admin.blog.posts.';
                                         <div class="form-group row mandatory">
                                             <label class="col-sm-4 form-control-label">Автор</label>
                                             <div class="col-sm-8">
-                                                <select class="form-select item-status" required="required"
+                                                <select class="form-select item-status select2" required="required"
                                                         name="user_id">
                                                     @foreach (users()->getForSelect() as $user)
                                                         <option value={{ $user->id }} @selected($post->user_id === $user->id)>{{ $user->name }}</option>
@@ -124,6 +128,19 @@ $page = 'admin.blog.posts.';
                                                         name="status">
                                                     @foreach (posts()->getStatuses() as $key => $status) {
                                                     <option value='{{ $key }}' @selected($post->status === $key)>{{ $status }}</option>";
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-12 help-text">{{ $help['status'] }}</div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 form-control-label">Теги</label>
+                                            <div class="col-sm-8">
+                                                <select class="form-select item-status select2"
+                                                        name="tegs[]" multiple="multiple">
+                                                    @foreach (postTags()->getForSelect() as $tag) {
+                                                    <option value='{{ $tag->id }}'>{{ $tag->title }}</option>";
+{{--                                                    <option value='{{ $tag->id }}' @selected(in_array($tag->id, $post->tags))>{{ $tag->title }}</option>";--}}
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -218,3 +235,6 @@ $page = 'admin.blog.posts.';
         </form>
     </div>
 @endsection
+@push('scripts')
+    @vite('resources/js/admin/blog_posts.js')
+@endpush

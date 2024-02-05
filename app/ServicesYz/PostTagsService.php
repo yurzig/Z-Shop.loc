@@ -177,4 +177,13 @@ class PostTagsService
         return session('post_tags_sort', $defaultSort);
     }
 
+    /**
+     * Получить список тегов для вывода в выпадающем списке
+     */
+    public function getForSelect()
+    {
+
+        return Tag::select('id', 'title')->toBase()->get();
+    }
+
 }
