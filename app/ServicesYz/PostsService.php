@@ -80,6 +80,8 @@ class PostsService
         }
 
         $data = $request->all();
+//        dd($data);
+//        $data['tags'] = (is_array($data['tags'])) ? json_encode($data['tags'], JSON_UNESCAPED_UNICODE) : $data['tags'];
 
         $this->saveValidate($data);
 
@@ -220,5 +222,14 @@ class PostsService
         }
 
         return $slug_new;
+    }
+
+    /**
+     * Получить список постов для вывода в выпадающем списке
+     */
+    public function getForSelect()
+    {
+
+        return Post::select('id', 'title')->toBase()->get();
     }
 }

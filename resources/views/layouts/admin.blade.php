@@ -74,6 +74,7 @@
 <script src="{{ asset('js/summernote-lite.min.js') }}" defer></script>
 <script src="{{ asset('js/lang/summernote-ru-RU.min.js') }}" defer></script>
 <script src="{{ asset('js/select2/select2.min.js') }}" defer></script>
+<script src="{{ asset('js/select2/i18n/ru.js') }}" defer></script>
 @vite('resources/js/app.js')
 @stack('scripts')
 

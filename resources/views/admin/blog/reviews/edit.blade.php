@@ -7,17 +7,6 @@ $help = [
     'response' => '',
     'status' => '',
 ];
-$userOptions = '';
-foreach ($users as $user) {
-    $selected = ($item->user_id === $user->id) ? ' selected="selected"' : '';
-    $userOptions .= "<option value='$user->id'$selected>$user->name</option>";
-}
-$statuses = \App\Models\Blog\Review::STATUSES;
-$statusOptions = '';
-foreach($statuses as $key => $status) {
-    $selected = ($item->status === $key)  ? ' selected="selected"' : '';
-    $statusOptions .= "<option value='$key'$selected>$status</option>";
-}
 
 $pageName = 'Редактирование отзыва';
 $page = 'admin.blog.reviews.';
@@ -27,14 +16,14 @@ $page = 'admin.blog.reviews.';
 @section('title', $pageName)
 
 @section('header-block')
-    <span>{{ $pageName }}: ({{ $item->id }}) для статьи - {{ $item->post->title }}</span>
+    <span>{{ $pageName }}: ({{ $review->id }}) для статьи - {{ $review->post->title }}</span>
     @include('admin.includes._header_block')
 @endsection
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-2 mb-3">
     <form id="edit-form" class="item w-100" method="POST" enctype="multipart/form-data"
-          action="{{ route($page . 'update', $item) }}" novalidate>
+          action="{{ route($page . 'update', $review) }}" novalidate>
         @csrf
         @method('PATCH')
 
@@ -71,15 +60,20 @@ $page = 'admin.blog.reviews.';
                                     <div class="form-group row mandatory">
                                         <label class="col-sm-4 form-control-label">Статья</label>
                                         <div class="col-sm-8">
-                                            <input type="hidden" name="post_id" value="{{ $item->post_id }}">
-                                            <input class="form-control" readonly type="text" value="{{ $post->title }}">
+                                            <input type="hidden" name="post_id" value="{{ $review->post_id }}">
+                                            <input class="form-control" readonly type="text" value="{{ $review->post->title }}">
                                         </div>
                                     </div>
                                     <div class="form-group row mandatory">
                                         <label class="col-sm-4 form-control-label">Пользователь</label>
                                         <div class="col-sm-8">
-                                            <select class="form-select item-status" required="required" name="user_id">
-                                                {!! $userOptions !!}
+                                            <select class="form-select select2"
+                                                    required="required"
+                                                    name="user_id"
+                                                    data-placeholder="Пользователь оставивший отзыв">
+                                                @foreach (users()->getForSelect() as $user)
+                                                    <option value={{ $user->id }} @selected($review->user_id === $user->id)>{{ $user->name }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -89,13 +83,13 @@ $page = 'admin.blog.reviews.';
                                             <input class="form-control" type="text"
                                                    name="rating"
                                                    placeholder="Рейтинг товара(1-5)"
-                                                   value="{{ old('rating', $item->rating) }}">
+                                                   value="{{ old('rating', $review->rating) }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-4 form-control-label">Комментарий</label>
                                         <div class="col-sm-8">
-                                            <textarea name="comment" class="form-control item-content" style="height: 100px">{{ old('comment', $item->comment) }}</textarea>
+                                            <textarea name="comment" class="form-control item-content" style="height: 100px">{{ old('comment', $review->comment) }}</textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -104,14 +98,16 @@ $page = 'admin.blog.reviews.';
                                             <input class="form-control" type="text"
                                                    name="response"
                                                    placeholder="Ответ на комментарий"
-                                                   value="{{ old('response', $item->response) }}">
+                                                   value="{{ old('response', $review->response) }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-4 form-control-label">Статус</label>
                                         <div class="col-sm-8">
                                             <select class="form-select item-status" required="required" name="status">
-                                                {!! $statusOptions !!}
+                                                @foreach (postReviews()->getStatuses() as $key => $status) {
+                                                <option value='{{ $key }}' @selected($review->status === $key)>{{ $status }}</option>";
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -127,7 +123,7 @@ $page = 'admin.blog.reviews.';
                                     <div class="form-group row">
                                         <label class="col-sm-4 form-control-label">Дата создания</label>
                                         <div class="col-sm-8">
-                                            {{ $item->created_at }}
+                                            {{ $review->created_at }}
                                         </div>
                                     </div>
                                 </div>
@@ -137,7 +133,7 @@ $page = 'admin.blog.reviews.';
                                     <div class="form-group row">
                                         <label class="col-sm-4 form-control-label">Дата обновления</label>
                                         <div class="col-sm-8">
-                                            {{ $item->updated_at }}
+                                            {{ $review->updated_at }}
                                         </div>
                                     </div>
                                 </div>

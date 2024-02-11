@@ -33,7 +33,9 @@ $(document).ready(function () {
     /**
      Инициализация select2
     */
-    $('.select2').select2();
+    $('.select2').select2({
+        language: "ru"
+    });
 
     $('.row-delete').on('click', function () {
         const text = $(this).closest('tr').find('.js-title').text(),

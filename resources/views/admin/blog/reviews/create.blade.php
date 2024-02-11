@@ -8,18 +8,6 @@ $help = [
     'status' => '',
 ];
 
-$postOptions = "<option value=''>Выберите статью</option>";
-foreach($posts as $post) {
-    $postOptions .= "<option value={$post->id}>{$post->title}</option>";
-}
-$userOptions = '';
-foreach ($users as $user) {
-    $userOptions .= "<option value='$user->id'>$user->name</option>";
-}
-$statusOptions = '';
-foreach (\App\Models\Blog\Review::STATUSES as $key => $status) {
-    $statusOptions .= "<option value='$key'>$status</option>";
-}
 $pageName = 'Новый отзыв';
 $page = 'admin.blog.reviews.';
 ?>
@@ -63,16 +51,28 @@ $page = 'admin.blog.reviews.';
                                     <div class="form-group row mandatory">
                                         <label class="col-sm-4 form-control-label">Статья</label>
                                         <div class="col-sm-8">
-                                            <select class="form-select item-status" required="required" name="post_id">
-                                                {!! $postOptions !!}
+                                            <select class="form-select select2"
+                                                    required="required"
+                                                    name="post_id"
+                                                    data-placeholder="Укажите статью">
+                                                <option></option>
+                                                @foreach(posts()->getForSelect() as $post)
+                                                    <option value={{ $post->id }}>{{ $post->title }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group row mandatory">
                                         <label class="col-sm-4 form-control-label">Пользователь</label>
                                         <div class="col-sm-8">
-                                            <select class="form-select item-status" required="required" name="user_id">
-                                                {!! $userOptions !!}
+                                            <select class="form-select select2"
+                                                    required="required"
+                                                    name="user_id"
+                                                    data-placeholder="Пользователь оставивший отзыв">
+                                                <option></option>
+                                                @foreach (users()->getForSelect() as $user)
+                                                    <option value={{ $user->id }}>{{ $user->name }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -105,7 +105,9 @@ $page = 'admin.blog.reviews.';
                                         <label class="col-sm-4 form-control-label">Статус</label>
                                         <div class="col-sm-8">
                                             <select class="form-select item-status" required="required" name="status">
-                                                {!! $statusOptions !!}
+                                                @foreach (postReviews()->getStatuses() as $key => $status) {
+                                                <option value='{{ $key }}'>{{ $status }}</option>";
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>

@@ -4,7 +4,6 @@ namespace App\Models\Blog;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -53,6 +52,10 @@ class Post extends Model
 
     protected  $table = 'blog_posts';
 
+    protected $casts = [
+        'tags' => 'json',
+    ];
+
     protected $fillable = [
         'category_id',
         'user_id',
@@ -60,6 +63,7 @@ class Post extends Model
         'slug',
         'excerpt',
         'content',
+        'tags',
         'status',
         'seo_title',
         'seo_description',
@@ -81,5 +85,13 @@ class Post extends Model
             set: fn () => posts()->setSlug($this),
         );
     }
+    //
+//    protected function tags(): Attribute
+//    {
+//
+//        return new Attribute(
+//            set: fn () => (is_array($this)) ? json_encode($this, JSON_UNESCAPED_UNICODE) : $this,
+//        );
+//    }
 
 }

@@ -137,10 +137,9 @@ $page = 'admin.blog.posts.';
                                             <label class="col-sm-4 form-control-label">Теги</label>
                                             <div class="col-sm-8">
                                                 <select class="form-select item-status select2"
-                                                        name="tegs[]" multiple="multiple">
+                                                        name="tags[]" multiple="multiple">
                                                     @foreach (postTags()->getForSelect() as $tag) {
-                                                    <option value='{{ $tag->id }}'>{{ $tag->title }}</option>";
-{{--                                                    <option value='{{ $tag->id }}' @selected(in_array($tag->id, $post->tags))>{{ $tag->title }}</option>";--}}
+                                                        <option value='{{ $tag->title }}' @isset( $post->tags ) @selected( in_array($tag->title, $post->tags ) )@endisset>{{ $tag->title }}</option>";
                                                     @endforeach
                                                 </select>
                                             </div>
