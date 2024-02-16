@@ -17,13 +17,14 @@ return new class extends Migration
             $table->id();
             $table->foreignId('category_id')->references('id')->on('blog_categories')->onDelete('CASCADE');
             $table->foreignId('user_id')->references('id')->on('users');
-            $table->string('title', 255);
-            $table->string('slug', 255)->unique();
+            $table->string('title');
+            $table->string('slug')->unique();
             $table->text('excerpt')->fulltext()->nullable();
             $table->text('content')->fulltext();
+            $table->json('tags')->nullable();
             $table->boolean('status')->default(false);
-            $table->string('meta_title', 255)->nullable();
-            $table->string('meta_description', 255)->nullable();
+            $table->string('meta_title')->nullable();
+            $table->string('meta_description')->nullable();
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
