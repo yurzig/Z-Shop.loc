@@ -83,14 +83,27 @@ class PostsService
 //        dd($data);
 //        $data['tags'] = (is_array($data['tags'])) ? json_encode($data['tags'], JSON_UNESCAPED_UNICODE) : $data['tags'];
 
+//        if( is_object($data) )
+//            dd('object');
+
+
         $this->saveValidate($data);
+//dd($data);
+//        foreach ($data as $key => $value) {
+//            $post->{$key} = $value;
+//        }
 
-        $result = $post->update($data);
+        $post->tags = (object)['раз','два'] ;
+//        $post->tags = $post->title;
+//        $post->tags =json_encode($post->tags, JSON_UNESCAPED_UNICODE) ;
+//        dd($post);
+        $result = $post->save();
+//        $result = $post->update($data);
 
-        if (!$result) {
-
-            return back()->withErrors(['msg' => 'Ошибка сохранения'])->withInput();
-        }
+//        if (!$result) {
+//
+//            return back()->withErrors(['msg' => 'Ошибка сохранения'])->withInput();
+//        }
 
         return to_route('admin.blog.posts.edit', $post)->with(['success' => 'Успешно сохранено']);
     }

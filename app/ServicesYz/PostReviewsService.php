@@ -213,13 +213,13 @@ class PostReviewsService
     /**
      * Получение даты/времени по Москве
      */
-    public function getMoscowTime($value): string
-    {
-        if($value) {
-
-            return Carbon::createFromFormat('Y-m-d H:i:s', $value)->timezone('Europe/Moscow');
-        }
-
-        return '';
-    }
+//    public function getMoscowTime($value): string
+//    {
+//        if($value) {
+//
+//            return Carbon::createFromFormat('Y-m-d H:i:s', $value)->timezone('Europe/Moscow');
+//        }
+//
+//        return '';
+//    }
 }

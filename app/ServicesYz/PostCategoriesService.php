@@ -5,6 +5,7 @@ namespace App\ServicesYz;
 use App\Models\Blog\Category;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -44,6 +45,7 @@ class PostCategoriesService
     public function store(Request $request): RedirectResponse
     {
         $data = $request->input();
+        $data['editor'] = Auth::id();
         $this->saveValidate($data);
 
         $category = (new Category())->create($data);
@@ -69,6 +71,7 @@ class PostCategoriesService
         }
 
         $data = $request->all();
+        $data['editor'] = Auth::id();
 
         $this->saveValidate($data);
 

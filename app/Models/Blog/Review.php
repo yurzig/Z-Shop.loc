@@ -74,26 +74,26 @@ class Review extends Model
     /**
      * Преобразует дату и время создания из UTC в Europe/Moscow
      */
-    public function getCreatedAtAttribute($value): string
-    {
-        if($value) {
-            return Carbon::createFromFormat('Y-m-d H:i:s', $value)->timezone('Europe/Moscow');
-        }
-
-        return '';
-    }
-
-    /**
-     * Преобразует дату и время обновления из UTC в Europe/Moscow
-     */
-    public function getUpdatedAtAttribute($value): string
-    {
-        if($value) {
-
-            return Carbon::createFromFormat('Y-m-d H:i:s', $value)->timezone('Europe/Moscow');
-        }
-
-        return '';
-    }
+//    public function getCreatedAtAttribute($value): string
+//    {
+//        if($value) {
+//            return Carbon::createFromFormat('Y-m-d H:i:s', $value)->timezone('Europe/Moscow');
+//        }
+//
+//        return '';
+//    }
+//
+//    /**
+//     * Преобразует дату и время обновления из UTC в Europe/Moscow
+//     */
+//    public function getUpdatedAtAttribute($value): string
+//    {
+//        if($value) {
+//
+//            return Carbon::createFromFormat('Y-m-d H:i:s', $value)->timezone('Europe/Moscow');
+//        }
+//
+//        return '';
+//    }
 
 }
