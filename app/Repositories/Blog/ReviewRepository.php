@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Blog;
 
-use App\Models\Blog\Review as Model;
+use App\Models\Blog\PostReview as Model;
 use App\Repositories\CoreRepository;
 
 /**

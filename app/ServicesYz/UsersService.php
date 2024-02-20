@@ -2,7 +2,7 @@
 
 namespace App\ServicesYz;
 
-use App\Models\Blog\Category;
+use App\Models\Blog\PostCategory;
 use App\Models\Blog\Post;
 use App\Models\User;
 use App\Models\User as Model;
@@ -59,7 +59,7 @@ class UsersService
 //        $data = $request->input();
 //        $this->saveValidate($data);
 //
-//        $category = (new Category())->create($data);
+//        $category = (new PostCategory())->create($data);
 //
 //        if (!$category) {
 //
@@ -72,7 +72,7 @@ class UsersService
 //    /**
 //        Обновить категорию поста
 //     */
-//    public function update(Request $request, Category $category):RedirectResponse
+//    public function update(Request $request, PostCategory $category):RedirectResponse
 //    {
 //        if (empty($category)) {
 //
@@ -98,7 +98,7 @@ class UsersService
 //    /**
 //        Удалить категорию поста
 //     */
-//    public function delete (Category $category): RedirectResponse
+//    public function delete (PostCategory $category): RedirectResponse
 //    {
 //
 //        $result = $category->delete();
@@ -140,7 +140,7 @@ class UsersService
 //    /**
 //     * Если поле слаг пустое, то заполняем его конвертацией заголовка
 //     */
-//    public function setSlug(Category $category): String
+//    public function setSlug(PostCategory $category): String
 //    {
 //        if (!empty($category->slug)) {
 //
@@ -151,7 +151,7 @@ class UsersService
 //        $slug_new = $slug;
 //
 //        $i = 0;
-//        while (Category::where('slug', $slug_new)->get()->count() > 0) {
+//        while (PostCategory::where('slug', $slug_new)->get()->count() > 0) {
 //            $slug_new = $slug . '_' . ++$i;
 //        }
 //

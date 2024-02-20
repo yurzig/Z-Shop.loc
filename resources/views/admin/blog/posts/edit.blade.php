@@ -19,7 +19,7 @@ $page = 'admin.blog.posts.';
 @extends('layouts.admin')
 
 @push('styles')
-    @vite('resources/css/admin/blog_posts.css')
+    @vite('resources/css/admin/posts.css')
 @endpush
 
 @section('title', $pageName)
@@ -235,5 +235,5 @@ $page = 'admin.blog.posts.';
     </div>
 @endsection
 @push('scripts')
-    @vite('resources/js/admin/blog_posts.js')
+    @vite('resources/js/admin/posts.js')
 @endpush

@@ -32,7 +32,7 @@ class PostController extends Controller
      */
     public function create(): View
     {
-dd(get_class($this));
+//dd(get_class($this));
         return view('admin.blog.posts.create');
     }
 

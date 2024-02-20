@@ -2,7 +2,7 @@
 
 namespace App\ServicesYz;
 
-use App\Models\Blog\Category;
+use App\Models\Blog\PostCategory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +17,7 @@ class PostCategoriesService
      */
     public function getTree():array
     {
-        $categories = Category::select('id', 'title', 'parent_id')
+        $categories = PostCategory::select('id', 'title', 'parent_id')
             ->orderBy('sort')
             ->toBase()
             ->get();
@@ -48,7 +48,7 @@ class PostCategoriesService
         $data['editor'] = Auth::id();
         $this->saveValidate($data);
 
-        $category = (new Category())->create($data);
+        $category = (new PostCategory())->create($data);
 
         if (!$category) {
 
@@ -61,7 +61,7 @@ class PostCategoriesService
     /**
         Обновить категорию поста
      */
-    public function update(Request $request, Category $category):RedirectResponse
+    public function update(Request $request, PostCategory $category):RedirectResponse
     {
         if (empty($category)) {
 
@@ -88,7 +88,7 @@ class PostCategoriesService
     /**
         Удалить категорию поста
      */
-    public function delete (Category $category): RedirectResponse
+    public function delete (PostCategory $category): RedirectResponse
     {
 
         $result = $category->delete();
@@ -133,13 +133,13 @@ class PostCategoriesService
     public function getForSelect()
     {
 
-        return Category::select('id', 'title')->toBase()->get();
+        return PostCategory::select('id', 'title')->toBase()->get();
     }
 
     /**
      * Если поле слаг пустое, то заполняем его конвертацией заголовка
      */
-    public function setSlug(Category $category): String
+    public function setSlug(PostCategory $category): String
     {
         if (!empty($category->slug)) {
 
@@ -150,7 +150,7 @@ class PostCategoriesService
         $slug_new = $slug;
 
         $i = 0;
-        while (Category::where('slug', $slug_new)->withTrashed()->get()->count() > 0) {
+        while (PostCategory::where('slug', $slug_new)->withTrashed()->get()->count() > 0) {
             $slug_new = $slug . '_' . ++$i;
         }
 
@@ -255,7 +255,7 @@ class PostCategoriesService
         $ids = explode(',', rtrim($data->ids, ','));
 
         foreach ($ids as $key => $id) {
-            Category::find($id)->update(['parent_id' => $parent_id, 'sort' => $key]);
+            PostCategory::find($id)->update(['parent_id' => $parent_id, 'sort' => $key]);
         }
     }
 

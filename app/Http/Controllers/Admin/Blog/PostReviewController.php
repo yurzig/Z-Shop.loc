@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin\Blog;
 
 use App\Http\Controllers\Controller;
-use App\Models\Blog\Review;
+use App\Models\Blog\PostReview;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class ReviewController extends Controller
+class PostReviewController extends Controller
 {
     private $perPage;
 
@@ -48,7 +48,7 @@ class ReviewController extends Controller
     /**
      * Редактирование отзыва(форма)
      */
-    public function edit(Review $review): View
+    public function edit(PostReview $review): View
     {
 
         return view('admin.blog.reviews.edit', compact('review'));
@@ -57,7 +57,7 @@ class ReviewController extends Controller
     /**
      * Редактирование отзыва(сохранение)
      */
-    public function update(Request $request, Review $review): RedirectResponse
+    public function update(Request $request, PostReview $review): RedirectResponse
     {
 
         return postReviews()->update($request, $review);
@@ -66,7 +66,7 @@ class ReviewController extends Controller
     /**
      * Удаление отзыва поста.
      */
-    public function destroy(Review $review): RedirectResponse
+    public function destroy(PostReview $review): RedirectResponse
     {
 
         return postReviews()->delete($review);

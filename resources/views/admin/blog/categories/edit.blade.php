@@ -11,7 +11,7 @@ $page = 'admin.blog.categories.';
 @extends('layouts.admin')
 
 @push('styles')
-    @vite('resources/css/admin/blog_categories.css')
+    @vite('resources/css/admin/post_categories.css')
 @endpush
 
 @section('title', $pageName)
@@ -144,5 +144,5 @@ $page = 'admin.blog.categories.';
 @endsection
 @push('scripts')
     <script src="{{ asset('js/Sortable.min.js') }}" defer></script>
-    @vite('resources/js/admin/blog_categories.js')
+    @vite('resources/js/admin/post_categories.js')
 @endpush

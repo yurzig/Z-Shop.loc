@@ -35,7 +35,7 @@ class ShopCategoryObserver
     }
 
     /**
-     * Handle the Category "created" event.
+     * Handle the PostCategory "created" event.
      *
      * @param  \App\Models\Shop\Category  $category
      * @return void
@@ -54,7 +54,7 @@ class ShopCategoryObserver
     }
 
     /**
-     * Handle the Category "updated" event.
+     * Handle the PostCategory "updated" event.
      *
      * @param  \App\Models\Shop\Category  $category
      * @return void
@@ -65,7 +65,7 @@ class ShopCategoryObserver
     }
 
     /**
-     * Handle the Category "deleted" event.
+     * Handle the PostCategory "deleted" event.
      *
      * @param  \App\Models\Shop\Category  $category
      * @return void
@@ -76,7 +76,7 @@ class ShopCategoryObserver
     }
 
     /**
-     * Handle the Category "restored" event.
+     * Handle the PostCategory "restored" event.
      *
      * @param  \App\Models\Shop\Category  $category
      * @return void
@@ -87,7 +87,7 @@ class ShopCategoryObserver
     }
 
     /**
-     * Handle the Category "force deleted" event.
+     * Handle the PostCategory "force deleted" event.
      *
      * @param  \App\Models\Shop\Category  $category
      * @return void

@@ -2,7 +2,7 @@
 
 namespace App\ServicesYz;
 
-use App\Models\Blog\Review;
+use App\Models\Blog\PostReview;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -25,7 +25,7 @@ class PostReviewsService
         $filter = self::getFilters();
         $sort = self::getSort(['status', 'asc']);
 
-        $query = Review::query();
+        $query = PostReview::query();
         if($filter) {
             foreach ($filter['val'] as $key => $item) {
                 if ($item) {
@@ -55,7 +55,7 @@ class PostReviewsService
 
         $this->saveValidate($data);
 
-        $review = (new Review())->create($data);
+        $review = (new PostReview())->create($data);
 
         if (!$review) {
 
@@ -68,7 +68,7 @@ class PostReviewsService
     /**
         Обновить отзыв поста
      */
-    public function update(Request $request, Review $review): RedirectResponse
+    public function update(Request $request, PostReview $review): RedirectResponse
     {
         if (empty($review)) {
 
@@ -96,7 +96,7 @@ class PostReviewsService
     /**
         Удалить отзыв поста
      */
-    public function delete (Review $review): RedirectResponse
+    public function delete (PostReview $review): RedirectResponse
     {
         $item = $review;
 

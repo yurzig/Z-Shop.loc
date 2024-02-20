@@ -2,8 +2,8 @@
 
 namespace App\ServicesYz;
 
-use App\Models\Blog\Review;
-use App\Models\Blog\Tag;
+use App\Models\Blog\PostReview;
+use App\Models\Blog\PostTag;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -21,7 +21,7 @@ class PostTagsService
         $filter = self::getFilters();
         $sort = self::getSort(['id', 'asc']);
 
-        $query = Tag::query();
+        $query = PostTag::query();
         if($filter) {
             foreach ($filter['val'] as $key => $item) {
                 if ($item) {
@@ -45,7 +45,7 @@ class PostTagsService
 
         $this->saveValidate($data);
 
-        $tag = (new Tag())->create($data);
+        $tag = (new PostTag())->create($data);
 
         if (!$tag) {
 
@@ -58,7 +58,7 @@ class PostTagsService
     /**
         Обновить тег
      */
-    public function update(Request $request, Tag $tag): RedirectResponse
+    public function update(Request $request, PostTag $tag): RedirectResponse
     {
         if (empty($tag)) {
 
@@ -84,7 +84,7 @@ class PostTagsService
     /**
         Удалить тег
      */
-    public function delete (Tag $tag): RedirectResponse
+    public function delete (PostTag $tag): RedirectResponse
     {
         $item = $tag;
 
@@ -183,7 +183,7 @@ class PostTagsService
     public function getForSelect()
     {
 
-        return Tag::select('id', 'title')->toBase()->get();
+        return PostTag::select('id', 'title')->toBase()->get();
     }
 
 }

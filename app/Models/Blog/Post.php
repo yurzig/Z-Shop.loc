@@ -11,8 +11,6 @@ class Post extends Model
 {
     use SoftDeletes;
 
-    protected  $table = 'blog_posts';
-
     protected $fillable = [
         'category_id',
         'user_id',
@@ -35,7 +33,7 @@ class Post extends Model
     public function reviews(): HasMany
     {
 
-        return $this->hasMany(Review::class,'post_id', 'id');
+        return $this->hasMany(PostReview::class,'post_id', 'id');
     }
 
     // Добавляем в модель уникальное поле slug
@@ -46,13 +44,5 @@ class Post extends Model
             set: fn () => posts()->setSlug($this),
         );
     }
-    //
-//    protected function tags(): Attribute
-//    {
-//
-//        return new Attribute(
-//            set: fn () => (is_array($this)) ? json_encode($this, JSON_UNESCAPED_UNICODE) : $this,
-//        );
-//    }
 
 }

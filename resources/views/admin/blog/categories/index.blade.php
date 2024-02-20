@@ -5,7 +5,7 @@ $pageName = 'Категории статей';
 @extends('layouts.admin')
 
 @push('styles')
-    @vite('resources/css/admin/blog_categories.css')
+    @vite('resources/css/admin/post_categories.css')
 @endpush
 
 @section('title', $pageName)
@@ -17,6 +17,10 @@ $pageName = 'Категории статей';
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap py-2">
         <div class="col-lg-4 box">
+            <a class="btn btn-info"
+               href="{{ route('admin.blog.categories.add', 0) }}">
+                Ввод
+            </a>
             {!! postCategories()->menuTree(0) !!}
         </div>
 
@@ -26,5 +30,5 @@ $pageName = 'Категории статей';
 @endsection
 @push('scripts')
     <script src="{{ asset('js/Sortable.min.js') }}" defer></script>
-    @vite('resources/js/admin/blog_categories.js')
+    @vite('resources/js/admin/post_categories.js')
 @endpush

@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\Blog\PostController;
-use App\Http\Controllers\Admin\Blog\ReviewController;
-use App\Http\Controllers\Admin\Blog\TagController;
+use App\Http\Controllers\Admin\Blog\PostReviewController;
+use App\Http\Controllers\Admin\Blog\PostTagController;
 
 Route::group(
     [
@@ -50,9 +50,9 @@ Route::group(
         'namespace' => 'App\Http\Controllers\Admin\Blog'
     ],
     function () {
-        Route::get('categories/add/{parent}', 'CategoryController@add')->name('categories.add');
-        Route::post('categories/sortable', 'CategoryController@sortable')->name('categories.sortable');
-        Route::resource('categories', 'CategoryController')->except(['show', 'create'])->names('categories');
+        Route::get('categories/add/{parent}', 'PostCategoryController@add')->name('categories.add');
+        Route::post('categories/sortable', 'PostCategoryController@sortable')->name('categories.sortable');
+        Route::resource('categories', 'PostCategoryController')->except(['show', 'create'])->names('categories');
 
         Route::controller(PostController::class)->group(function () {
             Route::post('posts/columns', 'columns')->name('posts.columns');
@@ -62,21 +62,21 @@ Route::group(
         });
         Route::resource('posts', 'PostController')->except(['show'])->names('posts');
 
-        Route::controller(ReviewController::class)->group(function () {
+        Route::controller(PostReviewController::class)->group(function () {
             Route::post('reviews/columns', 'columnsSave')->name('reviews.columns');
             Route::post('reviews/filter', 'filter')->name('reviews.filter');
             Route::post('reviews/reset', 'filterReset')->name('reviews.reset');
             Route::get('reviews/sort', 'sort')->name('reviews.sort');
         });
-        Route::resource('reviews', 'ReviewController')->except(['show'])->names('reviews');
+        Route::resource('reviews', 'PostReviewController')->except(['show'])->names('reviews');
 
-        Route::controller(TagController::class)->group(function () {
+        Route::controller(PostTagController::class)->group(function () {
             Route::post('tags/columns', 'columnsSave')->name('tags.columns');
             Route::post('tags/filter', 'filter')->name('tags.filter');
             Route::post('tags/reset', 'filterReset')->name('tags.reset');
             Route::get('tags/sort', 'sort')->name('tags.sort');
         });
-        Route::resource('tags', 'TagController')->except(['show'])->names('tags');
+        Route::resource('tags', 'PostTagController')->except(['show'])->names('tags');
     }
 );
 
@@ -98,8 +98,8 @@ Route::group(
 //                    ->except(['show'])
 //                    ->names('products');
 
-    Route::get('categories/add/{parent}', 'CategoryController@add')->name('categories.add');
-    Route::resource('categories', 'CategoryController')->except(['show', 'create'])->names('categories');
+    Route::get('categories/add/{parent}', 'PostCategoryController@add')->name('categories.add');
+    Route::resource('categories', 'PostCategoryController')->except(['show', 'create'])->names('categories');
 
     }
 );
