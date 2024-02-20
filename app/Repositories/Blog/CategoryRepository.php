@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Blog;
 
-use App\Models\Blog\Category as Model;
+use App\Models\Blog\PostCategory as Model;
 use App\Repositories\CoreRepository;
 
 /**

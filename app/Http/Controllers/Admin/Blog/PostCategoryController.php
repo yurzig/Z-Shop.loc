@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin\Blog;
 
 use App\Http\Controllers\Controller;
-use App\Models\Blog\Category;
+use App\Models\Blog\PostCategory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 
-class CategoryController extends Controller
+class PostCategoryController extends Controller
 {
 
     public function __construct()
@@ -45,7 +45,7 @@ class CategoryController extends Controller
     /**
      * Редактирование категории (форма)
      */
-    public function edit(Category $category): View
+    public function edit(PostCategory $category): View
     {
         $categories = postCategories()->getTree();
 
@@ -55,7 +55,7 @@ class CategoryController extends Controller
     /**
      * Редактирование категории (сохранить)
      */
-    public function update(Request $request, Category $category): RedirectResponse
+    public function update(Request $request, PostCategory $category): RedirectResponse
     {
 
         return postCategories()->update($request, $category);
@@ -64,7 +64,7 @@ class CategoryController extends Controller
     /**
         Удаление категории.
      */
-    public function destroy(Category $category): RedirectResponse
+    public function destroy(PostCategory $category): RedirectResponse
     {
 
         return postCategories()->delete($category);

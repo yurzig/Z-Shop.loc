@@ -118,7 +118,7 @@ class PostsService
     public function saveValidate( array $data ): void
     {
         Validator::make( $data, [
-            'category_id' => 'required|integer|exists:blog_categories,id',
+            'category_id' => 'required|integer|exists:post_categories,id',
             'user_id' => 'required|integer|exists:users,id',
             'title' => 'required|min:3|max:200',
             'slug' => 'max:200',

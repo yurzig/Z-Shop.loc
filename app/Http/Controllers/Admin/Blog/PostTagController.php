@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin\Blog;
 
 use App\Http\Controllers\Controller;
-use App\Models\Blog\Review;
-use App\Models\Blog\Tag;
+use App\Models\Blog\PostReview;
+use App\Models\Blog\PostTag;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class TagController extends Controller
+class PostTagController extends Controller
 {
     private $perPage;
 
@@ -49,7 +49,7 @@ class TagController extends Controller
     /**
      * Редактирование тега(форма)
      */
-    public function edit(Tag $tag): View
+    public function edit(PostTag $tag): View
     {
 
         return view('admin.blog.tags.edit', compact('tag'));
@@ -58,7 +58,7 @@ class TagController extends Controller
     /**
      * Редактирование тега(сохранение)
      */
-    public function update(Request $request, Tag $tag): RedirectResponse
+    public function update(Request $request, PostTag $tag): RedirectResponse
     {
 
         return postTags()->update($request, $tag);
@@ -67,7 +67,7 @@ class TagController extends Controller
     /**
      * Удаление тега.
      */
-    public function destroy(Tag $tag)
+    public function destroy(PostTag $tag)
     {
 
         return postReviews()->delete($review);

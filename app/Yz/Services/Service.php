@@ -1,0 +1,1 @@
+<?phpnamespace App\Yz\Services;class Service{    protected function getModel(): string    {        $class = get_class($this);        $class_name = explode('\\', $class);        $class_name = end($class_name);        $model_name = str($class_name)->replace('Service', '', $class_name)->singular();        return $model_name;    }}
