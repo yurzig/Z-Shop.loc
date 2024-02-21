@@ -57,7 +57,7 @@ Route::group(
         Route::controller(PostController::class)->group(function () {
             Route::post('posts/columns', 'columns')->name('posts.columns');
             Route::post('posts/filter', 'filter')->name('posts.filter');
-            Route::get('posts/reset', 'filtersReset')->name('posts.reset');
+            Route::get('posts/reset', 'resetFilters')->name('posts.reset');
             Route::get('posts/sort', 'sort')->name('posts.sort');
         });
         Route::resource('posts', 'PostController')->except(['show'])->names('posts');
@@ -65,7 +65,7 @@ Route::group(
         Route::controller(PostReviewController::class)->group(function () {
             Route::post('reviews/columns', 'columnsSave')->name('reviews.columns');
             Route::post('reviews/filter', 'filter')->name('reviews.filter');
-            Route::post('reviews/reset', 'filterReset')->name('reviews.reset');
+            Route::post('reviews/reset', 'resetFilters')->name('reviews.reset');
             Route::get('reviews/sort', 'sort')->name('reviews.sort');
         });
         Route::resource('reviews', 'PostReviewController')->except(['show'])->names('reviews');
@@ -73,7 +73,7 @@ Route::group(
         Route::controller(PostTagController::class)->group(function () {
             Route::post('tags/columns', 'columnsSave')->name('tags.columns');
             Route::post('tags/filter', 'filter')->name('tags.filter');
-            Route::post('tags/reset', 'filterReset')->name('tags.reset');
+            Route::post('tags/reset', 'resetFilters')->name('tags.reset');
             Route::get('tags/sort', 'sort')->name('tags.sort');
         });
         Route::resource('tags', 'PostTagController')->except(['show'])->names('tags');

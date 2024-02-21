@@ -95,9 +95,9 @@ class PostController extends Controller
     /**
      * Сброс и сохранение в сессии примененных фильтров.
      */
-    public function filtersReset(): RedirectResponse
+    public function resetFilters(): RedirectResponse
     {
-        posts()->filtersReset();
+        posts()->resetFilters();
 
         return to_route('admin.blog.posts.index');
     }

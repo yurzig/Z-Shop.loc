@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('blog_posts', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->references('id')->on('blog_categories')->onDelete('CASCADE');
+            $table->foreignId('category_id')->references('id')->on('post_categories')->onDelete('CASCADE');
             $table->foreignId('user_id')->references('id')->on('users');
             $table->string('title');
             $table->string('slug')->unique();
@@ -38,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('blog_posts');
+        Schema::dropIfExists('posts');
     }
 };

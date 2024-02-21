@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('blog_reviews', function (Blueprint $table) {
+        Schema::create('post_reviews', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('post_id')->index()->references('id')->on('blog_posts')->onDelete('CASCADE');
+            $table->foreignId('post_id')->index()->references('id')->on('posts')->onDelete('CASCADE');
             $table->foreignId('user_id')->references('id')->on('users');
             $table->string('name')->nullable();
             $table->string('email')->nullable();
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('blog_reviews');
+        Schema::dropIfExists('post_reviews');
     }
 };

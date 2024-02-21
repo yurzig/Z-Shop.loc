@@ -4,6 +4,8 @@ namespace App\ServicesYz;
 
 use App\Models\Blog\PostReview;
 use App\Models\Blog\PostTag;
+use App\Yz\Services\Service;
+use App\Yz\Services\Traits\Test;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -11,8 +13,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 
-class PostTagsService
+class PostTagsService extends Service
 {
+    use Test;
+
     /**
      * Получить список тегов
      */
@@ -60,6 +64,7 @@ class PostTagsService
      */
     public function update(Request $request, PostTag $tag): RedirectResponse
     {
+        $this->Test();
         if (empty($tag)) {
 
             return back()
