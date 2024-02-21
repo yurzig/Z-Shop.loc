@@ -3,20 +3,16 @@
 namespace App\ServicesYz;
 
 use App\Models\Blog\Post;
-use App\Yz\Services\Traits\GetColumns;
-use App\Yz\Services\Traits\GetFilters;
-use App\Yz\Services\Traits\ResetFilters;
-use App\Yz\Services\Traits\SetColumns;
-use App\Yz\Services\Traits\SetFilters;
+use App\Yz\Services\Traits\ACTIONS;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
+//use Illuminate\Support\Str;
 use App\Yz\Services\Service;
 
 class PostsService extends Service
 {
-    use SetColumns, GetColumns, SetFilters, GetFilters, ResetFilters;
+    use ACTIONS;
     public const STATUS = [
         1 => 'черновик',
         2 => 'опубликована',
@@ -133,71 +129,6 @@ class PostsService extends Service
         ])->validate();
     }
 
-    /**
-     * Сохранение в сессии списка видимых колонок.
-     */
-//    public function setColumns(array $fields): void
-//    {
-//        session(['posts_columns' => $fields]);
-//    }
-
-    /**
-     * Получить список видимых колонок.
-     */
-//    public function getColumns(array $defaultFields): array
-//    {
-//
-//        return session('posts_columns', $defaultFields);
-//    }
-
-    /**
-     * Сохранение в сессии примененных фильтров.
-     */
-//    public function setFilters(array $filters): void
-//    {
-//        session(['posts_filter' => $filters]);
-//    }
-
-    /**
-     * Получение примененных фильтров.
-     */
-//    public function getFilters(): array
-//    {
-//
-//        return session('posts_filter', []);
-//    }
-
-    /**
-     * Сброс и сохранение в сессии примененных фильтров.
-     */
-//    public function filtersReset(): void
-//    {
-//        session(['posts_filter' => []]);
-//    }
-
-    /**
-     * Сохранение в сессии поля и направления сортировки.
-     */
-    public function setSort(Request $request): void
-    {
-        $direction = 'asc';
-        if ($request->session()->has('posts_sort')) {
-            $sort = session('posts_sort');
-            if ($sort[0] === $request->order) {
-                $direction = $sort[1] === 'asc' ? 'desc' : 'asc';
-            }
-        }
-
-        session(['posts_sort' => [$request->order, $direction]]);
-    }
-    /**
-     * Получение поля и направления сортировки.
-     */
-    public function getSort(array $defaultSort): array
-    {
-
-        return session('posts_sort', $defaultSort);
-    }
 
     /*
      * Получить статусы поста
@@ -217,7 +148,7 @@ class PostsService extends Service
             return $post->slug;
         }
 
-        $slug = Str::slug($post->title);
+        $slug = str($post->title)->slug();
         $slug_new = $slug;
 
         $i = 0;
