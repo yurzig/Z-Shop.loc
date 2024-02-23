@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Yz\Debug\Controllers\TestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', '\App\Http\Controllers\HomeController@index')->name('home');
+Route::get('/debug/test', [TestController::class, 'index'])->name('debug.test');
+
 //Route::get('/', function () {
 //    return view('welcome');
 //});

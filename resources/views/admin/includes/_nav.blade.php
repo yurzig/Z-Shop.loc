@@ -149,6 +149,12 @@ $menuItems = [
         'url' => route('admin.settings.index'),
         'role' => 'admin',
     ],
+    'tests' => [
+        'name' => 'Тесты',
+        'class' => 'fa-microscope',
+        'url' => route('debug.test'),
+        'role' => 'admin',
+    ],
 ];
 $arrayRoute = explode('.', Route::currentRouteName());
 array_shift($arrayRoute);

@@ -3,15 +3,17 @@
 namespace App\ServicesYz;
 
 use App\Models\Blog\PostReview;
+use App\Yz\Services\Service;
+use App\Yz\Services\Traits\ACTIONS;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 
-class PostReviewsService
+class PostReviewsService extends Service
 {
+    use ACTIONS;
     public const STATUS = [
         1 => 'Скрыт',
         2 => 'Опубликован',
@@ -128,73 +130,6 @@ class PostReviewsService
         ])->validate();
     }
 
-    /**
-     * Сохранение в сессии списка видимых колонок.
-     */
-    public function setColumns(array $fields): void
-    {
-        session(['post_reviews_columns' => $fields]);
-    }
-
-    /**
-     * Получить список видимых колонок.
-     */
-    public function getColumns(array $defaultFields): array
-    {
-
-        return session('post_reviews_columns', $defaultFields);
-    }
-
-    /**
-     * Сохранение в сессии примененных фильтров.
-     */
-    public function setFilters(array $filters): void
-    {
-        session(['post_reviews_filter' => $filters]);
-    }
-
-    /**
-     * Получение примененных фильтров.
-     */
-    public function getFilters(): array
-    {
-
-        return session('post_reviews_filter', []);
-    }
-
-    /**
-     * Сброс и сохранение в сессии примененных фильтров.
-     */
-    public function filtersReset(): void
-    {
-        session(['post_reviews_filter' => []]);
-    }
-
-    /**
-     * Сохранение в сессии поля и направления сортировки.
-     */
-    public function setSort(Request $request): void
-    {
-        $direction = 'asc';
-        if ($request->session()->has('post_reviews_sort')) {
-            $sort = session('post_reviews_sort');
-            if ($sort[0] === $request->order) {
-                $direction = $sort[1] === 'asc' ? 'desc' : 'asc';
-            }
-        }
-
-        session(['post_reviews_sort' => [$request->order, $direction]]);
-    }
-
-    /**
-     * Получение поля и направления сортировки.
-     */
-    public function getSort(array $defaultSort): array
-    {
-
-        return session('post_reviews_sort', $defaultSort);
-    }
-
     /*
      * Получить статусы отзыва
     */
@@ -210,16 +145,4 @@ class PostReviewsService
         return self::STATUS[$id];
     }
 
-    /**
-     * Получение даты/времени по Москве
-     */
-//    public function getMoscowTime($value): string
-//    {
-//        if($value) {
-//
-//            return Carbon::createFromFormat('Y-m-d H:i:s', $value)->timezone('Europe/Moscow');
-//        }
-//
-//        return '';
-//    }
 }

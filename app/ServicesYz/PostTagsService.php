@@ -2,20 +2,18 @@
 
 namespace App\ServicesYz;
 
-use App\Models\Blog\PostReview;
 use App\Models\Blog\PostTag;
 use App\Yz\Services\Service;
+use App\Yz\Services\Traits\ACTIONS;
 use App\Yz\Services\Traits\Test;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 
 class PostTagsService extends Service
 {
-    use Test;
+    use ACTIONS;
 
     /**
      * Получить список тегов
@@ -113,73 +111,6 @@ class PostTagsService extends Service
         Validator::make( $data, [
             'title' => 'required',
         ])->validate();
-    }
-
-    /**
-     * Сохранение в сессии списка видимых колонок.
-     */
-    public function setColumns(array $fields): void
-    {
-        session(['post_tags_columns' => $fields]);
-    }
-
-    /**
-     * Получить список видимых колонок.
-     */
-    public function getColumns(array $defaultFields): array
-    {
-
-        return session('post_tags_columns', $defaultFields);
-    }
-
-    /**
-     * Сохранение в сессии примененных фильтров.
-     */
-    public function setFilters(array $filters): void
-    {
-        session(['post_tags_filter' => $filters]);
-    }
-
-    /**
-     * Получение примененных фильтров.
-     */
-    public function getFilters(): array
-    {
-
-        return session('post_tags_filter', []);
-    }
-
-    /**
-     * Сброс и сохранение в сессии примененных фильтров.
-     */
-    public function filtersReset(): void
-    {
-        session(['post_tags_filter' => []]);
-    }
-
-    /**
-     * Сохранение в сессии поля и направления сортировки.
-     */
-    public function setSort(Request $request): void
-    {
-        $direction = 'asc';
-        if ($request->session()->has('post_tags_sort')) {
-            $sort = session('post_tags_sort');
-            if ($sort[0] === $request->order) {
-                $direction = $sort[1] === 'asc' ? 'desc' : 'asc';
-            }
-        }
-
-        session(['post_tags_sort' => [$request->order, $direction]]);
-    }
-
-    /**
-     * Получение поля и направления сортировки.
-     */
-    public function getSort(array $defaultSort): array
-    {
-
-        return session('post_tags_sort', $defaultSort);
     }
 
     /**

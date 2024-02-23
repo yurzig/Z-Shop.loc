@@ -7,7 +7,6 @@ use App\Yz\Services\Traits\ACTIONS;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-//use Illuminate\Support\Str;
 use App\Yz\Services\Service;
 
 class PostsService extends Service
@@ -167,4 +166,15 @@ class PostsService extends Service
 
         return Post::select('id', 'title')->toBase()->get();
     }
+
+    /**
+     * Получить список постов с заданными тегами
+     */
+    public function getByTags(array $tags): object
+    {
+
+        return Post::whereJsonContains('tags', $tags)->get();
+    }
+
+
 }
