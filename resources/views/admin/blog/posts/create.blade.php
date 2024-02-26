@@ -7,6 +7,7 @@ $help = [
     'excerpt' => 'Краткое описание статьи',
     'content' => 'Текст статьи',
     'status' => 'Укажите статус статьи(по-умолчанию - черновик)',
+    'tags' => 'Укажите теги связанные с этой статьей',
     'published_at' => 'Дата публикации статьи',
 ];
 
@@ -71,7 +72,7 @@ $page = 'admin.blog.posts.';
                                         <div class="form-group row mandatory">
                                             <label class="col-sm-4 form-control-label">Автор</label>
                                             <div class="col-sm-8">
-                                                <select class="form-select item-status" required="required"
+                                                <select class="form-select item-status select2" required="required"
                                                         name="user_id">
                                                     @foreach (users()->getForSelect() as $user)
                                                         <option value={{ $user->id }} @selected($user->id === Auth::id())>{{ $user->name }}</option>
@@ -113,6 +114,19 @@ $page = 'admin.blog.posts.';
                                             </div>
                                             <div class="col-sm-12 help-text">{{ $help['status'] }}</div>
                                         </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 form-control-label">Теги</label>
+                                            <div class="col-sm-8">
+                                                <select class="form-select item-status select2"
+                                                        name="tags[]" multiple="multiple">
+                                                    @foreach (postTags()->getForSelect() as $tag) {
+                                                        <option value='{{ $tag->title }}'>{{ $tag->title }}</option>";
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-12 help-text">{{ $help['tags'] }}</div>
+                                        </div>
+
                                         <div class="form-group row">
                                             <label class="col-sm-4 form-control-label">Дата публикации</label>
                                             <div class="col-sm-8">

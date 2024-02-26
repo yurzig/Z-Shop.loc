@@ -120,7 +120,7 @@ class PostReviewsService extends Service
     public function saveValidate( array $data ): void
     {
         Validator::make( $data, [
-            'post_id' => 'required|integer|exists:blog_posts,id',
+            'post_id' => 'required|integer|exists:posts,id',
             'user_id' => 'required|integer|exists:users,id',
             'rating' => 'nullable|integer',
             'comment' => 'string|max:2000',

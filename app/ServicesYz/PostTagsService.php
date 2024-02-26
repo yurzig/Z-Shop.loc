@@ -5,7 +5,6 @@ namespace App\ServicesYz;
 use App\Models\Blog\PostTag;
 use App\Yz\Services\Service;
 use App\Yz\Services\Traits\ACTIONS;
-use App\Yz\Services\Traits\Test;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -62,7 +61,6 @@ class PostTagsService extends Service
      */
     public function update(Request $request, PostTag $tag): RedirectResponse
     {
-        $this->Test();
         if (empty($tag)) {
 
             return back()
@@ -100,7 +98,7 @@ class PostTagsService extends Service
 
         return redirect()
             ->route('admin.blog.tags.index')
-            ->with(['success' => "Удалена запись id[$item->id] - $item->title"]);
+            ->with(['success' => "Удалена запись id[$item->id] - $item->tag"]);
     }
 
     /**
@@ -109,7 +107,7 @@ class PostTagsService extends Service
     public function saveValidate( array $data ): void
     {
         Validator::make( $data, [
-            'title' => 'required',
+            'tag' => 'required|unique:post_tags',
         ])->validate();
     }
 
@@ -119,7 +117,7 @@ class PostTagsService extends Service
     public function getForSelect()
     {
 
-        return PostTag::select('id', 'title')->toBase()->get();
+        return PostTag::select('id', 'tag')->toBase()->get();
     }
 
 }

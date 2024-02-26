@@ -1,15 +1,16 @@
 <?php
 $help = [
-    'category_id' => '',
-    'user_id' => '',
-    'title' => '',
-    'slug' => '',
-    'excerpt' => '',
-    'content' => '',
-    'status' => '',
-    'published_at' => '',
-    'meta_title' => '',
-    'meta_description' => '',
+    'category_id' => 'Необходимо привязать статью к категории',
+    'user_id' => 'Необходимо указать автора статьи',
+    'title' => 'Заголовок статьи',
+    'slug' => 'Url статьи(если не указать, то формируется автоматически)',
+    'excerpt' => 'Краткое описание статьи',
+    'content' => 'Текст статьи',
+    'status' => 'Укажите статус статьи(по-умолчанию - черновик)',
+    'tags' => 'Укажите теги связанные с этой статьей',
+    'published_at' => 'Дата публикации статьи',
+    'meta_title' => 'Заголовок статьи для SEO',
+    'meta_description' => 'Краткое описание статьи для SEO',
 ];
 
 $pageName = 'Редактирование статьи';
@@ -143,7 +144,7 @@ $page = 'admin.blog.posts.';
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="col-sm-12 help-text">{{ $help['status'] }}</div>
+                                            <div class="col-sm-12 help-text">{{ $help['tags'] }}</div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-4 form-control-label">Дата публикации</label>

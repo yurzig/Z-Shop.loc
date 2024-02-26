@@ -1,7 +1,7 @@
 <?php
 $help = [
     'id' => '',
-    'title' => '',
+    'tag' => '',
 ];
 
 $pageName = 'Новый тег';
@@ -48,7 +48,7 @@ $page = 'admin.blog.tags.';
                                         <label class="col-sm-4 form-control-label">Тег</label>
                                         <div class="col-sm-8">
                                             <input class="form-control" type="text"
-                                                   name="title"
+                                                   name="tag"
                                                    placeholder="Тег"
                                                    value="{{ old('tag') }}">
                                         </div>

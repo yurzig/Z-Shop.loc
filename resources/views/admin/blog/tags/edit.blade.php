@@ -1,6 +1,6 @@
 <?php
 $help = [
-    'title' => '',
+    '$tag' => '',
 ];
 
 $pageName = 'Редактирование тега';
@@ -11,7 +11,7 @@ $page = 'admin.blog.tags.';
 @section('title', $pageName)
 
 @section('header-block')
-    <span>{{ $pageName }}: ({{ $tag->id }}) - {{ $tag->title }}</span>
+    <span>{{ $pageName }}: ({{ $tag->id }}) - {{ $tag->tag }}</span>
     @include('admin.includes._header_block')
 @endsection
 
@@ -56,9 +56,9 @@ $page = 'admin.blog.tags.';
                                         <label class="col-sm-4 form-control-label">Тег</label>
                                         <div class="col-sm-8">
                                             <input class="form-control" type="text"
-                                                   name="title"
+                                                   name="tag"
                                                    placeholder="Тег"
-                                                   value="{{ old('title', $tag->title) }}">
+                                                   value="{{ old('tag', $tag->tag) }}">
                                         </div>
                                     </div>
                                 </div>

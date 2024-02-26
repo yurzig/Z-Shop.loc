@@ -1,14 +1,14 @@
 <?php
 $fields = [
     ['name' => 'Id',              'dbName' => 'id',         'type' => 'text', 'op' => '=',    'class' => ''],
-    ['name' => 'Тег',             'dbName' => 'title',      'type' => 'text', 'op' => '=',    'class' => ''],
+    ['name' => 'Тег',             'dbName' => 'tag',        'type' => 'text', 'op' => '=',    'class' => ''],
     ['name' => 'Дата создания',   'dbName' => 'created_at', 'type' => 'date', 'op' => '=',    'class' => ''],
     ['name' => 'Дата обновления', 'dbName' => 'updated_at', 'type' => 'date', 'op' => '=',    'class' => ''],
 ];
 
 $sort = postTags()->getSort(['id', 'asc']);
 $filter = postTags()->getFilters();
-$columns = postTags()->getColumns(['id', 'title', 'created_at']);
+$columns = postTags()->getColumns(['id', 'tag', 'created_at']);
 
 $pageName = 'Теги';
 $page = 'admin.blog.tags.';
