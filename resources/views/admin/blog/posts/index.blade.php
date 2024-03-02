@@ -62,7 +62,7 @@ if (in_array('status',$columns)) {
 }
 
 $pageName = 'Статьи';
-$page = 'admin.blog.posts.';
+$page = 'admin.posts.';
 ?>
 @extends('layouts.admin')
 

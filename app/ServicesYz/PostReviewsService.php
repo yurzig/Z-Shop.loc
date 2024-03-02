@@ -4,6 +4,7 @@ namespace App\ServicesYz;
 
 use App\Models\Blog\PostReview;
 use App\Yz\Services\Service;
+use App\Yz\Services\Traits\ActionAfterSaving;
 use App\Yz\Services\Traits\ACTIONS;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Validator;
 
 class PostReviewsService extends Service
 {
-    use ACTIONS;
+    use ACTIONS, ActionAfterSaving;
     public const STATUS = [
         1 => 'Скрыт',
         2 => 'Опубликован',
@@ -64,7 +65,7 @@ class PostReviewsService extends Service
             return back()->withErrors(['msg' => 'Ошибка сохранения'])->withInput();
         }
 
-        return to_route('admin.blog.reviews.edit', $review)->with(['success' => 'Успешно сохранено']);
+        return $this->actionAfterSaving($review, $request);
     }
 
     /**
@@ -82,7 +83,6 @@ class PostReviewsService extends Service
         $data = $request->all();
         $data['editor'] = Auth::id();
 
-
         $this->saveValidate($data);
 
         $result = $review->update($data);
@@ -92,7 +92,7 @@ class PostReviewsService extends Service
             return back()->withErrors(['msg' => 'Ошибка сохранения'])->withInput();
         }
 
-        return to_route('admin.blog.reviews.edit', $review)->with(['success' => 'Успешно сохранено']);
+        return $this->actionAfterSaving($review, $request);
     }
 
     /**

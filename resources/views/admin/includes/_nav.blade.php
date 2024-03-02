@@ -6,31 +6,31 @@ $menuItems = [
     'blog' => [
         'name' => 'Статьи',
         'class' => 'fa-address-card-o',
-        'url' => 'blog',
+        'url' => 'post',
         'role' => 'manage-blog',
         'submenu' => [
-            'blog.categories' => [
+            'post.categories' => [
                 'name' => 'Категории',
                 'class' => 'fa-sitemap',
-                'url' => route('admin.blog.categories.index'),
+                'url' => route('admin.post.categories.index'),
                 'role' => 'manage-blog',
             ],
-            'blog.posts' => [
+            'posts' => [
                 'name' => 'Статьи',
                 'class' => 'fa-address-card-o',
-                'url' => route('admin.blog.posts.index'),
+                'url' => route('admin.posts.index'),
                 'role' => 'manage-blog',
             ],
-            'blog.reviews' => [
+            'post.reviews' => [
                 'name' => 'Отзывы',
                 'class' => 'fa-comments',
-                'url' => route('admin.blog.reviews.index'),
+                'url' => route('admin.post.reviews.index'),
                 'role' => 'manage-blog',
             ],
-            'blog.tags' => [
+            'post.tags' => [
                 'name' => 'Теги',
                 'class' => 'fa-tags',
-                'url' => route('admin.blog.tags.index'),
+                'url' => route('admin.post.tags.index'),
                 'role' => 'manage-blog',
             ],
 

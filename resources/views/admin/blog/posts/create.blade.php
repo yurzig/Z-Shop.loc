@@ -12,7 +12,7 @@ $help = [
 ];
 
 $pageName = 'Новая статья';
-$page = 'admin.blog.posts.';
+$page = 'admin.posts.';
 ?>
 
 @extends('layouts.admin')
@@ -120,7 +120,7 @@ $page = 'admin.blog.posts.';
                                                 <select class="form-select item-status select2"
                                                         name="tags[]" multiple="multiple">
                                                     @foreach (postTags()->getForSelect() as $tag) {
-                                                        <option value='{{ $tag->title }}'>{{ $tag->title }}</option>";
+                                                        <option value='{{ $tag->tag }}'>{{ $tag->tag }}</option>";
                                                     @endforeach
                                                 </select>
                                             </div>

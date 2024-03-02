@@ -37,6 +37,37 @@ $(document).ready(function () {
         language: "ru"
     });
 
+    $(".select2-tag").select2({
+        language: "ru",
+        tags: true,
+        tokenSeparators: [",", " "],
+                createTag: function (params) {
+            var term = $.trim(params.term);
+
+
+            if (term === '') {
+                return null;
+            }
+            return {
+                id: term,
+                text: term,
+                newTag: true // add additional parameters
+            }
+        }
+    });
+    $('.select2-tag').on("change", function(e) {
+        // alert('Вы хотите добавить новый тег:' + e.added.id);
+        console.log(e);
+        if (e.added) {
+                var response = confirm("Do you want to add the new tag " + e.added.id + "?");
+                if (response == true) {
+                    console.log("Will now send new tag to server: " + e.added.id);
+                } else {
+                    console.log("Removing the tag");
+                }
+        }
+    });
+
     $('.row-delete').on('click', function () {
         const text = $(this).closest('tr').find('.js-title').text(),
             modalDelete = new bootstrap.Modal(document.getElementById('confirmDelete'), {});

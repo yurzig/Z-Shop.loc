@@ -4,7 +4,7 @@ $help = [
 ];
 
 $pageName = 'Редактирование тега';
-$page = 'admin.blog.tags.';
+$page = 'admin.post.tags.';
 ?>
 @extends('layouts.admin')
 

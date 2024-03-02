@@ -9,7 +9,7 @@ $help = [
 ];
 
 $pageName = 'Новый отзыв';
-$page = 'admin.blog.reviews.';
+$page = 'admin.post.reviews.';
 ?>
 @extends('layouts.admin')
 

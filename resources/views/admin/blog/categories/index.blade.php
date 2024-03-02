@@ -18,7 +18,7 @@ $pageName = 'Категории статей';
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap py-2">
         <div class="col-lg-4 box">
             <a class="btn btn-info"
-               href="{{ route('admin.blog.categories.add', 0) }}">
+               href="{{ route('admin.post.categories.add', 0) }}">
                 Ввод
             </a>
             {!! postCategories()->menuTree(0) !!}

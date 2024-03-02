@@ -11,7 +11,7 @@ $filter = postTags()->getFilters();
 $columns = postTags()->getColumns(['id', 'tag', 'created_at']);
 
 $pageName = 'Теги';
-$page = 'admin.blog.tags.';
+$page = 'admin.post.tags.';
 ?>
 @extends('layouts.admin')
 

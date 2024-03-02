@@ -4,6 +4,7 @@ namespace App\ServicesYz;
 
 use App\Models\Blog\PostTag;
 use App\Yz\Services\Service;
+use App\Yz\Services\Traits\ActionAfterSaving;
 use App\Yz\Services\Traits\ACTIONS;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 
 class PostTagsService extends Service
 {
-    use ACTIONS;
+    use ACTIONS, ActionAfterSaving;
 
     /**
      * Получить список тегов
@@ -53,7 +54,7 @@ class PostTagsService extends Service
             return back()->withErrors(['msg' => 'Ошибка сохранения'])->withInput();
         }
 
-        return to_route('admin.blog.tags.edit', $tag)->with(['success' => 'Успешно сохранено']);
+        return $this->actionAfterSaving($tag, $request);
     }
 
     /**
@@ -79,7 +80,7 @@ class PostTagsService extends Service
             return back()->withErrors(['msg' => 'Ошибка сохранения'])->withInput();
         }
 
-        return to_route('admin.blog.tags.edit', $tag)->with(['success' => 'Успешно сохранено']);
+        return $this->actionAfterSaving($tag, $request);
     }
 
     /**

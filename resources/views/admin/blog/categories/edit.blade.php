@@ -5,7 +5,7 @@ $help = [
     'parent_id' => '',
 ];
 $pageName = 'Категория статьи';
-$page = 'admin.blog.categories.';
+$page = 'admin.post.categories.';
 ?>
 
 @extends('layouts.admin')

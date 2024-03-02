@@ -14,7 +14,7 @@ $help = [
 ];
 
 $pageName = 'Редактирование статьи';
-$page = 'admin.blog.posts.';
+$page = 'admin.posts.';
 ?>
 
 @extends('layouts.admin')
@@ -137,10 +137,10 @@ $page = 'admin.blog.posts.';
                                         <div class="form-group row">
                                             <label class="col-sm-4 form-control-label">Теги</label>
                                             <div class="col-sm-8">
-                                                <select class="form-select item-status select2"
+                                                <select class="form-select item-status select2-tag"
                                                         name="tags[]" multiple="multiple">
                                                     @foreach (postTags()->getForSelect() as $tag) {
-                                                        <option value='{{ $tag->title }}' @isset( $post->tags ) @selected( in_array($tag->title, $post->tags ) )@endisset>{{ $tag->title }}</option>";
+                                                        <option value='{{ $tag->tag }}' @isset( $post->tags ) @selected( in_array($tag->tag, $post->tags ) )@endisset>{{ $tag->tag }}</option>";
                                                     @endforeach
                                                 </select>
                                             </div>

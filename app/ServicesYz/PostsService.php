@@ -3,6 +3,7 @@
 namespace App\ServicesYz;
 
 use App\Models\Blog\Post;
+use App\Yz\Services\Traits\ActionAfterSaving;
 use App\Yz\Services\Traits\ACTIONS;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -11,7 +12,7 @@ use App\Yz\Services\Service;
 
 class PostsService extends Service
 {
-    use ACTIONS;
+    use ACTIONS, ActionAfterSaving;
     public const STATUS = [
         1 => 'черновик',
         2 => 'опубликована',
@@ -46,6 +47,7 @@ class PostsService extends Service
     public function store(Request $request): RedirectResponse
     {
         $data = $request->input();
+
         $this->saveValidate($data);
 
         $post = (new Post())->create($data);
@@ -55,7 +57,7 @@ class PostsService extends Service
             return back()->withErrors(['msg' => 'Ошибка сохранения'])->withInput();
         }
 
-        return to_route('admin.blog.posts.edit', $post)->with(['success' => 'Успешно сохранено']);
+        return $this->actionAfterSaving($post, $request);
     }
 
     /**
@@ -91,7 +93,7 @@ class PostsService extends Service
             return back()->withErrors(['msg' => 'Ошибка сохранения'])->withInput();
         }
 
-        return to_route('admin.blog.posts.edit', $post)->with(['success' => 'Успешно сохранено']);
+        return $this->actionAfterSaving($post, $request);
     }
 
     /**
@@ -127,7 +129,6 @@ class PostsService extends Service
             'content' => 'required|max:10000',
         ])->validate();
     }
-
 
     /*
      * Получить статусы поста

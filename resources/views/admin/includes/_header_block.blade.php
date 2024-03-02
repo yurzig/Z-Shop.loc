@@ -8,7 +8,7 @@
         <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"></button>
         <ul class="dropdown-menu">
             <li><button type="submit" form="edit-form" class="btn btn-primary w-100" name="action" value="close">и закрыть</button></li>
-            <li><button type="submit" form="edit-form" class="btn btn-primary w-100" name="action" value="edit">и продолжить</button></li>
+            <li><button type="submit" form="edit-form" class="btn btn-primary w-100" name="action" value="edit">и редактировать</button></li>
             <li><button type="submit" form="edit-form" class="btn btn-primary w-100" name="action" value="new">и новый</button></li>
         </ul>
     </div>

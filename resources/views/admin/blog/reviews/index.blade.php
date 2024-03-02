@@ -59,7 +59,7 @@ if (in_array('post_id',$columns)) {
 }
 
 $pageName = 'Отзывы';
-$page = 'admin.blog.reviews.';
+$page = 'admin.post.reviews.';
 ?>
 @extends('layouts.admin')
 
