@@ -37,36 +37,38 @@ $(document).ready(function () {
         language: "ru"
     });
 
-    $(".select2-tag").select2({
-        language: "ru",
+    $('.select2-tag').select2({
         tags: true,
         tokenSeparators: [",", " "],
-                createTag: function (params) {
-            var term = $.trim(params.term);
-
-
-            if (term === '') {
-                return null;
-            }
+        createTag: function (tag) {
             return {
-                id: term,
-                text: term,
-                newTag: true // add additional parameters
+                id: tag.term,
+                text: tag.term,
+                // add indicator:
+                isNew : true
+            };
+        }
+    }).on("select2:select", function(e) {
+        if(e.params.data.isNew){
+
+            let isAdds = confirm("Добавить тег <" + e.params.data.id + ">?");
+            if (!isAdds) {
+                return;
             }
+
+            let data = new FormData();
+
+            data.append('newTag', e.params.data.id);
+
+            requestAjax($(this).data('url'), data, function (response){
+                console.log(response);
+            }, function (error, i, code ){
+                console.log('error-' + error + ' i-' + i + ' code-' + code);
+            });
         }
     });
-    $('.select2-tag').on("change", function(e) {
-        // alert('Вы хотите добавить новый тег:' + e.added.id);
-        console.log(e);
-        if (e.added) {
-                var response = confirm("Do you want to add the new tag " + e.added.id + "?");
-                if (response == true) {
-                    console.log("Will now send new tag to server: " + e.added.id);
-                } else {
-                    console.log("Removing the tag");
-                }
-        }
-    });
+
+
 
     $('.row-delete').on('click', function () {
         const text = $(this).closest('tr').find('.js-title').text(),

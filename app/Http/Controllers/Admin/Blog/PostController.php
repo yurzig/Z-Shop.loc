@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Blog;
 
 use App\Http\Controllers\Controller;
 use App\Models\Blog\Post;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -79,7 +80,7 @@ class PostController extends Controller
     {
         posts()->setColumns($request->fields);
 
-        return to_route('admin.blog.posts.index');
+        return to_route('admin.posts.index');
     }
 
     /**
@@ -89,7 +90,7 @@ class PostController extends Controller
     {
         posts()->setFilters($request->filters);
 
-        return to_route('admin.blog.posts.index');
+        return to_route('admin.posts.index');
     }
 
     /**
@@ -99,7 +100,7 @@ class PostController extends Controller
     {
         posts()->resetFilters();
 
-        return to_route('admin.blog.posts.index');
+        return to_route('admin.posts.index');
     }
 
     /**
@@ -109,7 +110,17 @@ class PostController extends Controller
     {
         posts()->setSort($request);
 
-        return to_route('admin.blog.posts.index');
+        return to_route('admin.posts.index');
+    }
+
+    /**
+     * Добавление тега по запросу ajax
+     */
+    public function addTag(Request $request): JsonResponse
+    {
+        $result = postTags()->addTag($request->newTag);
+
+        return response()->json($result);
     }
 
 }

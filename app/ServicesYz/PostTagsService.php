@@ -120,5 +120,22 @@ class PostTagsService extends Service
 
         return PostTag::select('id', 'tag')->toBase()->get();
     }
+    /**
+        Добавить тег
+     */
+    public function addTag(string $tag)
+    {
+        $data = ['tag' => $tag];
 
+        $this->saveValidate($data);
+
+        $result = (new PostTag())->create($data);
+
+        if (!$result) {
+
+            return 'Ошибка сохранения';
+        }
+
+        return 'ok';
+    }
 }

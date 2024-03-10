@@ -138,7 +138,7 @@ $page = 'admin.posts.';
                                             <label class="col-sm-4 form-control-label">Теги</label>
                                             <div class="col-sm-8">
                                                 <select class="form-select item-status select2-tag"
-                                                        name="tags[]" multiple="multiple">
+                                                        name="tags[]" multiple="multiple" data-url="{{ route($page . 'add_tag') }}" >
                                                     @foreach (postTags()->getForSelect() as $tag) {
                                                         <option value='{{ $tag->tag }}' @isset( $post->tags ) @selected( in_array($tag->tag, $post->tags ) )@endisset>{{ $tag->tag }}</option>";
                                                     @endforeach

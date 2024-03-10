@@ -59,6 +59,7 @@ Route::group(
             Route::post('posts/filter', 'filter')->name('posts.filter');
             Route::get('posts/reset', 'resetFilters')->name('posts.reset');
             Route::get('posts/sort', 'sort')->name('posts.sort');
+            Route::post('posts/add-tag', 'addTag')->name('posts.add_tag');
         });
         Route::resource('posts', 'PostController')->except(['show'])->names('posts');
 
