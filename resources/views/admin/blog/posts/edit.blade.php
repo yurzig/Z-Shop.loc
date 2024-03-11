@@ -8,6 +8,7 @@ $help = [
     'content' => 'Текст статьи',
     'status' => 'Укажите статус статьи(по-умолчанию - черновик)',
     'tags' => 'Укажите теги связанные с этой статьей',
+    'is_published' => 'Признак публикации статьи',
     'published_at' => 'Дата публикации статьи',
     'meta_title' => 'Заголовок статьи для SEO',
     'meta_description' => 'Краткое описание статьи для SEO',
@@ -145,6 +146,15 @@ $page = 'admin.posts.';
                                                 </select>
                                             </div>
                                             <div class="col-sm-12 help-text">{{ $help['tags'] }}</div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 form-control-label">Статья опубликована</label>
+                                            <div class="col-sm-8 form-check form-switch">
+                                                <input class="form-control form-check-input" type="checkbox"
+                                                       name="is_published"
+                                                       value="{{ old('is_published', $post->is_published) }}">
+                                            </div>
+                                            <div class="col-sm-12 help-text">{{ $help['is_published'] }}</div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-4 form-control-label">Дата публикации</label>

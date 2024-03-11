@@ -311,9 +311,15 @@ body.light .btn-theme.light-mode {
 .column-item input {
     margin-right: 0.5rem;
 }
+.form-switch .form-check-input {
+    width: 3em;
+    margin-left: -1.5em;
+}
 .form-check-input {
     background-color: var(--bs-bg-light, #ffffff);
-    border-color: #000;
+    border: 1px solid var(--bs-line, #bbb);
+    width: 25px;
+    height: 25px;
 }
 .form-check-input:checked {
     background-color: var(--bs-primary, #30a0e0);
