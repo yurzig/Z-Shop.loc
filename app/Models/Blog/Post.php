@@ -19,7 +19,7 @@ class Post extends Model
         'excerpt',
         'content',
         'tags',
-        'status',
+        'is_published',
         'seo_title',
         'seo_description',
         'published_at',

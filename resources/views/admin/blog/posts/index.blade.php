@@ -7,7 +7,7 @@ $fields = [
     ['name' => 'Url',              'dbName' => 'slug',             'type' => 'text',   'op' => 'like', 'class' => ''],
     ['name' => 'Аннотация',        'dbName' => 'excerpt',          'type' => 'text',   'op' => 'like', 'class' => ''],
     ['name' => 'Текст статьи',     'dbName' => 'content',          'type' => 'text',   'op' => 'like', 'class' => ''],
-    ['name' => 'Статус',           'dbName' => 'status',           'type' => 'select', 'op' => '=',    'class' => ''],
+    ['name' => 'Опубликована',     'dbName' => 'is_published',     'type' => 'switch',   'op' => '=',    'class' => ''],
     ['name' => 'meta title',       'dbName' => 'meta_title',       'type' => 'text',   'op' => '=',    'class' => ''],
     ['name' => 'meta description', 'dbName' => 'meta_description', 'type' => 'text',   'op' => '=',    'class' => ''],
     ['name' => 'Дата публикации',  'dbName' => 'published_at',     'type' => 'date',   'op' => '=',    'class' => ' class=flatpickr-input'],
@@ -17,7 +17,7 @@ $fields = [
 
 $sort = posts()->getSort(['id', 'asc']);
 $filter = posts()->getFilters();
-$columns = posts()->getColumns(['id', 'category_id', 'user_id', 'title', 'published_at']);
+$columns = posts()->getColumns(['id', 'category_id', 'user_id', 'title', 'is_published', 'published_at']);
 
 if (in_array('category_id',$columns)) {
     $category_id_items = [];
