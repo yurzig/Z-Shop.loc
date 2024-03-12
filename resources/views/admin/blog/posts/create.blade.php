@@ -6,8 +6,8 @@ $help = [
     'slug' => 'Url статьи(формируется автоматически)',
     'excerpt' => 'Краткое описание статьи',
     'content' => 'Текст статьи',
-    'status' => 'Укажите статус статьи(по-умолчанию - черновик)',
     'tags' => 'Укажите теги связанные с этой статьей',
+    'is_published' => 'Признак публикации статьи',
     'published_at' => 'Дата публикации статьи',
 ];
 
@@ -58,7 +58,7 @@ $page = 'admin.posts.';
                         <div id="basic" class="tab-pane fade show active" role="tabpanel" aria-labelledby="basic-tab">
                             <div class="box">
                                 <div class="row justify-content-center">
-                                    <div class="col-xl-6 block">
+                                    <div class="col-xl-8 block">
                                         <div class="form-group row mandatory">
                                             <label class="col-sm-4 form-control-label">Категория</label>
                                             <div class="col-sm-8">
@@ -102,18 +102,6 @@ $page = 'admin.posts.';
                                             </div>
                                             <div class="col-sm-12 help-text">{{ $help['slug'] }}</div>
                                         </div>
-                                        <div class="form-group row mandatory">
-                                            <label class="col-sm-4 form-control-label">Статус</label>
-                                            <div class="col-sm-8">
-                                                <select class="form-select item-status" required="required"
-                                                        name="status">
-                                                    @foreach (posts()->getStatuses() as $key => $status) {
-                                                    <option value='{{ $key }}'>{{ $status }}</option>";
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-12 help-text">{{ $help['status'] }}</div>
-                                        </div>
                                         <div class="form-group row">
                                             <label class="col-sm-4 form-control-label">Теги</label>
                                             <div class="col-sm-8">
@@ -125,6 +113,16 @@ $page = 'admin.posts.';
                                                 </select>
                                             </div>
                                             <div class="col-sm-12 help-text">{{ $help['tags'] }}</div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 form-control-label">Статья опубликована</label>
+                                            <div class="col-sm-8 form-check form-switch">
+                                                <input type="hidden" name="is_published" value="0">
+                                                <input class="form-control form-check-input" type="checkbox"
+                                                       name="is_published"
+                                                       value="1">
+                                            </div>
+                                            <div class="col-sm-12 help-text">{{ $help['is_published'] }}</div>
                                         </div>
 
                                         <div class="form-group row">

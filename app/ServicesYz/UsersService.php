@@ -22,7 +22,7 @@ class UsersService
         $where = [];
         if($filter) {
             foreach ($filter['val'] as $key => $item) {
-                if ($item) {
+                if (!is_null($item)) {
                     $where[] = [$key, $filter['op'][$key], $filter['op'][$key] === 'like' ? "%$item%" : $item];
                 }
             }

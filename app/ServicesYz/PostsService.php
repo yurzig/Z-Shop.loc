@@ -5,6 +5,7 @@ namespace App\ServicesYz;
 use App\Models\Blog\Post;
 use App\Yz\Services\Traits\ActionAfterSaving;
 use App\Yz\Services\Traits\ACTIONS;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -13,10 +14,6 @@ use App\Yz\Services\Service;
 class PostsService extends Service
 {
     use ACTIONS, ActionAfterSaving;
-    public const STATUS = [
-        1 => 'черновик',
-        2 => 'опубликована',
-    ];
 
     /**
      * Получить список постов
@@ -29,7 +26,7 @@ class PostsService extends Service
         $query = Post::query();
         if($filter) {
             foreach ($filter['val'] as $key => $item) {
-                if ($item) {
+                if (!is_null($item)) {
                     $query->where($key, $filter['op'][$key], $filter['op'][$key] === 'like' ? "%$item%" : $item);
                 }
             }
@@ -47,6 +44,11 @@ class PostsService extends Service
     public function store(Request $request): RedirectResponse
     {
         $data = $request->input();
+
+        // добавляем дату публикации
+        if ($data['is_published'] === '1' && is_null($data['published_at'])) {
+            $data['published_at'] = Carbon::now();
+        }
 
         $this->saveValidate($data);
 
@@ -83,6 +85,11 @@ class PostsService extends Service
         }
 
         $data = $request->all();
+
+        // добавляем дату публикации
+        if ($data['is_published'] === '1' && is_null($data['published_at'])) {
+            $data['published_at'] = Carbon::now();
+        }
 
         $this->saveValidate($data);
 
@@ -130,14 +137,6 @@ class PostsService extends Service
         ])->validate();
     }
 
-    /*
-     * Получить статусы поста
-    */
-    public function getStatuses(): array
-    {
-        return self::STATUS;
-    }
-
     /**
      * Если поле slug пустое, то заполняем его конвертацией заголовка
      */
@@ -176,6 +175,5 @@ class PostsService extends Service
 
         return Post::whereJsonContains('tags', $tags)->get();
     }
-
 
 }

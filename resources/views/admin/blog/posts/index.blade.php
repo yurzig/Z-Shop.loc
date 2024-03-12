@@ -7,7 +7,7 @@ $fields = [
     ['name' => 'Url',              'dbName' => 'slug',             'type' => 'text',   'op' => 'like', 'class' => ''],
     ['name' => 'Аннотация',        'dbName' => 'excerpt',          'type' => 'text',   'op' => 'like', 'class' => ''],
     ['name' => 'Текст статьи',     'dbName' => 'content',          'type' => 'text',   'op' => 'like', 'class' => ''],
-    ['name' => 'Опубликована',     'dbName' => 'is_published',     'type' => 'switch',   'op' => '=',    'class' => ''],
+    ['name' => 'Опубликована',     'dbName' => 'is_published',     'type' => 'switch', 'op' => '=',    'class' => ''],
     ['name' => 'meta title',       'dbName' => 'meta_title',       'type' => 'text',   'op' => '=',    'class' => ''],
     ['name' => 'meta description', 'dbName' => 'meta_description', 'type' => 'text',   'op' => '=',    'class' => ''],
     ['name' => 'Дата публикации',  'dbName' => 'published_at',     'type' => 'date',   'op' => '=',    'class' => ' class=flatpickr-input'],
@@ -47,18 +47,15 @@ if (in_array('user_id',$columns)) {
     }
 }
 
-if (in_array('status',$columns)) {
-    $status_items = [];
-    $status_options = '<option value="">Все</option>';
-    foreach (posts()->getStatuses() as $key => $statusItem) {
-        $status_items[$key] = $statusItem;
+if (in_array('is_published',$columns)) {
+    $is_published_options = '<option value="">Все</option>';
 
-        $selected = '';
-        if (is_array($filter) && !empty($filter) && $filter['val']['status'] == $key) {
-            $selected = " selected='selected'";
-        }
-        $status_options .= "<option value='$key'$selected>$statusItem</option>";
-    }
+    $selected = ((is_array($filter) && !empty($filter) && $filter['val']['is_published'] === '1')) ? " selected='selected'" : '';
+    $is_published_options .= "<option value='1'$selected>Да</option>";
+
+    $selected = ((is_array($filter) && !empty($filter) && $filter['val']['is_published'] === '0')) ? " selected='selected'" : '';
+    $is_published_options .= "<option value='0'$selected>Нет</option>";
+
 }
 
 $pageName = 'Статьи';

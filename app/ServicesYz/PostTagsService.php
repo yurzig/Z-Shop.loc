@@ -26,7 +26,7 @@ class PostTagsService extends Service
         $query = PostTag::query();
         if($filter) {
             foreach ($filter['val'] as $key => $item) {
-                if ($item) {
+                if (!is_null($item)) {
                     $query->where($key, $filter['op'][$key], $filter['op'][$key] === 'like' ? "%$item%" : $item);
                 }
             }

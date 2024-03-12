@@ -41,6 +41,7 @@
                         <input type="hidden" name="filters[op][{{ $field['dbName'] }}]" value="{{ $field['op'] }}">
 
                         @switch($field['type'])
+                            @case('switch')
                             @case('select')
                                 <select class="form-select" name="filters[val][{{ $field['dbName'] }}]">
                                     @php $var = $field['dbName'] . '_options';
@@ -48,17 +49,14 @@
                                     @endphp
                                 </select>
                                 @break
-                            @case('switch')
-                                <div class="form-check form-switch">
-                                    <input type="checkbox"
-                                           name="filters[val][{{ $field['dbName'] }}]"
-                                           class="form-check-input"
-                                           value="1"
-                                        {{ (isset($filter['val'][$field['dbName']]) &&
-                                            $filter['val'][$field['dbName']]
-                                            ) ? ' checked' : '' }}>
-                                </div>
-                                @break
+{{--                                <div class="form-check form-switch">--}}
+{{--                                    <input type="checkbox"--}}
+{{--                                           name="filters[val][{{ $field['dbName'] }}]"--}}
+{{--                                           class="form-check-input"--}}
+{{--                                           value="1"--}}
+{{--                                           @checked((isset($filter['val'][$field['dbName']]) && $filter['val'][$field['dbName']]))--}}
+{{--                                </div>--}}
+{{--                                @break--}}
                             @case('date')
                                 <input class="form-control flatpickr-input" type="text"
                                        name="filters[val][{{ $field['dbName'] }}]"

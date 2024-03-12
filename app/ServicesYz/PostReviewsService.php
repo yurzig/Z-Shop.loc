@@ -31,7 +31,7 @@ class PostReviewsService extends Service
         $query = PostReview::query();
         if($filter) {
             foreach ($filter['val'] as $key => $item) {
-                if ($item) {
+                if (!is_null($item)) {
                     $query->where($key, $filter['op'][$key], $filter['op'][$key] === 'like' ? "%$item%" : $item);
                 }
             }
