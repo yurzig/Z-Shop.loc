@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin\Blog;
 
 use App\Http\Controllers\Controller;
-use App\Models\Blog\PostReview;
 use App\Models\Blog\PostTag;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

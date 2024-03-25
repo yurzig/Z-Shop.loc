@@ -1,0 +1,1 @@
+<div class="form-group row">    <div class="col-sm-12">        <input class="form-control" type="text" name="block-title" placeholder="Заголовок блока" value="">    </div></div><div class="form-group">    <label class="form-control-label justify-content-center">Текст блока</label>    <textarea name="text" class="summernote form-control item-content"></textarea></div>

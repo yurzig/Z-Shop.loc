@@ -1,4 +1,4 @@
-window.requestAjax = function ( url, data, success_func, error_func ){
+window.requestAjax = function ( url, data, success_func, error_func, data_type = 'json' ){
 
     if( $.isArray(data) ){
         data.push({name: 'ajax', value: true});
@@ -10,7 +10,7 @@ window.requestAjax = function ( url, data, success_func, error_func ){
         url: url,
         type: 'POST',
         data: data,
-        dataType: 'json',
+        dataType: data_type,
         processData: false,
         contentType: false,
         cache: false,

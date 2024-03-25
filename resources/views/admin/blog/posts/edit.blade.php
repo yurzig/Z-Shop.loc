@@ -21,8 +21,10 @@ $page = 'admin.posts.';
 @extends('layouts.admin')
 
 @push('styles')
+    <link rel="stylesheet" href="{{ asset('css/cropper.css') }}">
     @vite('resources/css/admin/posts.css')
 @endpush
+
 
 @section('title', $pageName)
 
@@ -169,13 +171,20 @@ $page = 'admin.posts.';
                                     <textarea name="excerpt"
                                               class="form-control item-content">{{ old('excerpt', $post->excerpt) }}</textarea>
                                 </div>
-
-                                <div class="form-group">
-                                    <label class="form-control-label justify-content-center">Статья</label>
-                                    <div class="col-sm-12 help-text">{{ $help['content'] }}</div>
-                                    <textarea name="content" required="required"
-                                              class="summernote form-control item-content">{{ old('content', $post->content) }}</textarea>
+                                <div class="add-block-to-post" data-url="{{ route($page . 'add_block') }}">
+                                    <button data-type="text-only" class="btn btn-default">Блок текста</button>
+                                    <button data-type="img-and-text" class="btn btn-default">Картинка + текст</button>
+                                    <button data-type="img-only" class="btn btn-default">Картинка</button>
+                                    <button data-type="subtitle" class="btn btn-default">Подзаголовок</button>
                                 </div>
+
+
+{{--                                <div class="form-group">--}}
+{{--                                    <label class="form-control-label justify-content-center">Статья</label>--}}
+{{--                                    <div class="col-sm-12 help-text">{{ $help['content'] }}</div>--}}
+{{--                                    <textarea name="content" required="required"--}}
+{{--                                              class="summernote form-control item-content">{{ old('content', $post->content) }}</textarea>--}}
+{{--                                </div>--}}
                             </div>
                         </div>
                         <div id="review" class="tab-pane fade" role="tabpanel" aria-labelledby="review-tab">
@@ -228,5 +237,6 @@ $page = 'admin.posts.';
     </div>
 @endsection
 @push('scripts')
+    <script src="{{ asset('js/cropper.js') }}" defer></script>
     @vite('resources/js/admin/posts.js')
 @endpush

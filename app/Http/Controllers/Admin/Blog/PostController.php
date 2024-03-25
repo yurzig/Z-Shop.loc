@@ -123,4 +123,24 @@ class PostController extends Controller
         return response()->json($result);
     }
 
+    /**
+        Добавить блок текста
+     */
+    public function addBlock( Request $request )
+    {
+        switch ($request->type) {
+            case 'text-only':
+                return view('admin.blog.posts._block-text');
+            case 'img-and-text':
+                return view('admin.blog.posts._block-img-and-text');
+            case 'img-only':
+                echo 'img-only';
+                break;
+            case 'subtitle':
+                echo 'subtitle';
+                break;
+        }
+//        dd($request->type);
+    }
+
 }
