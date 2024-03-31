@@ -235,6 +235,29 @@ $page = 'admin.posts.';
             </div>
         </form>
     </div>
+
+
+
+
+    <div id="change-img-modal" class="modal fade in">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Рисунок</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <p><img style="width: 600px" src="{{ asset('images/test.jpg') }}"></p>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn md btn-default apply-btn">Сохранить</button>
+                    <button type="button" class="cancel-btn btn btn-default" data-dismiss="modal">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @push('scripts')
     <script src="{{ asset('js/cropper.js') }}" defer></script>
