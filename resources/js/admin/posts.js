@@ -23,14 +23,14 @@ $(document).on('change','.block-image-upload',function(event){
     let reader = new FileReader(),
         output = $("#change-img-modal").find('img');
 
-    reader.onload = function () {
-        output.attr('src', reader.result);
-    }
-    reader.readAsDataURL(event.target.files[0]);
-
     $("#change-img-modal").modal("show");
 
-    createCropper(16/9);
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = function () {
+        output.attr('src', reader.result);
+        createCropper(16/9);
+    }
+
 });
 
 var cropper={destroy:function(){}};
@@ -45,7 +45,7 @@ var upload_block=0;
 function createCropper(aspectRatio){
     cropper.destroy();
     var cropImg = $("#change-img-modal").find("img")[0];
-    // console.log(cropImg);
+    console.log(cropImg);
     // console.log(aspectRatio);
     cropper = new Cropper(cropImg, {
         aspectRatio:aspectRatio,
