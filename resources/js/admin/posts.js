@@ -51,7 +51,7 @@ function createCropper(aspectRatio){
         aspectRatio:aspectRatio,
         responsive: true,
         restore: true,
-        viewMode: 3,
+        viewMode: 2,
         zoomable: false,
         crop: function(e) {
             cropX= Math.round(e.detail.x);

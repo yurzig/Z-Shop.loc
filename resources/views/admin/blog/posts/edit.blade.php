@@ -259,6 +259,7 @@ $page = 'admin.posts.';
         </div>
     </div>
 @endsection
+
 @push('scripts')
     <script src="{{ asset('js/cropper.js') }}" defer></script>
     @vite('resources/js/admin/posts.js')
