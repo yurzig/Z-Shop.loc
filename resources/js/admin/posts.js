@@ -89,6 +89,41 @@ function createCropper(aspectRatio){
             cropper.setData({x:cropX,y:cropY});
         }
     });
+    cropper.getCroppedCanvas({width:200,height:200});
 }
 
+// Сохраняем обрезанное изображение
+$('.apply-btn').on('click', function (event) {
+    event.preventDefault();
+console.log('apply-btn');
+console.log(cropper);
+    var canvas = cropper.getCroppedCanvas({
+        width: 160,
+        height: 160,
+    });
+
+    canvas.toBlob(function(blob) {
+        var url = URL.createObjectURL(blob);
+        var reader = new FileReader();
+        var image = $(".head-image").find('img');
+
+        reader.readAsDataURL(blob);
+        reader.onloadend = function() {
+
+            image.attr('src', reader.result);
+        //     $.ajax({
+        //         введите: "ОПУБЛИКОВАТЬ",
+        //         Тип данных: "json",
+        //         url: "обрезка изображения-загрузка",
+        //         данные: {'_token': $('meta[name="_token"]').attr('content'), 'image': base64data},
+        //     успех: функция(данные){
+        //         консоль.журнал(данные);
+        //         $modal.модальный('скрыть');
+        //         оповещение("Обрезка изображения успешно загружена");
+        //     }
+        // });
+        }
+    });
+
+});
 
