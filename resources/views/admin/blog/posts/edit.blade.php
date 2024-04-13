@@ -34,6 +34,22 @@ $page = 'admin.posts.';
 @endsection
 
 @section('content')
+    <style type="text/css">
+        img {
+            display: block;
+            max-width: 100%;
+        }
+        .preview {
+            overflow: hidden;
+            width: 160px;
+            height: 160px;
+            margin: 10px;
+            border: 1px solid red;
+        }
+        .modal-lg{
+            max-width: 1000px !important;
+        }
+    </style>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-2 mb-3">
         <form id="edit-form" class="item w-100" method="POST" enctype="multipart/form-data"
               action="{{ route($page . 'update', $post) }}" novalidate>
@@ -239,7 +255,7 @@ $page = 'admin.posts.';
 
 
 
-    <div id="change-img-modal" class="modal fade in">
+    <div id="change-img-modal" class="modal fade">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -248,7 +264,16 @@ $page = 'admin.posts.';
                 </div>
 
                 <div class="modal-body">
-                    <p><img style="width: 600px" src="{{ asset('images/test.jpg') }}"></p>
+                    <div class="img-container">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <img id="image" src="https://avatars0.githubusercontent.com/u/3456749">
+                            </div>
+                            <div class="col-md-4">
+                                <div class="preview"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="modal-footer">

@@ -19,98 +19,65 @@ $('.add-block-to-post button').on('click', function (event) {
 });
 
 
-$(document).on('change','.block-image-upload',function(event){
-    let reader = new FileReader(),
-        output = $("#change-img-modal").find('img');
+// let image = $("#change-img-modal #image");
+var image = document.getElementById('image');
 
-    $("#change-img-modal").modal("show");
-
-    reader.readAsDataURL(event.target.files[0]);
-    reader.onload = function () {
-        output.attr('src', reader.result);
-        createCropper(16/9);
+let cropper;
+$(document).on('change','.block-image-upload',function(e){
+    let files = e.target.files;
+    let done = function (url) {
+        image.src = url;
+        $("#change-img-modal").modal("show");
     }
+    let reader = new FileReader();
+    let file;
+    let url;
 
+    if (files && files.length > 0) {
+        file = files[0];
+
+        if (URL) {
+            done(URL.createObjectURL(file));
+        } else if (FileReader) {
+            reader.onload = function (e) {
+                done(reader.result);
+            };
+            reader.readAsDataURL(file);
+
+        }
+    }
 });
 
-var cropper={destroy:function(){}};
-
-var cropX;
-var cropY;
-var cropWidth;
-var cropHeight;
-
-var upload_block=0;
-
-function createCropper(aspectRatio){
-    cropper.destroy();
-    var cropImg = $("#change-img-modal").find("img")[0];
-    console.log(cropImg);
-    // console.log(aspectRatio);
-    cropper = new Cropper(cropImg, {
-        aspectRatio:aspectRatio,
-        responsive: true,
-        restore: true,
-        viewMode: 2,
+$('#change-img-modal').on('shown.bs.modal',function () {
+    cropper = new Cropper(image, {
+        aspectRatio: 1,
+        viewMode: 3,
         zoomable: false,
-        crop: function(e) {
-            cropX= Math.round(e.detail.x);
-            cropY= Math.round(e.detail.y);
-            cropWidth= Math.round(e.detail.width);
-            cropHeight= Math.round(e.detail.height);
-            console.log('cropWidth'+cropWidth);
-        },
-        ready:function(){
-
-            var cropRatio=aspectRatio;
-            var cropWidth=0;
-            var cropHeight=0;
-            var cropX=0;
-            var cropY=0;
-            var imgData=cropper.getImageData();
-            var imgW=imgData.naturalWidth;
-            var imgH=imgData.naturalHeight;
-            var imgRatio=imgData.aspectRatio;
-
-            if(imgRatio>cropRatio){
-                cropHeight=imgH;
-                cropWidth=cropHeight*cropRatio;
-                cropY=0;
-                cropX=(imgW-cropWidth)/2;
-            }else{
-                cropWidth=imgW;
-                cropX=0;
-                cropHeight=cropWidth/cropRatio;
-                cropY=(imgH-cropHeight)/2;
-            }
-            console.log('cropWidth'+cropWidth);
-
-            cropper.setData({width:cropWidth,height:cropHeight});
-            cropper.setData({x:cropX,y:cropY});
-        }
+        preview: '.preview'
     });
-    cropper.getCroppedCanvas({width:200,height:200});
-}
+}).on('hidden.bs.modal', function () {
+    cropper.destroy();
+    cropper = null;
+});
+
 
 // Сохраняем обрезанное изображение
-$('.apply-btn').on('click', function (event) {
-    event.preventDefault();
-console.log('apply-btn');
-console.log(cropper);
-    var canvas = cropper.getCroppedCanvas({
-        width: 160,
-        height: 160,
+$('.apply-btn').on('click', function () {
+    let canvas = cropper.getCroppedCanvas({
+        width: 600,
+        height: 600,
     });
 
     canvas.toBlob(function(blob) {
-        var url = URL.createObjectURL(blob);
-        var reader = new FileReader();
+        let url = URL.createObjectURL(blob);
+        let reader = new FileReader();
         var image = $(".head-image").find('img');
 
         reader.readAsDataURL(blob);
         reader.onloadend = function() {
 
             image.attr('src', reader.result);
+            $("#change-img-modal").modal("hide");
         //     $.ajax({
         //         введите: "ОПУБЛИКОВАТЬ",
         //         Тип данных: "json",
