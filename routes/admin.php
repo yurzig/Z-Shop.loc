@@ -61,6 +61,7 @@ Route::group(
             Route::get('posts/sort', 'sort')->name('posts.sort');
             Route::post('posts/add-tag', 'addTag')->name('posts.add_tag');
             Route::post('posts/add-block', 'addBlock')->name('posts.add_block');
+            Route::post('posts/add-img', 'addImg')->name('posts.add_img');
         });
         Route::resource('posts', 'PostController')->except(['show'])->names('posts');
 

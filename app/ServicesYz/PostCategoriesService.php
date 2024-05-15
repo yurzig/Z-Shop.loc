@@ -82,7 +82,7 @@ class PostCategoriesService
             return back()->withErrors(['msg' => 'Ошибка сохранения'])->withInput();
         }
 
-        return to_route('admin.blog.categories.edit', $category)->with(['success' => 'Успешно сохранено']);
+        return to_route('admin.postblog.categories.edit', $category)->with(['success' => 'Успешно сохранено']);
     }
 
     /**
@@ -96,7 +96,7 @@ class PostCategoriesService
         if ($result) {
 
             return redirect()
-                ->route('admin.blog.categories.index')
+                ->route('admin.post.categories.index')
                 ->with(['success' => "Удалена запись id[$category->id] - $category->title"]);
         }
 
@@ -196,7 +196,7 @@ class PostCategoriesService
     public function menuTree(int $active_id): string
     {
         $level = 1;
-        $string = '<ul class="menu-tree node" data-level="' . $level . '" data-id="0" data-url="' . route("admin.blog.categories.sortable") . '">';
+        $string = '<ul class="menu-tree node" data-level="' . $level . '" data-id="0" data-url="' . route("admin.post.categories.sortable") . '">';
 
         $string .= self::menuItems(postCategories()->getTree(), $active_id, $level);
 
@@ -223,16 +223,16 @@ class PostCategoriesService
                 <div class="menu-tree-line d-flex justify-content-between">
                     <div>
                         <a class="btn fa act-add"
-                            href="' . route('admin.blog.categories.add', $category['id']) . '"
+                            href="' . route('admin.post.categories.add', $category['id']) . '"
                             title="Новая запись">
                         </a>
                         <a class="menu-tree-text"
-                            href="' . route('admin.blog.categories.edit', $category['id']) . '"
+                            href="' . route('admin.post.categories.edit', $category['id']) . '"
                             title="Редактировать">' . $category['title'] . '</a>
                     </div>
                     <div>
                         <a class="btn fa act-delete js-delete"
-                            href="' . route('admin.blog.categories.destroy', $category['id']) . '"
+                            href="' . route('admin.post.categories.destroy', $category['id']) . '"
                             title="Удалить запись"></a>
                     </div>
                 </div>';

@@ -321,6 +321,10 @@ body.light .btn-theme.light-mode {
     width: 25px;
     height: 25px;
 }
+.form-check-label {
+    margin-left: 0.5em;
+    margin-top: 0.25em;
+}
 .form-check-input:checked {
     background-color: var(--bs-primary, #30a0e0);
     border-color: var(--bs-primary, #30a0e0);

@@ -267,7 +267,7 @@ $page = 'admin.posts.';
                     <div class="img-container">
                         <div class="row">
                             <div class="col-md-8">
-                                <img id="image" src="https://avatars0.githubusercontent.com/u/3456749">
+                                <img id="image" src="{{ asset('images/noimage.jpg') }}">
                             </div>
                             <div class="col-md-4">
                                 <div class="preview"></div>
@@ -277,7 +277,7 @@ $page = 'admin.posts.';
                 </div>
 
                 <div class="modal-footer">
-                    <button class="btn md btn-default apply-btn">Сохранить</button>
+                    <button class="btn md btn-default apply-btn" data-url="{{ route($page . 'add_img') }}">Сохранить</button>
                     <button type="button" class="cancel-btn btn btn-default" data-dismiss="modal">Отмена</button>
                 </div>
             </div>

@@ -63,34 +63,47 @@ $('#change-img-modal').on('shown.bs.modal',function () {
 
 // Сохраняем обрезанное изображение
 $('.apply-btn').on('click', function () {
+    let url = $(this).data('url');
     let canvas = cropper.getCroppedCanvas({
         width: 600,
         height: 600,
     });
 
     canvas.toBlob(function(blob) {
-        let url = URL.createObjectURL(blob);
+        let data = new FormData();
         let reader = new FileReader();
         var image = $(".head-image").find('img');
 
         reader.readAsDataURL(blob);
         reader.onloadend = function() {
+            const cropImage = reader.result;
 
-            image.attr('src', reader.result);
-            $("#change-img-modal").modal("hide");
-        //     $.ajax({
-        //         введите: "ОПУБЛИКОВАТЬ",
-        //         Тип данных: "json",
-        //         url: "обрезка изображения-загрузка",
-        //         данные: {'_token': $('meta[name="_token"]').attr('content'), 'image': base64data},
-        //     успех: функция(данные){
-        //         консоль.журнал(данные);
-        //         $modal.модальный('скрыть');
-        //         оповещение("Обрезка изображения успешно загружена");
-        //     }
-        // });
+            image.attr('src', cropImage);
+console.log(cropImage);
+            data.append('image', cropImage);
+
+            requestAjax(url, data, function (response){
+                console.log(response);
+                $("#change-img-modal").modal("hide");
+                alert("Картинка сохранена");
+
+                }, function (error, i, code ){
+                    console.log('error-' + error + ' i-' + i + ' code-' + code);
+                });
+
         }
     });
-
 });
 
+// Поведение кнопок при изменении ширины картинки
+$(document).on('click',$('input[name="img-width"]'),function(){
+    const value = $('input[name="img-width"]:checked').val();
+
+    if (value !== undefined) {
+        if (value === '100') {
+            $('.percent-100').hide();
+        } else {
+            $('.percent-100').show();
+        }
+    }
+});
