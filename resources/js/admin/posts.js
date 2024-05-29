@@ -3,14 +3,18 @@ $('.add-block-to-post button').on('click', function (event) {
     event.preventDefault()
 
     let data = new FormData(),
-        block = $(this);
+        block = $(this),
+        type = block.data('type');
 
-    data.append('type', $(this).data('type'));
+    data.append('type', type);
 
     requestAjax(block.closest('.add-block-to-post').data('url'), data, function (response){
 
         block.parent().before(response);
-        $('.summernote').summernote();
+
+        if (type === 'img-and-text' || type === 'img-only') {
+            $('.summernote').summernote();
+        }
 
     }, function (error, i, code ){
         console.log('error-' + error + ' i-' + i + ' code-' + code);
@@ -20,7 +24,10 @@ $('.add-block-to-post button').on('click', function (event) {
 
 
 // let image = $("#change-img-modal #image");
-var image = document.getElementById('image');
+let image = document.getElementById('image');
+
+let imageWidth = 0;
+let imageHeight = 0;
 
 let cropper;
 $(document).on('change','.block-image-upload',function(e){
@@ -32,6 +39,11 @@ $(document).on('change','.block-image-upload',function(e){
     let reader = new FileReader();
     let file;
     let url;
+
+    let w = $('input[name="img-width"]:checked');
+
+    imageWidth = w.data('width');
+    imageHeight = w.data('height');
 
     if (files && files.length > 0) {
         file = files[0];
@@ -50,7 +62,7 @@ $(document).on('change','.block-image-upload',function(e){
 
 $('#change-img-modal').on('shown.bs.modal',function () {
     cropper = new Cropper(image, {
-        aspectRatio: 1,
+        aspectRatio: imageWidth/imageHeight,
         viewMode: 3,
         zoomable: false,
         preview: '.preview'
@@ -65,8 +77,8 @@ $('#change-img-modal').on('shown.bs.modal',function () {
 $('.apply-btn').on('click', function () {
     let url = $(this).data('url');
     let canvas = cropper.getCroppedCanvas({
-        width: 600,
-        height: 600,
+        width: imageWidth,
+        height: imageHeight,
     });
 
     canvas.toBlob(function(blob) {
