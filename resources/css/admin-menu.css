@@ -558,7 +558,7 @@ body.light .btn-theme.light-mode {
     border: 2px dashed #B0B0B0;
     border-radius: .25rem;
     position: relative;
-    height: 17rem;
+    min-height: 17rem;
     margin: 2rem 0 2rem 1rem;
 }
 
@@ -582,6 +582,8 @@ body.light .btn-theme.light-mode {
 .media-preview input {
     height: 100%; /*calc(12.25rem - 4px);*/
     position: absolute;
+    top: 0;
+    padding: 0;
     overflow: hidden;
     cursor: pointer;
     width: 100%;

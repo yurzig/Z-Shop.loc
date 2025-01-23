@@ -93,6 +93,17 @@ class PostsService extends Service
 
         $this->saveValidate($data);
 
+        // Упорядочиваем блоки
+        $content = $data['content'];
+        $newContent = [];
+        $i = 0;
+        foreach ($content as $val) {
+            $newContent[$i] = $val;
+            $i++;
+        }
+        $data['content'] = $newContent;
+
+//dd($data, $data['content'], $newarr);
         $result = $post->update($data);
 
         if (!$result) {

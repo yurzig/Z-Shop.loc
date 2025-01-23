@@ -20,12 +20,12 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('excerpt')->fulltext()->nullable();
-            $table->text('content')->fulltext();
+            $table->json('content')->nullable();
             $table->json('tags')->nullable();
-            $table->boolean('status')->default(false);
+            $table->boolean('is_published')->default(false);
+            $table->timestamp('published_at')->nullable();
             $table->string('meta_title')->nullable();
             $table->string('meta_description')->nullable();
-            $table->timestamp('published_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

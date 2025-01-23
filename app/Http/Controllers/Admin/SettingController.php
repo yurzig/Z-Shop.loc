@@ -3,162 +3,112 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SettingCreateRequest;
-use App\Http\Requests\SettingUpdateRequest;
 use App\Models\Setting;
-use App\Repositories\SettingRepository;
-use App\Services\SettingService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class SettingController extends Controller
 {
-    private $settingRepository;
     private $perPage;
 
     public function __construct()
     {
-        $this->settingRepository = app(SettingRepository::class);
         $this->perPage = 25;
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * Список настроек
      */
-    public function index()
+    public function index(): View
     {
-        $sort = session('settings_sort', ['id', 'asc']);
-        $filter = session('settings_filter', []);
-        $items = $this->settingRepository->getAll($sort, $filter, $this->perPage);
-        $columns = session('settings_columns', ['id', 'slug', 'description']);
+        $items = settings()->getAll($this->perPage);
 
-        return view('admin.settings.index', compact('items',
-                                                       'columns',
-                                                                 'filter',
-                                                                 'sort'));
+        return view('admin.settings.index', compact('items'));
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * Создание настройки (форма)
      */
-    public function create()
+    public function create(): View
     {
+
         return view('admin.settings.create');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * Создание настройки (сохранение)
      */
-    public function store(SettingCreateRequest $request)
+    public function store(Request $request): RedirectResponse
     {
-        $data = $request->input();
-        $data['editor'] = Auth::id();
 
-        $item = (new Setting())->create($data);
-
-        return SettingService::actionAfterSaving($item, $request->action);
-    }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $item = $this->settingRepository->getEdit($id);
-        if (empty($item)) {
-            abort(404);
-        }
-
-        return view('admin.settings.edit', compact('item'));
+        return settings()->store($request);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * Редактирование настройки (форма)
      */
-    public function update(SettingUpdateRequest $request, $id)
+    public function edit(Setting $setting): View
     {
-        $item = $this->settingRepository->getEdit($id);
 
-        if (empty($item)) {
-            return back()
-                ->withErrors(['msg' => "Запись id=[{$id}] не найдена"])
-                ->withInput();
-        }
-
-        $data = $request->all();
-        $data['editor'] = Auth::id();
-        $result = $item->update($data);
-
-        return SettingService::actionAfterSaving($result, $request->action);
+        return view('admin.settings.edit', compact('setting'));
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * Редактирование настройки (сохранение)
      */
-    public function destroy($id)
+    public function update(Request $request, Setting $setting): RedirectResponse
     {
-        $item = $this->settingRepository->getEdit($id);
-        $result = Setting::destroy($id);
 
-        if ($result) {
-            return redirect()
-                ->route('admin.settings.index')
-                ->with(['success' => "Удалена запись id[$id] - $item->title"]);
-        } else {
-            return back()->withErrors(['msg' => 'Ошибка удаления']);
-        }
+        return settings()->update($request, $setting);
+    }
+
+    /**
+     * Удаление настройки
+     */
+    public function destroy(Setting $setting): RedirectResponse
+    {
+
+        return settings()->delete($setting);
     }
 
     /**
      * Сохранение в сессии списка видимых колонок.
-     *
-     * @param  \Illuminate\Http\Request  $request
      */
-    public function columnsSave(Request $request)
+    public function columns(Request $request): RedirectResponse
     {
-        session(['settings_columns' => $request->field]);
-        return $this->index();
-    }
+        settings()->setColumns($request->fields);
 
-    public function search(Request $request)
-    {
-        session(['settings_filter' => $request->filter]);
         return to_route('admin.settings.index');
     }
 
-    public function sort(Request $request)
+    /**
+     * Сохранение в сессии примененных фильтров.
+     */
+    public function filter(Request $request): RedirectResponse
     {
-        $direction = 'asc';
-        if ($request->session()->has('settings_sort')) {
-            $sort = session('settings_sort');
-            if ($sort[0] === $request->order) {
-                $direction = $sort[1] === 'asc' ? 'desc' : 'asc';
-            }
-        }
+        posts()->setFilters($request->filters);
 
-        session(['settings_sort' => [$request->order, $direction]]);
+        return to_route('admin.posts.index');
+    }
+
+    /**
+     * Сброс и сохранение в сессии примененных фильтров.
+     */
+    public function resetFilters(): RedirectResponse
+    {
+        settings()->resetFilters();
+
         return to_route('admin.settings.index');
     }
 
-    public function reset()
+    /**
+     * Сохранение в сессии поля и направления сортировки.
+     */
+    public function sort(Request $request): RedirectResponse
     {
-        session(['settings_filter' => []]);
+        settings()->setSort($request);
+
         return to_route('admin.settings.index');
     }
 }

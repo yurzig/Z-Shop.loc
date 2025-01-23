@@ -1,17 +1,26 @@
 <?php
 $fields = [
-    ['name' => 'Id',              'dbName' => 'id',          'type' => 'text', 'op' => '=',    'class' => ''],
-    ['name' => 'Наименование',    'dbName' => 'slug',        'type' => 'text', 'op' => 'like', 'class' => ' class=js-title'],
-    ['name' => 'Описание',        'dbName' => 'description', 'type' => 'text', 'op' => 'like', 'class' => ''],
-    ['name' => 'Настройка',       'dbName' => 'setting',     'type' => 'text', 'op' => 'like', 'class' => ''],
-    ['name' => 'Дата создания',   'dbName' => 'created_at',  'type' => 'date', 'op' => '=',    'class' => ' class="flatpickr-input"'],
-    ['name' => 'Дата обновления', 'dbName' => 'updated_at',  'type' => 'date', 'op' => '=',    'class' => ' class="flatpickr-input"'],
-    ['name' => 'Редактор',        'dbName' => 'editor',      'type' => 'text', 'op' => 'like', 'class' => ''],
+    ['name' => 'Id',              'dbName' => 'id',             'type' => 'text', 'op' => '=',    'class' => ''],
+    ['name' => 'Наименование',    'dbName' => 'slug',           'type' => 'text', 'op' => 'like', 'class' => ' class=js-title'],
+    ['name' => 'Описание',        'dbName' => 'title',          'type' => 'text', 'op' => 'like', 'class' => ''],
+    ['name' => 'Настройка',       'dbName' => 'setting_values', 'type' => 'text', 'op' => 'like', 'class' => ''],
+    ['name' => 'Дата создания',   'dbName' => 'created_at',     'type' => 'date', 'op' => '=',    'class' => ' class="flatpickr-input"'],
+    ['name' => 'Дата обновления', 'dbName' => 'updated_at',     'type' => 'date', 'op' => '=',    'class' => ' class="flatpickr-input"'],
+    ['name' => 'Редактор',        'dbName' => 'editor',         'type' => 'text', 'op' => 'like', 'class' => ''],
 ];
+
+$sort = settings()->getSort(['id', 'asc']);
+$filter = settings()->getFilters();
+$columns = settings()->getColumns(['id', 'slug', 'title']);
+
 $pageName = 'Настройки';
 $page = 'admin.settings.';
 ?>
 @extends('layouts.admin')
+
+@push('styles')
+    {{--    @vite('resources/css/test.css')--}}
+@endpush
 
 @section('title', $pageName)
 
@@ -34,3 +43,6 @@ $page = 'admin.settings.';
     @include('admin.includes._modal_columns', ['action' => route($page . 'columns')])
     @include('admin.includes._modal_delete')
 @endsection
+
+@push('scripts')
+@endpush

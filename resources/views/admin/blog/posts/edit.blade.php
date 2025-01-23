@@ -180,14 +180,25 @@ $page = 'admin.posts.';
                             </div>
                         </div>
                         <div id="content" class="tab-pane fade" role="tabpanel" aria-labelledby="content-tab">
-                            <div class="box">
+                            <div id="sortableBlock" class="box list-group">
                                 <div class="form-group row">
                                     <label class="form-control-label justify-content-center">Аннотация</label>
                                     <div class="col-sm-12 help-text">{{ $help['excerpt'] }}</div>
                                     <textarea name="excerpt"
                                               class="form-control item-content">{{ old('excerpt', $post->excerpt) }}</textarea>
                                 </div>
-                                <div class="add-block-to-post" data-url="{{ route($page . 'add_block') }}">
+                                @php $lastId = 0; @endphp
+                                @foreach($post->content as $id => $block)
+                                    @php $lastId = $id > $lastId ? $id : $lastId  @endphp
+                                    @switch($block['type'])
+                                        @case('img&text')
+                                            @include('admin.blog.posts._block-img-and-text',['blockId' => $id])
+                                        @break
+                                    @endswitch
+                                @endforeach
+                                <div class="add-block-to-post accordion"
+                                     data-url="{{ route($page . 'add_block') }}"
+                                     data-last-block="{{ $lastId }}">
                                     <button data-type="text-only" class="btn btn-default">Блок текста</button>
                                     <button data-type="img-and-text" class="btn btn-default">Картинка + текст</button>
                                     <button data-type="img-only" class="btn btn-default">Картинка</button>
@@ -286,6 +297,7 @@ $page = 'admin.posts.';
 @endsection
 
 @push('scripts')
+    <script src="{{ asset('js/Sortable.min.js') }}" defer></script>
     <script src="{{ asset('js/cropper.js') }}" defer></script>
     @vite('resources/js/admin/posts.js')
 @endpush

@@ -1,8 +1,8 @@
 <?php
 $help = [
     'slug' => 'Обязательное поле. Название настройки латиницей, должно быть уникальным.',
-    'description' => 'Описание или правила заполнения настройки.',
-    'setting' => 'Обязательное поле. Заполняются ключ-значение. Ключ(цифры, буквы) обязателен.',
+    'title' => 'Описание или правила заполнения настройки.',
+    'setting_values' => 'Обязательное поле. Заполняются ключ-значение. Ключ(цифры, буквы) обязателен.',
 ];
 $pageName = 'Новая настройка';
 $page = 'admin.settings.';
@@ -57,21 +57,27 @@ $page = 'admin.settings.';
                                     <div class="form-group row">
                                         <label class="col-sm-4 form-control-label">Описание</label>
                                         <div class="col-sm-8">
-                                            <input class="form-control" type="text"
-                                                       name="description"
-                                                       placeholder="Описание настройки"
-                                                       value="{{ old('description') }}">
+                                            <input type="text" name="title"
+                                                   class="form-control"
+                                                   value="{{ old('title') }}"
+                                                   placeholder="Описание настройки">
                                         </div>
-                                        <div class="col-sm-12 help-text">{{ $help['description'] }}</div>
+                                        <div class="col-sm-12 help-text">{{ $help['title'] }}</div>
                                     </div>
                                 </div>
 <template id="block-template">
     <div class="row block-element">
         <div class="col-md-4">
-            <input type="text" name="setting[--id--][key]" class="form-control" required="required" placeholder="Ключ">
+            <input type="text" name="setting_values[--id--][key]"
+                   class="form-control"
+                   required="required"
+                   placeholder="Ключ">
         </div>
         <div class="col-md-7">
-            <input type="text" name="setting[--id--][value]" class="form-control" required="required" placeholder="Значение">
+            <input type="text" name="setting_values[--id--][value]"
+                   class="form-control"
+                   required="required"
+                   placeholder="Значение">
         </div>
         <div class="col-md-1">
             <div class="btn act-delete mt-1 fa option-delete" title="Удалить строку"></div>
@@ -81,15 +87,19 @@ $page = 'admin.settings.';
                                 <div class="col-xl-6">
                                     <div class="form-group row items-block">
                                         <label class="col-sm-12 fw-bold border-bottom mb-2">Настройка</label>
-                                        <div class="col-sm-12 help-text">{{ $help['setting'] }}</div>
+                                        <div class="col-sm-12 help-text">{{ $help['setting_values'] }}</div>
                                         <div class="row block-element">
                                             <div class="col-md-4">
-                                                <input type="text" name="setting[1][key]" class="form-control"
-                                                       required="required" placeholder="Ключ">
+                                                <input type="text" name="setting_values[1][key]"
+                                                       class="form-control"
+                                                       required="required"
+                                                       placeholder="Ключ">
                                             </div>
                                             <div class="col-md-7">
-                                                <input type="text" name="setting[1][value]" class="form-control"
-                                                       required="required" placeholder="Значение">
+                                                <input type="text" name="setting_values[1][value]"
+                                                       class="form-control"
+                                                       required="required"
+                                                       placeholder="Значение">
                                             </div>
                                             <div class="col-md-1">
                                                 <div class="btn act-delete mt-1 fa js-delete-block" title="Удалить строку"></div>

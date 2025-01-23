@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\Blog\PostController;
 use App\Http\Controllers\Admin\Blog\PostReviewController;
 use App\Http\Controllers\Admin\Blog\PostTagController;
+use App\Http\Controllers\Admin\SettingController;
 
 Route::group(
     [
@@ -17,9 +18,9 @@ Route::group(
         Route::post('image/upload', 'ImageController@upload')->name('image.upload');
 
         Route::controller(SettingController::class)->group(function () {
-            Route::post('settings/columns', 'columnsSave')->name('settings.columns');
-            Route::post('settings/search', 'search')->name('settings.search');
-            Route::get('settings/reset', 'reset')->name('settings.reset');
+            Route::post('settings/columns', 'columns')->name('settings.columns');
+            Route::post('settings/filter', 'filter')->name('settings.filter');
+            Route::get('settings/reset', 'resetFilters')->name('settings.reset');
             Route::get('settings/sort', 'sort')->name('settings.sort');
         });
         Route::resource('settings', 'SettingController')->except(['show'])->names('settings');

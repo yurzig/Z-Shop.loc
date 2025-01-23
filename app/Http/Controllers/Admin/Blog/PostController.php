@@ -51,6 +51,7 @@ class PostController extends Controller
      */
     public function edit(Post $post): View
     {
+//        dd($post->content[1], $post);
 
         return view('admin.blog.posts.edit', compact('post'));
     }
@@ -60,6 +61,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post): RedirectResponse
     {
+//        dd($request);
 
         return posts()->update($request, $post);
     }
@@ -128,11 +130,23 @@ class PostController extends Controller
      */
     public function addBlock( Request $request )
     {
+        $blockId = $request->blockId;
+
         switch ($request->type) {
             case 'text-only':
                 return view('admin.blog.posts._block-text');
             case 'img-and-text':
-                return view('admin.blog.posts._block-img-and-text');
+                $block = ['text' => '',
+                    'numb' => $blockId,
+                    'block-title' => '',
+                    'flow' => 'no',
+                    'type' => 'img&text',
+                    'img-link' => '',
+                    'img-path' => '',
+                    'img-title' => '',
+                    'img-width' => '100',
+                    'img-horizontally' => 'centre'];
+                return view('admin.blog.posts._block-img-and-text', compact('block','blockId'));
             case 'img-only':
                 echo 'img-only';
                 break;
@@ -148,7 +162,7 @@ class PostController extends Controller
      */
     public function addImg( Request $request )
     {
-        $folderPath = public_path('upload/');
+        $folderPath = public_path('upload\\');
         $image_parts = explode(";base64,", $request->image);
 //        dd($image_parts);
 //        $image_type_aux = explode("image/", $image_parts[0]);
@@ -162,6 +176,6 @@ class PostController extends Controller
 //        $saveFile->name = $imageName;
 //        $saveFile->save();
 
-        return response()->json(['success'=>'Crop Image Uploaded Successfully path - '.$imageName]);
+        return response()->json(['success'=>'upload\\'.$imageName]);
     }
 }

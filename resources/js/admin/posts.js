@@ -2,13 +2,21 @@
 $('.add-block-to-post button').on('click', function (event) {
     event.preventDefault()
 
-    let data = new FormData(),
-        block = $(this),
-        type = block.data('type');
+    const block = $(this),
+          main = block.closest('.add-block-to-post'),
+          type = block.data('type');
 
+    let id = parseInt(main.attr('data-last-block'));
+
+    id = id + 1;
+
+    main.attr('data-last-block', id);
+
+    let data = new FormData();
+    data.append('blockId', id);
     data.append('type', type);
 
-    requestAjax(block.closest('.add-block-to-post').data('url'), data, function (response){
+    requestAjax(main.data('url'), data, function (response){
 
         block.parent().before(response);
 
@@ -20,8 +28,8 @@ $('.add-block-to-post button').on('click', function (event) {
         console.log('error-' + error + ' i-' + i + ' code-' + code);
     },
         'html');
-});
 
+});
 
 // let image = $("#change-img-modal #image");
 let image = document.getElementById('image');
@@ -38,9 +46,8 @@ $(document).on('change','.block-image-upload',function(e){
     }
     let reader = new FileReader();
     let file;
-    let url;
 
-    let w = $('input[name="img-width"]:checked');
+    let w = $('input[id^="img-width"]:checked');
 
     imageWidth = w.data('width');
     imageHeight = w.data('height');
@@ -72,7 +79,6 @@ $('#change-img-modal').on('shown.bs.modal',function () {
     cropper = null;
 });
 
-
 // Сохраняем обрезанное изображение
 $('.apply-btn').on('click', function () {
     let url = $(this).data('url');
@@ -85,18 +91,21 @@ $('.apply-btn').on('click', function () {
         let data = new FormData();
         let reader = new FileReader();
         var image = $(".head-image").find('img');
+        var path = $(".head-image").find('input');
+
 
         reader.readAsDataURL(blob);
         reader.onloadend = function() {
             const cropImage = reader.result;
 
             image.attr('src', cropImage);
-console.log(cropImage);
             data.append('image', cropImage);
 
             requestAjax(url, data, function (response){
-                console.log(response);
+                console.log(response.success);
                 $("#change-img-modal").modal("hide");
+
+                path.val(response.success);
                 alert("Картинка сохранена");
 
                 }, function (error, i, code ){
@@ -108,8 +117,8 @@ console.log(cropImage);
 });
 
 // Поведение кнопок при изменении ширины картинки
-$(document).on('click',$('input[name="img-width"]'),function(){
-    const value = $('input[name="img-width"]:checked').val();
+$(document).on('click',$('input[id^="img-width"]'),function(){
+    const value = $('input[id^="img-width"]:checked').val();
 
     if (value !== undefined) {
         if (value === '100') {
@@ -119,3 +128,27 @@ $(document).on('click',$('input[name="img-width"]'),function(){
         }
     }
 });
+
+/**
+ Инициализация сортировки блоков
+ */
+// window.postBlocksSortableSetup = function () {
+//
+//     Sortable.create(sortableBlock, {
+//         handle: '.handle',
+//         animation: 150,
+//
+//     });
+// };
+//
+// postBlocksSortableSetup();
+// window.postBlocksSortableSetup = function () {
+//
+    Sortable.create(sortableBlock, {
+        handle: '.handle',
+        animation: 150,
+
+    });
+// };
+//
+// postBlocksSortableSetup();

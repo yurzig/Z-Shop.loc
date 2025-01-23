@@ -27,6 +27,7 @@ class Post extends Model
 
     protected $casts = [
         'tags' => 'json',
+        'content' => 'array',
     ];
 
     // к посту привязываем отзывы

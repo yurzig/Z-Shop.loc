@@ -1,8 +1,8 @@
 <?php
 $help = [
     'slug' => 'Обязательное поле. Название настройки латиницей, должно быть уникальным.',
-    'description' => 'Описание или правила заполнения настройки.',
-    'setting' => 'Обязательное поле. Заполняются ключ-значение. Ключ(цифры, буквы) обязателен.',
+    'title' => 'Описание или правила заполнения настройки.',
+    'setting_values' => 'Обязательное поле. Заполняются ключ-значение. Ключ(цифры, буквы) обязателен.',
 ];
 $pageName = 'Редактирование настройки';
 $page = 'admin.settings.';
@@ -12,14 +12,14 @@ $page = 'admin.settings.';
 @section('title', $pageName)
 
 @section('header-block')
-<span>{{ $pageName }}: ({{ $item->id }}) {{ $item->slug }}</span>
+<span>{{ $pageName }}: ({{ $setting->id }}) {{ $setting->slug }}</span>
 @include('admin.includes._header_block')
 @endsection
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-2 mb-3">
     <form id="edit-form" class="item w-100" method="POST" enctype="multipart/form-data"
-          action="{{ route($page . 'update', $item) }}" novalidate>
+          action="{{ route($page . 'update', $setting) }}" novalidate>
         @csrf
         @method('PATCH')
 
@@ -56,33 +56,38 @@ $page = 'admin.settings.';
                                     <div class="form-group row mandatory">
                                         <label class="col-sm-4 form-control-label">Наименование</label>
                                         <div class="col-sm-8">
-                                            <input class="form-control" type="text"
-                                                   name="slug"
-                                                   placeholder="Наименование настройки"
-                                                   value="{{ old('slug', $item->slug) }}"
-                                                   required="required">
+                                            <input type="text" name="slug"
+                                                   class="form-control"
+                                                   value="{{ old('slug', $setting->slug) }}"
+                                                   required="required"
+                                                   placeholder="Наименование настройки">
                                         </div>
                                         <div class="col-sm-12 help-text">{{ $help['slug'] }}</div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-4 form-control-label">Описание</label>
                                         <div class="col-sm-8">
-                                            <input class="form-control" type="text"
-                                                   name="description"
-                                                   placeholder="Описание"
-                                                   value="{{ old('description', $item->description) }}">
+                                            <input type="text" name="title"
+                                                   class="form-control"
+                                                   value="{{ old('title', $setting->title) }}"
+                                                   placeholder="Описание">
                                         </div>
-                                        <div class="col-sm-12 help-text">{{ $help['description'] }}</div>
+                                        <div class="col-sm-12 help-text">{{ $help['title'] }}</div>
                                     </div>
 
                                 </div>
 <template id="block-template">
     <div class="row block-element">
         <div class="col-md-4">
-            <input type="text" name="setting[--id--][key]" class="form-control" required="required" placeholder="Ключ">
+            <input type="text" name="setting_values[--id--][key]"
+                   class="form-control"
+                   required="required"
+                   placeholder="Ключ">
         </div>
         <div class="col-md-7">
-            <input type="text" name="setting[--id--][value]" class="form-control" required="required"
+            <input type="text" name="setting_values[--id--][value]"
+                   class="form-control"
+                   required="required"
                    placeholder="Значение">
         </div>
         <div class="col-md-1">
@@ -94,22 +99,23 @@ $page = 'admin.settings.';
                                 <div class="col-xl-6">
                                     <div class="form-group row mandatory items-block">
                                         <label class="col-sm-12 fw-bold border-bottom mb-2">Настройка</label>
-                                        <div class="col-sm-12 help-text">{{ $help['setting'] }}</div>
-                                        @empty($item->setting)
-                                            @php $item->setting = [0 => ['key' => '', 'value' => '']] @endphp
-                                        @endempty
-                                        @foreach($item->setting as $key => $arrayItem)
+                                        <div class="col-sm-12 help-text">{{ $help['setting_values'] }}</div>
+                                        @php
+                                            if (is_null($setting->setting_values) || !is_array($setting->setting_values))
+                                                $setting->setting_values = [0 => ['key' => '', 'value' => '']]
+                                        @endphp
+                                        @foreach($setting->setting_values as $key => $arrayItem)
                                             <div class="row block-element">
                                                 <div class="col-md-4">
-                                                    <input type="text" name="setting[{{ $key }}][key]"
+                                                    <input type="text" name="setting_values[{{ $key }}][key]"
                                                            class="form-control"
-                                                           value="{{ old('setting['.$key.'][key]', $arrayItem['key']) }}"
+                                                           value="{{ old('setting_values['.$key.'][key]', $arrayItem['key']) }}"
                                                            required="required" placeholder="Ключ">
                                                 </div>
                                                 <div class="col-md-7">
-                                                    <input type="text" name="setting[{{ $key }}][value]"
+                                                    <input type="text" name="setting_values[{{ $key }}][value]"
                                                            class="form-control"
-                                                           value="{{ old('setting['.$key.'][value]', $arrayItem['value']) }}"
+                                                           value="{{ old('setting_values['.$key.'][value]', $arrayItem['value']) }}"
                                                            required="required" placeholder="Значение">
                                                 </div>
                                                 <div class="col-md-1">
@@ -134,7 +140,7 @@ $page = 'admin.settings.';
                                     <div class="form-group row">
                                         <label class="col-sm-4 form-control-label">Дата создания</label>
                                         <div class="col-sm-8">
-                                            {{ $item->created_at }}
+                                            {{ $setting->created_at }}
                                         </div>
                                     </div>
                                 </div>
@@ -144,7 +150,7 @@ $page = 'admin.settings.';
                                     <div class="form-group row">
                                         <label class="col-sm-4 form-control-label">Дата обновления</label>
                                         <div class="col-sm-8">
-                                            {{ $item->updated_at }}
+                                            {{ $setting->updated_at }}
                                         </div>
                                     </div>
                                 </div>
@@ -154,7 +160,7 @@ $page = 'admin.settings.';
                                     <div class="form-group row">
                                         <label class="col-sm-4 form-control-label">Редактор</label>
                                         <div class="col-sm-8">
-                                            {{ $item->editor}}
+                                            {{ $setting->editor}}
                                         </div>
                                     </div>
                                 </div>
