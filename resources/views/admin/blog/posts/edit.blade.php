@@ -34,22 +34,22 @@ $page = 'admin.posts.';
 @endsection
 
 @section('content')
-    <style type="text/css">
-        img {
-            display: block;
-            max-width: 100%;
-        }
-        .preview {
-            overflow: hidden;
-            width: 160px;
-            height: 160px;
-            margin: 10px;
-            border: 1px solid red;
-        }
-        .modal-lg{
-            max-width: 1000px !important;
-        }
-    </style>
+{{--    <style type="text/css">--}}
+{{--        img {--}}
+{{--            display: block;--}}
+{{--            max-width: 100%;--}}
+{{--        }--}}
+{{--        .preview {--}}
+{{--            overflow: hidden;--}}
+{{--            width: 160px;--}}
+{{--            height: 160px;--}}
+{{--            margin: 10px;--}}
+{{--            border: 1px solid red;--}}
+{{--        }--}}
+{{--        .modal-lg{--}}
+{{--            max-width: 1000px !important;--}}
+{{--        }--}}
+{{--    </style>--}}
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-2 mb-3">
         <form id="edit-form" class="item w-100" method="POST" enctype="multipart/form-data"
               action="{{ route($page . 'update', $post) }}" novalidate>
@@ -188,30 +188,32 @@ $page = 'admin.posts.';
                                               class="form-control item-content">{{ old('excerpt', $post->excerpt) }}</textarea>
                                 </div>
                                 @php $lastId = 0; @endphp
-                                @foreach($post->content as $id => $block)
-                                    @php $lastId = $id > $lastId ? $id : $lastId  @endphp
+                                @foreach($post->content as $block)
+                                    @php $lastId = $block['blockId'] > $lastId ? $block['blockId'] : $lastId  @endphp
                                     @switch($block['type'])
-                                        @case('img&text')
-                                            @include('admin.blog.posts._block-img-and-text',['blockId' => $id])
+                                        @case('img-and-text')
+                                            @include('admin.blog.posts._block-img-and-text',['blockId' => $block['blockId']])
+                                        @break
+                                        @case('img-only')
+                                            @include('admin.blog.posts._block-img',['blockId' => $block['blockId']])
+                                        @break
+                                        @case('text-only')
+                                            @include('admin.blog.posts._block-text',['blockId' => $block['blockId']])
+                                        @break
+                                        @case('subtitle')
+                                            @include('admin.blog.posts._block-subtitle',['blockId' => $block['blockId']])
                                         @break
                                     @endswitch
                                 @endforeach
                                 <div class="add-block-to-post accordion"
                                      data-url="{{ route($page . 'add_block') }}"
                                      data-last-block="{{ $lastId }}">
+
                                     <button data-type="text-only" class="btn btn-default">Блок текста</button>
                                     <button data-type="img-and-text" class="btn btn-default">Картинка + текст</button>
                                     <button data-type="img-only" class="btn btn-default">Картинка</button>
                                     <button data-type="subtitle" class="btn btn-default">Подзаголовок</button>
                                 </div>
-
-
-{{--                                <div class="form-group">--}}
-{{--                                    <label class="form-control-label justify-content-center">Статья</label>--}}
-{{--                                    <div class="col-sm-12 help-text">{{ $help['content'] }}</div>--}}
-{{--                                    <textarea name="content" required="required"--}}
-{{--                                              class="summernote form-control item-content">{{ old('content', $post->content) }}</textarea>--}}
-{{--                                </div>--}}
                             </div>
                         </div>
                         <div id="review" class="tab-pane fade" role="tabpanel" aria-labelledby="review-tab">
@@ -262,8 +264,6 @@ $page = 'admin.posts.';
             </div>
         </form>
     </div>
-
-
 
 
     <div id="change-img-modal" class="modal fade">

@@ -51,8 +51,7 @@ class PostController extends Controller
      */
     public function edit(Post $post): View
     {
-//        dd($post->content[1], $post);
-
+//dd($post);
         return view('admin.blog.posts.edit', compact('post'));
     }
 
@@ -128,33 +127,10 @@ class PostController extends Controller
     /**
         Добавить блок текста
      */
-    public function addBlock( Request $request )
+    public function addBlock(Request $request):View
     {
-        $blockId = $request->blockId;
 
-        switch ($request->type) {
-            case 'text-only':
-                return view('admin.blog.posts._block-text');
-            case 'img-and-text':
-                $block = ['text' => '',
-                    'numb' => $blockId,
-                    'block-title' => '',
-                    'flow' => 'no',
-                    'type' => 'img&text',
-                    'img-link' => '',
-                    'img-path' => '',
-                    'img-title' => '',
-                    'img-width' => '100',
-                    'img-horizontally' => 'centre'];
-                return view('admin.blog.posts._block-img-and-text', compact('block','blockId'));
-            case 'img-only':
-                echo 'img-only';
-                break;
-            case 'subtitle':
-                echo 'subtitle';
-                break;
-        }
-//        dd($request->type);
+        return posts()->addBlock($request);
     }
 
     /**

@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Yz\Services\Service;
+use Illuminate\View\View;
 
 class PostsService extends Service
 {
@@ -94,16 +95,14 @@ class PostsService extends Service
         $this->saveValidate($data);
 
         // Упорядочиваем блоки
-        $content = $data['content'];
         $newContent = [];
-        $i = 0;
-        foreach ($content as $val) {
-            $newContent[$i] = $val;
-            $i++;
+
+        foreach ($data['content'] as $val) {
+            $newContent[] = $val;
         }
+
         $data['content'] = $newContent;
 
-//dd($data, $data['content'], $newarr);
         $result = $post->update($data);
 
         if (!$result) {
@@ -185,6 +184,55 @@ class PostsService extends Service
     {
 
         return Post::whereJsonContains('tags', $tags)->get();
+    }
+
+    public function addBlock(Request $request): View
+    {
+        $blockId = $request->blockId;
+
+        switch ($request->type) {
+            case 'text-only':
+                $block = ['blockId' => $blockId,
+                    'type' => 'text-only',
+                    'block-title' => '',
+                    'text' => ''];
+
+                return view('admin.blog.posts._block-text', compact('block', 'blockId'));
+
+            case 'img-and-text':
+                $block = ['blockId' => $blockId,
+                    'type' => 'img-and-text',
+                    'block-title' => '',
+                    'img-width' => '100',
+                    'img-horizontally' => 'centre',
+                    'flow' => 'no',
+                    'img-path' => '',
+                    'img-title' => '',
+                    'img-link' => '',
+                    'text' => ''];
+
+                return view('admin.blog.posts._block-img-and-text', compact('block', 'blockId'));
+
+            case 'img-only':
+                $block = ['blockId' => $blockId,
+                    'type' => 'img-only',
+                    'block-title' => '',
+                    'img-width' => '100',
+                    'img-horizontally' => 'centre',
+                    'img-path' => '',
+                    'img-title' => '',
+                    'img-link' => '',];
+
+                return view('admin.blog.posts._block-img', compact('block', 'blockId'));
+
+            case 'subtitle':
+                $block = ['blockId' => $blockId,
+                    'type' => 'subtitle',
+                    'block-title' => '',
+                    'text' => ''];
+
+                return view('admin.blog.posts._block-subtitle', compact('block', 'blockId'));
+        }
     }
 
 }

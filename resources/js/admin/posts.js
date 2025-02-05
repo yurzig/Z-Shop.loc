@@ -20,7 +20,7 @@ $('.add-block-to-post button').on('click', function (event) {
 
         block.parent().before(response);
 
-        if (type === 'img-and-text' || type === 'img-only') {
+        if (type === 'img-and-text' || type === 'text-only'|| type === 'subtitle') {
             $('.summernote').summernote();
         }
 
@@ -132,23 +132,9 @@ $(document).on('click',$('input[id^="img-width"]'),function(){
 /**
  Инициализация сортировки блоков
  */
-// window.postBlocksSortableSetup = function () {
-//
-//     Sortable.create(sortableBlock, {
-//         handle: '.handle',
-//         animation: 150,
-//
-//     });
-// };
-//
-// postBlocksSortableSetup();
-// window.postBlocksSortableSetup = function () {
-//
-    Sortable.create(sortableBlock, {
-        handle: '.handle',
-        animation: 150,
 
-    });
-// };
-//
-// postBlocksSortableSetup();
+Sortable.create(sortableBlock, {
+    handle: '.handle',
+    animation: 150,
+
+});
