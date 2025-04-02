@@ -63,17 +63,7 @@ class PostsService extends Service
         return $this->actionAfterSaving($post, $request);
     }
 
-    /**
-        Получить пост по id
-     */
-//    public function getPost(int $id): \Illuminate\Database\Eloquent\Builder|array|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
-//    {
-//
-//        return Post::with('review')
-//                     ->findOrFail($id);
-//    }
-
-    /**
+     /**
         Обновить пост
      */
     public function update(Request $request, Post $post):RedirectResponse
@@ -228,8 +218,10 @@ class PostsService extends Service
             case 'subtitle':
                 $block = ['blockId' => $blockId,
                     'type' => 'subtitle',
+                    'title-location' => 'centre',
+                    'title-type' => ($request->titleType) ?: 'h2',
                     'block-title' => '',
-                    'text' => ''];
+                    'text' => ($request->title) ?: '' ];
 
                 return view('admin.blog.posts._block-subtitle', compact('block', 'blockId'));
         }

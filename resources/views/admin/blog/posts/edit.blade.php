@@ -25,7 +25,6 @@ $page = 'admin.posts.';
     @vite('resources/css/admin/posts.css')
 @endpush
 
-
 @section('title', $pageName)
 
 @section('header-block')
@@ -34,22 +33,6 @@ $page = 'admin.posts.';
 @endsection
 
 @section('content')
-{{--    <style type="text/css">--}}
-{{--        img {--}}
-{{--            display: block;--}}
-{{--            max-width: 100%;--}}
-{{--        }--}}
-{{--        .preview {--}}
-{{--            overflow: hidden;--}}
-{{--            width: 160px;--}}
-{{--            height: 160px;--}}
-{{--            margin: 10px;--}}
-{{--            border: 1px solid red;--}}
-{{--        }--}}
-{{--        .modal-lg{--}}
-{{--            max-width: 1000px !important;--}}
-{{--        }--}}
-{{--    </style>--}}
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-2 mb-3">
         <form id="edit-form" class="item w-100" method="POST" enctype="multipart/form-data"
               action="{{ route($page . 'update', $post) }}" novalidate>
@@ -187,6 +170,11 @@ $page = 'admin.posts.';
                                     <textarea name="excerpt"
                                               class="form-control item-content">{{ old('excerpt', $post->excerpt) }}</textarea>
                                 </div>
+                                @if(count($post->content) > 1)
+                                <div class="form-group collapsed">
+                                    <button class="collapsed-btn btn-secondary" type="button">Развернуть блоки</button>
+                                </div>
+                                @endif
                                 @php $lastId = 0; @endphp
                                 @foreach($post->content as $block)
                                     @php $lastId = $block['blockId'] > $lastId ? $block['blockId'] : $lastId  @endphp

@@ -31,7 +31,6 @@ $('.add-block-to-post button').on('click', function (event) {
 
 });
 
-// let image = $("#change-img-modal #image");
 let image = document.getElementById('image');
 
 let imageWidth = 0;
@@ -137,4 +136,66 @@ Sortable.create(sortableBlock, {
     handle: '.handle',
     animation: 150,
 
+});
+
+/**
+ Раскрыть\скрыть все блоки статьи
+ */
+$(document).on('click', '.collapsed-btn', function(){
+    if ($(this).text() === 'Развернуть блоки') {
+        $('.accordion-collapse').collapse('show');
+        $(this).text('Свернуть блоки');
+    } else {
+        $('.accordion-collapse').collapse('hide');
+        $(this).text('Развернуть блоки');
+    }
+});
+
+/**
+ Удалить блок
+ */
+$(document).on('click', '.js-delete-block', function() {
+    const block = $(this).closest('.accordion-item');
+    block.remove();
+});
+
+/**
+ Создать блок заголовка при первоначальном заполнении поля Название статьи
+ */
+$(document).on('change','.js-title', function() {
+    console.log($(this).val());
+
+    if($(".block-subtitle").length) {
+        return;
+    }
+
+    const main = $('.add-block-to-post'),
+        title = $('input[name="title"]').val();
+
+    let id = parseInt(main.attr('data-last-block'));
+
+    id = id + 1;
+
+    main.attr('data-last-block', id);
+
+    let data = new FormData();
+    data.append('blockId', id);
+    data.append('type', 'subtitle');
+    data.append('title',title);
+    data.append('titleType','h1');
+
+    requestAjax(main.data('url'), data, function (response){
+
+            main.before(response);
+
+            $('.summernote').summernote();
+
+        }, function (error, i, code ){
+            console.log('error-' + error + ' i-' + i + ' code-' + code);
+        },
+        'html');
+
+    // console.log($('input[name="content[0][text]"]').html('<div></div>'));
+   // $('.note-editable').val($(this).val());
+   //  $('.summernote').summernote();
 });

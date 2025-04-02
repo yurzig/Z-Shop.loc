@@ -3,12 +3,15 @@ $help = [
     'category_id' => 'Необходимо привязать статью к категории',
     'user_id' => 'Необходимо указать автора статьи',
     'title' => 'Заголовок статьи',
-    'slug' => 'Url статьи(формируется автоматически)',
+    'slug' => 'Url статьи(если не указать, то формируется автоматически)',
     'excerpt' => 'Краткое описание статьи',
     'content' => 'Текст статьи',
+    'status' => 'Укажите статус статьи(по-умолчанию - черновик)',
     'tags' => 'Укажите теги связанные с этой статьей',
     'is_published' => 'Признак публикации статьи',
     'published_at' => 'Дата публикации статьи',
+    'meta_title' => 'Заголовок статьи для SEO',
+    'meta_description' => 'Краткое описание статьи для SEO',
 ];
 
 $pageName = 'Новая статья';
@@ -16,6 +19,13 @@ $page = 'admin.posts.';
 ?>
 
 @extends('layouts.admin')
+
+@section('title', $pageName)
+
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/cropper.css') }}">
+    @vite('resources/css/admin/posts.css')
+@endpush
 
 @section('title', $pageName)
 
@@ -85,7 +95,7 @@ $page = 'admin.posts.';
                                             <label class="col-sm-4 form-control-label">Заголовок</label>
                                             <div class="col-sm-8">
                                                 <input type="text" name="title"
-                                                       class="form-control"
+                                                       class="form-control js-title"
                                                        value="{{ old('title') }}"
                                                        required="required"
                                                        placeholder="Заголовок статьи">
@@ -141,19 +151,21 @@ $page = 'admin.posts.';
                             </div>
                         </div>
                         <div id="content" class="tab-pane fade" role="tabpanel" aria-labelledby="content-tab">
-                            <div class="box">
+                            <div id="sortableBlock" class="box list-group">
                                 <div class="form-group row">
                                     <label class="form-control-label justify-content-center">Аннотация</label>
                                     <div class="col-sm-12 help-text">{{ $help['excerpt'] }}</div>
                                     <textarea name="excerpt"
                                               class="form-control item-content">{{ old('excerpt') }}</textarea>
                                 </div>
+                                <div class="add-block-to-post accordion"
+                                     data-url="{{ route($page . 'add_block') }}"
+                                     data-last-block="0">
 
-                                <div class="form-group">
-                                    <label class="form-control-label justify-content-center">Статья</label>
-                                    <div class="col-sm-12 help-text">{{ $help['content'] }}</div>
-                                    <textarea name="content" required="required"
-                                              class="summernote form-control item-content">{{ old('content') }}</textarea>
+                                    <button data-type="text-only" class="btn btn-default">Блок текста</button>
+                                    <button data-type="img-and-text" class="btn btn-default">Картинка + текст</button>
+                                    <button data-type="img-only" class="btn btn-default">Картинка</button>
+                                    <button data-type="subtitle" class="btn btn-default">Подзаголовок</button>
                                 </div>
                             </div>
                         </div>
@@ -163,4 +175,37 @@ $page = 'admin.posts.';
             </div>
         </form>
     </div>
+    <div id="change-img-modal" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Рисунок</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="img-container">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <img id="image" src="{{ asset('images/noimage.jpg') }}">
+                            </div>
+                            <div class="col-md-4">
+                                <div class="preview"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn md btn-default apply-btn" data-url="{{ route($page . 'add_img') }}">Сохранить</button>
+                    <button type="button" class="cancel-btn btn btn-default" data-dismiss="modal">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
+@push('scripts')
+    <script src="{{ asset('js/Sortable.min.js') }}" defer></script>
+    <script src="{{ asset('js/cropper.js') }}" defer></script>
+    @vite('resources/js/admin/posts.js')
+@endpush
